@@ -4,8 +4,10 @@
 Sends the same temperature-0, fixed-seed requests first one at a time, then again
 at increasing concurrency, and compares each response against its own sequential
 baseline. Any difference can only come from what else was running at the same time.
+Per-request hashes are kept, so the counts can be recomputed from the report.
 """
 import argparse
+import hashlib
 import json
 import os
 import signal
@@ -31,17 +33,17 @@ def post(port, name, prompt, max_tokens):
     req = urllib.request.Request(f"http://127.0.0.1:{port}/v1/chat/completions", data=json.dumps(body).encode(), headers={"Content-Type": "application/json"})
     with urllib.request.urlopen(req, timeout=1800) as r:
         d = json.load(r)
-    return d["choices"][0]["message"]["content"], d.get("system_fingerprint")
-
-
-def first_difference(a, b):
-    for i, (x, y) in enumerate(zip(a, b)):
-        if x != y:
-            return i
-    return min(len(a), len(b)) if len(a) != len(b) else None
+    text = d["choices"][0]["message"]["content"]
+    return {
+        "sha": hashlib.sha256(text.encode()).hexdigest()[:24],
+        "fingerprint": d.get("system_fingerprint"),
+        "completion_tokens": d.get("usage", {}).get("completion_tokens"),
+        "prompt_tokens": d.get("usage", {}).get("prompt_tokens"),
+    }
 
 
 def main():
+    here = os.path.dirname(os.path.abspath(__file__))
     parser = argparse.ArgumentParser()
     parser.add_argument("--engine", required=True, choices=["stride", "vllm"])
     parser.add_argument("--model", required=True)
@@ -49,17 +51,18 @@ def main():
     parser.add_argument("--port", type=int, default=8000)
     parser.add_argument("--max-tokens", type=int, default=256)
     parser.add_argument("--levels", default="8,32,64,128")
-    parser.add_argument("--stride-bin", default="/root/stride/build/stride_server")
+    parser.add_argument("--stride-bin", default=os.path.join(here, "..", "..", "build", "stride_server"))
     parser.add_argument("--stride-path", default="tc")
-    parser.add_argument("--vllm-bin", default="/root/venv-vllm/bin/vllm")
+    parser.add_argument("--kv-gb", default="16")
+    parser.add_argument("--vllm-bin", default=os.path.join(os.environ.get("BENCH_VENV", "/root/venv-vllm"), "bin", "vllm"))
     args = parser.parse_args()
 
-    here = os.path.dirname(os.path.abspath(__file__))
     pin = subprocess.check_output([sys.executable, os.path.join(here, "..", "verify_weights.py"), "--dir", args.model], text=True).strip()
     name = "llama-3.2-1b"
     env = dict(os.environ, HF_HUB_OFFLINE="1", TRANSFORMERS_OFFLINE="1")
     if args.engine == "stride":
-        cmd = [args.stride_bin, "--model", args.model, "--host", "127.0.0.1", "--port", str(args.port), "--path", args.stride_path, "--kv-gb", "16", "--max-seqs", "256", "--max-rows", "2048", "--prefill-chunk", "256"]
+        cmd = [args.stride_bin, "--model", args.model, "--host", "127.0.0.1", "--port", str(args.port), "--path", args.stride_path, "--kv-gb", args.kv_gb,
+               "--max-seqs", "256", "--max-rows", "2048", "--prefill-chunk", "256"]
     else:
         cmd = [args.vllm_bin, "serve", args.model, "--dtype", "bfloat16", "--max-model-len", "2048", "--no-enable-prefix-caching", "--seed", "0",
                "--gpu-memory-utilization", "0.85", "--served-model-name", name, "--host", "127.0.0.1", "--port", str(args.port), "--disable-log-stats", "--uvicorn-log-level", "warning"]
@@ -85,7 +88,8 @@ def main():
             "prompts": len(texts),
             "max_tokens": args.max_tokens,
             "temperature": 0.0,
-            "sequential_repeat_differs": sum(a[0] != b[0] for a, b in zip(baseline, repeat)),
+            "sequential_repeat_differs": sum(a["sha"] != b["sha"] for a, b in zip(baseline, repeat)),
+            "baseline": baseline,
             "levels": [],
         }
         print(f"{args.engine}: sequential rerun differs on {report['sequential_repeat_differs']}/{len(texts)}", flush=True)
@@ -95,22 +99,22 @@ def main():
             order = [i % len(texts) for i in range(count)]
             with ThreadPoolExecutor(level) as pool:
                 out = list(pool.map(lambda i: post(args.port, name, texts[i], args.max_tokens), order))
-            differs = [(i, o) for i, o in zip(order, out) if o[0] != baseline[i][0]]
-            prompts_changed = len({i for i, _ in differs})
-            divergence = sorted(first_difference(baseline[i][0], o[0]) for i, o in differs)
+            differs = [i for i, o in zip(order, out) if o["sha"] != baseline[i]["sha"]]
             row = {
                 "concurrency": level,
                 "requests": count,
                 "requests_differing": len(differs),
                 "requests_differing_pct": 100.0 * len(differs) / count,
-                "prompts_changed": prompts_changed,
-                "prompts_changed_pct": 100.0 * prompts_changed / len(texts),
-                "first_difference_char_p50": divergence[len(divergence) // 2] if divergence else None,
+                "prompts_changed": len(set(differs)),
+                "prompts_changed_pct": 100.0 * len(set(differs)) / len(texts),
+                "responses": [{"prompt": i, **o} for i, o in zip(order, out)],
             }
             if args.engine == "stride":
-                row["fingerprints_differing"] = sum(o[1] != baseline[i][1] for i, o in zip(order, out))
+                row["fingerprints_differing"] = sum(o["fingerprint"] != baseline[i]["fingerprint"] for i, o in zip(order, out))
+                with urllib.request.urlopen(f"http://127.0.0.1:{args.port}/stats", timeout=5) as r:
+                    row["stats_after"] = json.load(r)
             report["levels"].append(row)
-            print(f"{args.engine} c={level}: {len(differs)}/{count} requests differ, {prompts_changed}/{len(texts)} prompts changed", flush=True)
+            print(f"{args.engine} c={level}: {len(differs)}/{count} requests differ, {row['prompts_changed']}/{len(texts)} prompts changed, stats {row.get('stats_after', {}).get('preemptions')}", flush=True)
     finally:
         try:
             os.killpg(os.getpgid(proc.pid), signal.SIGTERM)
@@ -118,7 +122,7 @@ def main():
         except Exception:
             os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
     with open(args.report, "w") as f:
-        json.dump(report, f, indent=2)
+        json.dump(report, f, indent=1)
         f.write("\n")
     time.sleep(3)
 

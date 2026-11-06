@@ -111,14 +111,14 @@ def main():
     parser.add_argument("--requests-per-concurrency", type=int, default=6)
     parser.add_argument("--port", type=int, default=8000)
     parser.add_argument("--served-name", default="llama-3.2-1b")
-    parser.add_argument("--stride-bin", default="/root/stride/build/stride_server")
+    parser.add_argument("--stride-bin", default=os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "build", "stride_server"))
     parser.add_argument("--stride-path", default="tc")
     parser.add_argument("--stride-flag", action="append", default=[])
     parser.add_argument("--kv-gb", type=float, default=16.0)
     parser.add_argument("--max-rows", type=int, default=2048)
     parser.add_argument("--prefill-chunk", type=int, default=256)
-    parser.add_argument("--vllm-bin", default="/root/venv-vllm/bin/vllm")
-    parser.add_argument("--aiperf-bin", default="/root/venv-vllm/bin/aiperf")
+    parser.add_argument("--vllm-bin", default=os.path.join(os.environ.get("BENCH_VENV", "/root/venv-vllm"), "bin", "vllm"))
+    parser.add_argument("--aiperf-bin", default=os.path.join(os.environ.get("BENCH_VENV", "/root/venv-vllm"), "bin", "aiperf"))
     args = parser.parse_args()
 
     here = os.path.dirname(os.path.abspath(__file__))
@@ -144,6 +144,7 @@ def main():
                     for name, key in METRICS.items():
                         row[key] = {"avg": pick(summary, name, "avg"), "p50": pick(summary, name, "p50"), "p99": pick(summary, name, "p99")}
                     row["errors"] = pick(summary, "error_request_count", "avg") or 0
+                    row["usage_prompt_tokens_avg"] = pick(summary, "usage_prompt_tokens", "avg")
                     row["requests_ok"] = pick(summary, "request_count", "avg")
                     reps.append(row)
                     print(f"{label} c={concurrency} r={r}: {row['output_tok_per_s']['avg']} tok/s ttft_p50={row['ttft_ms']['p50']} itl_p50={row['itl_ms']['p50']} errors={row['errors']}", flush=True)

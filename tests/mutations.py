@@ -26,7 +26,7 @@ MUTANTS = {
     102: ("norm", "RMSNorm partial sums combined in reverse order"),
     103: ("norm", "mean divides by dim - 1"),
     104: ("norm", "epsilon dropped from RMSNorm"),
-    105: ("norm", "learned norm gain ignored for one dim"),
+    105: ("norm", "learned norm gain ignored for some dims"),
     111: ("rope", "RoPE uses position + 1"),
     112: ("rope", "sign error in one RoPE rotation term"),
     113: ("kv", "K and V swapped on append"),
@@ -52,6 +52,12 @@ MUTANTS = {
     302: ("engine", "final norm uses a layer norm's weights"),
     303: ("engine", "logit lanes compacted from the wrong row"),
 }
+
+
+# These change only rounding: a reversed sum, or a RoPE shift applied to Q and K alike,
+# which leaves relative phase unchanged. Catching them shows the golden oracle is
+# sensitive, not that it finds functional bugs, so they are counted separately.
+ROUNDING_ONLY = {102, 111, 123, 131}
 
 
 def run_cli(cli, model, prompts, output, bug, timeout, extra, summary=None):
@@ -124,7 +130,9 @@ def main():
         logits = np.fromfile(solo_bin, dtype=np.float32)
         rows, mixed_rows, tight_rows, long_rows = read_rows(solo), read_rows(mixed), read_rows(tight), read_rows(long_solo)
         tokens_ok = args.no_token_oracle or all(rows[i]["tokens"] == ref_rows[i]["tokens"] for i in ref_rows)
-        max_diff = float(np.abs(logits - ref_logits).max()) if logits.size == ref_logits.size else float("inf")
+        # Non-finite logits count as an infinite difference; NaN would otherwise compare false.
+        diff = np.abs(logits - ref_logits) if logits.size == ref_logits.size else np.array([np.inf])
+        max_diff = float(diff.max()) if np.isfinite(diff).all() else float("inf")
         return {
             "status": "ok",
             "fingerprints": {i: rows[i]["fingerprint"] for i in rows},
@@ -160,8 +168,9 @@ def main():
                 caught_by.append("invariance")
             if r["fingerprints"] != clean["fingerprints"]:
                 caught_by.append("golden")
-            detail = {"max_logit_diff": r["max_logit_diff"], "tokens_match_reference": r["tokens_match_reference"]}
-        results[bug] = {"where": where, "what": what, "caught": bool(caught_by), "caught_by": caught_by, **detail}
+            finite = r["max_logit_diff"] != float("inf")
+            detail = {"max_logit_diff": r["max_logit_diff"] if finite else None, "logits_non_finite_or_missing": not finite, "tokens_match_reference": r["tokens_match_reference"]}
+        results[bug] = {"where": where, "what": what, "rounding_only": bug in ROUNDING_ONLY, "caught": bool(caught_by), "caught_by": caught_by, **detail}
         print(f"{bug:4d} {where:10s} {'CAUGHT' if caught_by else 'MISSED'} {','.join(caught_by):32s} {what}", flush=True)
 
     caught = sum(r["caught"] for r in results.values())
@@ -170,6 +179,12 @@ def main():
     report = {
         "path": args.path,
         "tolerance": args.tolerance,
+        "token_oracle": not args.no_token_oracle,
+        "rounding_only_mutants": sorted(ROUNDING_ONLY),
+        "functional_mutants": len(results) - len(ROUNDING_ONLY),
+        "functional_caught": sum(r["caught"] and not r["rounding_only"] for r in results.values()),
+        "functional_caught_by_tolerance": sum("tolerance" in r["caught_by"] and not r["rounding_only"] for r in results.values()),
+        "caught_only_by_crash_or_hang": [b for b, r in results.items() if r["caught"] and set(r["caught_by"]) <= {"crash", "hang"}],
         "clean": {k: clean[k] for k in ("max_logit_diff", "tokens_match_reference", "invariant_mixed", "invariant_tight", "preemptions")},
         "clean_within_tolerance": tolerance_ok,
         "mutants": len(results),
@@ -181,7 +196,7 @@ def main():
         "results": results,
     }
     with open(args.report, "w") as f:
-        json.dump(report, f, indent=2)
+        json.dump(report, f, indent=2, allow_nan=False)
         f.write("\n")
     print(f"caught {caught}/{len(results)}; tolerance oracle alone {by_oracle.get('tolerance', 0)}; only bit-exact {len(only_exact)}; missed {report['missed']}")
     if report["catch_rate_pct"] < args.min_catch_rate:

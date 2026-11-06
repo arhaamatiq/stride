@@ -1,16 +1,27 @@
 #!/usr/bin/env python3
-"""Batch-1 decode against the memory-bandwidth roofline, with repeats.
+"""Batch-1 decode against a memory-bandwidth roofline, with repeats.
 
-The roofline is peak DRAM bandwidth (1008 GB/s on an RTX 4090) divided by the weight
-bytes one forward pass must read; the engine reports that byte count from the actual
-matrices it loaded.
+The roofline is 1008 GB/s, the RTX 4090's specified peak DRAM bandwidth, divided by the
+weight bytes one forward pass must read. It is a bound from a data-sheet figure, not a
+counter measurement. KV and activation traffic are not counted, so a real engine cannot
+reach 100%. The byte count comes from the safetensors header: every tensor once, which
+counts tied embeddings once as the output projection.
 """
 import argparse
 import json
+import os
 import statistics
+import struct
 import subprocess
 
 PEAK_GB_PER_S = 1008.0
+
+
+def weight_bytes(model_dir):
+    with open(os.path.join(model_dir, "model.safetensors"), "rb") as f:
+        size = struct.unpack("<Q", f.read(8))[0]
+        header = json.loads(f.read(size))
+    return sum(v["data_offsets"][1] - v["data_offsets"][0] for k, v in header.items() if k != "__metadata__")
 
 
 def main():
@@ -22,7 +33,9 @@ def main():
     parser.add_argument("--repeats", type=int, default=5)
     parser.add_argument("--max-new", type=int, default=256)
     args = parser.parse_args()
-    result = {"peak_gb_per_s": PEAK_GB_PER_S, "max_new": args.max_new, "paths": {}}
+    bytes_per_pass = weight_bytes(args.model)
+    ceiling = PEAK_GB_PER_S * 1e9 / bytes_per_pass
+    result = {"peak_gb_per_s": PEAK_GB_PER_S, "peak_is_specified_not_measured": True, "weight_bytes_per_pass": bytes_per_pass, "roofline_tok_per_s": ceiling, "max_new": args.max_new, "paths": {}}
     for path in ("tc", "exact"):
         runs = []
         for _ in range(args.repeats + 1):
@@ -31,16 +44,13 @@ def main():
             runs.append(json.loads(stderr.strip().splitlines()[-1]))
         runs = runs[1:]  # the first run warms clocks and caches
         rate = [r["generated"] / r["run_seconds"] for r in runs]
-        bytes_per_pass = runs[0]["weight_bytes_per_pass"]
-        ceiling = PEAK_GB_PER_S * 1e9 / bytes_per_pass
         result["paths"][path] = {
             "repeats": args.repeats,
             "tok_per_s_mean": statistics.mean(rate),
             "tok_per_s_std": statistics.stdev(rate),
             "tok_per_s_runs": rate,
-            "weight_bytes_per_pass": bytes_per_pass,
-            "roofline_tok_per_s": ceiling,
             "pct_of_roofline": 100.0 * statistics.mean(rate) / ceiling,
+            "weight_gb_per_s_implied": statistics.mean(rate) * bytes_per_pass / 1e9,
         }
         print(path, result["paths"][path], flush=True)
     with open(args.report, "w") as f:

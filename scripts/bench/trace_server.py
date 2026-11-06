@@ -60,8 +60,8 @@ def main():
     parser.add_argument("--osl", type=int, default=256)
     parser.add_argument("--port", type=int, default=8124)
     parser.add_argument("--server-flag", action="append", default=[])
-    parser.add_argument("--stride-bin", default="/root/stride/build/stride_server")
-    parser.add_argument("--aiperf-bin", default="/root/venv-vllm/bin/aiperf")
+    parser.add_argument("--stride-bin", default=os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "build", "stride_server"))
+    parser.add_argument("--aiperf-bin", default=os.path.join(os.environ.get("BENCH_VENV", "/root/venv-vllm"), "bin", "aiperf"))
     args = parser.parse_args()
 
     os.makedirs(args.out, exist_ok=True)

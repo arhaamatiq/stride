@@ -28,7 +28,7 @@ jobs:
         run: |
           python tests/mutations.py --cli build-cpu-mut/stride_cli --model tests/data/tiny \
             --reference tests/data/tiny/ref.jsonl --reference-logits tests/data/tiny/ref.bin \
-            --prompts tests/data/tiny/prompts.jsonl --tolerance 2e-4 --report mutation_report.json --min-catch-rate 95
+            --prompts tests/data/tiny/prompts.jsonl --tolerance 2e-4 --report mutation_report.json --min-catch-rate 100
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -58,6 +58,12 @@ if(STRIDE_MUTATION)
   target_compile_definitions(stride_core PUBLIC STRIDE_MUTATION)
 endif()
 
+if(STRIDE_CUDA)
+  # Measurements behind the kernel design; see scripts/run_all.sh.
+  add_executable(bench_memread tools/bench_memread.cu)
+  add_executable(tc_probe tools/tc_probe.cu)
+endif()
+
 add_executable(stride_cli tools/stride_cli.cpp)
 target_link_libraries(stride_cli PRIVATE stride_core)
 target_compile_options(stride_cli PRIVATE -O2 ${STRIDE_FP_FLAGS})
