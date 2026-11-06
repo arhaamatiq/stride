@@ -50,6 +50,8 @@ struct Args {
   std::string path = "exact";
 #endif
   bool norm_tile = false;
+  int micro_r = 0;
+  int micro_lt = 0;
   int max_seqs = 256;
   int max_rows = 256;
   int prefill_chunk = 64;
@@ -74,6 +76,8 @@ Args parse(int argc, char** argv) {
     else if (k == "--kv-gb") a.kv_gb = std::stod(next());
     else if (k == "--path") a.path = next();
     else if (k == "--norm-tile") a.norm_tile = true;
+    else if (k == "--micro-r") a.micro_r = std::stoi(next());
+    else if (k == "--micro-lt") a.micro_lt = std::stoi(next());
     else if (k == "--max-seqs") a.max_seqs = std::stoi(next());
     else if (k == "--max-rows") a.max_rows = std::stoi(next());
     else if (k == "--prefill-chunk") a.prefill_chunk = std::stoi(next());
@@ -329,6 +333,8 @@ class App {
     eo.kv_bytes = static_cast<int64_t>(a.kv_gb * 1024.0 * 1024.0 * 1024.0);
     eo.path = a.path == "tc" ? KernelPath::kTensorCore : KernelPath::kExact;
     eo.tc_norm_per_lane = !a.norm_tile;
+    eo.tc_micro_r = a.micro_r;
+    eo.tc_micro_lt = a.micro_lt;
     return eo;
   }
   static SchedulerOptions sched_options(const Args& a) {

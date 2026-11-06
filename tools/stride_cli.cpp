@@ -39,8 +39,8 @@ struct Args {
   int bug = 0;
   std::string path = "exact";
   bool norm_tile = false;
-  int lt_mlp = 0;
-  int lt_lm = 0;
+  int micro_r = 0;
+  int micro_lt = 0;
   bool full = false;
   int dump_steps = 1;
   bool use_eos = false;
@@ -79,8 +79,8 @@ Args parse(int argc, char** argv) {
     else if (k == "--bug") a.bug = std::stoi(next());
     else if (k == "--path") a.path = next();
     else if (k == "--norm-tile") a.norm_tile = true;
-    else if (k == "--lt-mlp") a.lt_mlp = std::stoi(next());
-    else if (k == "--lt-lm") a.lt_lm = std::stoi(next());
+    else if (k == "--micro-r") a.micro_r = std::stoi(next());
+    else if (k == "--micro-lt") a.micro_lt = std::stoi(next());
     else if (k == "--full") a.full = true;
     else if (k == "--use-eos") a.use_eos = true;
     else if (k == "--temperature") a.temperature = std::stof(next());
@@ -149,8 +149,8 @@ int main(int argc, char** argv) {
   eo.bug = args.bug;
   eo.path = args.path == "tc" ? KernelPath::kTensorCore : KernelPath::kExact;
   eo.tc_norm_per_lane = !args.norm_tile;
-  eo.tc_lt_mlp = args.lt_mlp;
-  eo.tc_lt_lm = args.lt_lm;
+  eo.tc_micro_r = args.micro_r;
+  eo.tc_micro_lt = args.micro_lt;
 
   const auto t_load0 = std::chrono::steady_clock::now();
   Engine engine(args.model, eo);

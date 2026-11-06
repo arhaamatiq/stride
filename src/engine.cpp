@@ -310,7 +310,11 @@ void Engine::step_tensor_core(const std::vector<StepRow>& rows, std::vector<Best
   auto* z = reinterpret_cast<uint16_t*>(z_);
   auto* lm_x = reinterpret_cast<uint16_t*>(lm_x_);
   // Sharing one weight load across two lane tiles pays off once the batch is large.
-  const int lt_mlp = opts_.tc_lt_mlp > 0 ? opts_.tc_lt_mlp : (lane_tiles >= 4 ? 2 : 1);
+  // Register blocking only pays once several lane tiles compete for load bandwidth.
+  const auto micro_r = [this](int tiles) { return opts_.tc_micro_r > 0 ? opts_.tc_micro_r : (tiles >= 4 ? 2 : 1); };
+  const auto micro_lt = [this](int tiles) { return opts_.tc_micro_lt > 0 ? opts_.tc_micro_lt : (tiles >= 4 ? 2 : 1); };
+  const int r = micro_r(lane_tiles);
+  const int lt = micro_lt(lane_tiles);
 
   TcEmbedParams embed{};
   embed.l = lanes;
@@ -347,7 +351,7 @@ void Engine::step_tensor_core(const std::vector<StepRow>& rows, std::vector<Best
     qkv.row_pos = row_pos_;
     qkv.layer = opts_.bug == 301 ? 0 : li;
     qkv.head_dim = cfg_.head_dim;
-    tc_qkv(qkv, 1);
+    tc_qkv(qkv);
 
     AttentionParams attn{};
     attn.l = lanes;
@@ -375,7 +379,7 @@ void Engine::step_tensor_core(const std::vector<StepRow>& rows, std::vector<Best
     o.x = attn_tiles;
     o.m = w.o;
     o.h = h_;
-    tc_gemm_residual(o);
+    tc_gemm_residual(o, r, lt);
 
     norm.weight = w.norm_mlp;
     tc_norm(norm, opts_.tc_norm_per_lane);
@@ -386,14 +390,14 @@ void Engine::step_tensor_core(const std::vector<StepRow>& rows, std::vector<Best
     mlp.w1 = w.w1;
     mlp.w3 = w.w3;
     mlp.z = z;
-    tc_mlp13(mlp, lt_mlp);
+    tc_mlp13(mlp, r, lt);
 
     TcGemmResidualParams down{};
     down.l = lanes;
     down.x = z;
     down.m = w.w2;
     down.h = h_;
-    tc_gemm_residual(down);
+    tc_gemm_residual(down, r, lt);
   }
 
   norm.weight = opts_.bug == 302 ? weights_->layer(0).norm_mlp : weights_->norm_final();
@@ -424,7 +428,7 @@ void Engine::step_tensor_core(const std::vector<StepRow>& rows, std::vector<Best
     lm.m = weights_->lm();
     lm.vocab = cfg_.vocab;
     lm.best = best_;
-    tc_lm_greedy(lm, opts_.tc_lt_lm > 0 ? opts_.tc_lt_lm : (tiles >= 4 ? 2 : 1));
+    tc_lm_greedy(lm, micro_r(tiles), micro_lt(tiles));
 
     greedy.resize(count);
     device_download(greedy.data(), best_, count * sizeof(BestEntry));

@@ -87,6 +87,7 @@ def main():
     parser.add_argument("--tight-blocks", default="16", help="KV blocks in the run that must preempt")
     parser.add_argument("--tight-max-new", default="200", help="tokens per prompt in the preemption run")
     parser.add_argument("--max-rows", default="256")
+    parser.add_argument("--no-token-oracle", action="store_true", help="BF16 path: token-level agreement with an FP32 reference is not expected")
     parser.add_argument("--min-catch-rate", type=float, default=0.0, help="exit non-zero below this percentage")
     parser.add_argument("--report", required=True)
     args = parser.parse_args()
@@ -122,7 +123,7 @@ def main():
             return {"status": status}
         logits = np.fromfile(solo_bin, dtype=np.float32)
         rows, mixed_rows, tight_rows, long_rows = read_rows(solo), read_rows(mixed), read_rows(tight), read_rows(long_solo)
-        tokens_ok = all(rows[i]["tokens"] == ref_rows[i]["tokens"] for i in ref_rows)
+        tokens_ok = args.no_token_oracle or all(rows[i]["tokens"] == ref_rows[i]["tokens"] for i in ref_rows)
         max_diff = float(np.abs(logits - ref_logits).max()) if logits.size == ref_logits.size else float("inf")
         return {
             "status": "ok",
@@ -142,6 +143,8 @@ def main():
     if clean["preemptions"] == 0:
         sys.exit("the tight KV run did not preempt, so the replay path is untested; lower --tight-blocks")
     tolerance_ok = clean["max_logit_diff"] <= args.tolerance and clean["tokens_match_reference"]
+    if not tolerance_ok:
+        sys.exit(f"clean build fails the tolerance oracle: {clean['max_logit_diff']} > {args.tolerance}")
 
     results = {}
     for bug, (where, what) in MUTANTS.items():

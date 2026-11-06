@@ -26,6 +26,11 @@ using FragC = wmma::fragment<wmma::accumulator, 16, 16, 16, float>;
 
 constexpr int kTile = 256;  // elements in one 16x16 tile
 
+// Warps per block for matrices with few rows (Q, K, V, output, MLP down). These get
+// too few warps from row tiles alone, so each one is split by column tile. The value
+// fixes a summation tree, so it depends on the kernel, never on the batch.
+constexpr int kFewRowsWarps = 8;
+
 STRIDE_DEVICE const Bf16* as_bf16(const uint16_t* p) { return reinterpret_cast<const Bf16*>(p); }
 
 STRIDE_DEVICE int tile_parts(int lane_tiles, int lt_per_block) { return (lane_tiles + lt_per_block - 1) / lt_per_block; }
@@ -69,6 +74,99 @@ STRIDE_DEVICE void tile_chain_range(const uint16_t* wrow, const uint16_t* x, int
       FragB b;
       wmma::load_matrix_sync(b, xb + (static_cast<int64_t>(lt) * col_tiles + ct) * kTile, 16);
       wmma::mma_sync(c[l], a, b, c[l]);
+    }
+  }
+}
+
+// Register-blocked chain: one warp holds R row tiles and LT lane tiles, so a weight
+// tile serves LT lanes and an x tile serves R rows. Load traffic per mma falls from
+// 1024 bytes at 1x1 to 512 at 2x2 and 256 at 4x4. Each (row tile, lane tile) still
+// chains its column tiles in ascending order, so every choice of R and LT produces
+// the same bits. c is indexed [r * LT + l].
+template <int R, int LT>
+STRIDE_DEVICE void tile_chain_blocked(const uint16_t* wrows, const uint16_t* x, int col_tiles, int ct0, int ct1, int lt0,
+                                      int lane_tiles, FragC* c) {
+  constexpr int U = R * LT >= 8 ? 1 : (R * LT >= 4 ? 2 : 4);
+  const Bf16* w = as_bf16(wrows);
+  const Bf16* xb = as_bf16(x);
+  int ct = ct0;
+  for (; ct + U <= ct1; ct += U) {
+    FragA a[U][R];
+    for (int u = 0; u < U; ++u)
+      for (int r = 0; r < R; ++r)
+        wmma::load_matrix_sync(a[u][r], w + (static_cast<int64_t>(r) * col_tiles + ct + u) * kTile, 16);
+    for (int l = 0; l < LT; ++l) {
+      const int lt = lt0 + l;
+      if (lt >= lane_tiles) break;
+      FragB b[U];
+      for (int u = 0; u < U; ++u)
+        wmma::load_matrix_sync(b[u], xb + (static_cast<int64_t>(lt) * col_tiles + ct + u) * kTile, 16);
+      for (int u = 0; u < U; ++u)
+        for (int r = 0; r < R; ++r) wmma::mma_sync(c[r * LT + l], a[u][r], b[u], c[r * LT + l]);
+    }
+  }
+  for (; ct < ct1; ++ct) {
+    for (int r = 0; r < R; ++r) {
+      FragA a;
+      wmma::load_matrix_sync(a, w + (static_cast<int64_t>(r) * col_tiles + ct) * kTile, 16);
+      for (int l = 0; l < LT; ++l) {
+        const int lt = lt0 + l;
+        if (lt >= lane_tiles) break;
+        FragB b;
+        wmma::load_matrix_sync(b, xb + (static_cast<int64_t>(lt) * col_tiles + ct) * kTile, 16);
+        wmma::mma_sync(c[r * LT + l], a, b, c[r * LT + l]);
+      }
+    }
+  }
+}
+
+// Gate and up chains advanced together, so each x tile load serves both matrices.
+// Each accumulator still sees its column tiles in ascending order.
+template <int R, int LT>
+STRIDE_DEVICE void tile_chain_pair(const uint16_t* w1rows, const uint16_t* w3rows, const uint16_t* x, int col_tiles, int ct0, int ct1,
+                                   int lt0, int lane_tiles, FragC* c1, FragC* c3) {
+  constexpr int U = 2;
+  const Bf16* w1 = as_bf16(w1rows);
+  const Bf16* w3 = as_bf16(w3rows);
+  const Bf16* xb = as_bf16(x);
+  int ct = ct0;
+  for (; ct + U <= ct1; ct += U) {
+    FragA a1[U][R], a3[U][R];
+    for (int u = 0; u < U; ++u) {
+      for (int r = 0; r < R; ++r) {
+        const int64_t at = (static_cast<int64_t>(r) * col_tiles + ct + u) * kTile;
+        wmma::load_matrix_sync(a1[u][r], w1 + at, 16);
+        wmma::load_matrix_sync(a3[u][r], w3 + at, 16);
+      }
+    }
+    for (int l = 0; l < LT; ++l) {
+      const int lt = lt0 + l;
+      if (lt >= lane_tiles) break;
+      FragB b[U];
+      for (int u = 0; u < U; ++u)
+        wmma::load_matrix_sync(b[u], xb + (static_cast<int64_t>(lt) * col_tiles + ct + u) * kTile, 16);
+      for (int u = 0; u < U; ++u) {
+        for (int r = 0; r < R; ++r) {
+          wmma::mma_sync(c1[r * LT + l], a1[u][r], b[u], c1[r * LT + l]);
+          wmma::mma_sync(c3[r * LT + l], a3[u][r], b[u], c3[r * LT + l]);
+        }
+      }
+    }
+  }
+  for (; ct < ct1; ++ct) {
+    for (int r = 0; r < R; ++r) {
+      const int64_t at = (static_cast<int64_t>(r) * col_tiles + ct) * kTile;
+      FragA a1, a3;
+      wmma::load_matrix_sync(a1, w1 + at, 16);
+      wmma::load_matrix_sync(a3, w3 + at, 16);
+      for (int l = 0; l < LT; ++l) {
+        const int lt = lt0 + l;
+        if (lt >= lane_tiles) break;
+        FragB b;
+        wmma::load_matrix_sync(b, xb + (static_cast<int64_t>(lt) * col_tiles + ct) * kTile, 16);
+        wmma::mma_sync(c1[r * LT + l], a1, b, c1[r * LT + l]);
+        wmma::mma_sync(c3[r * LT + l], a3, b, c3[r * LT + l]);
+      }
     }
   }
 }
@@ -244,22 +342,22 @@ struct TcNormLane {
 };
 
 // Q, K, V projections fused with RoPE and the KV append. Each row tile holds eight
-// RoPE pairs: rows (d0 + i) and (d0 + D/2 + i) for i in 0..7.
-template <int LT>
+// RoPE pairs: rows (d0 + i) and (d0 + D/2 + i) for i in 0..7. These matrices have few
+// rows, so K warps share each one and their partial sums combine left to right.
+template <int K>
 struct TcQkv {
   using Params = TcQkvParams;
   static constexpr int kPhases = 1;
+  static constexpr int kBlockSize = 32 * K;
   struct Shared {
-    float c[LT][kTile];
+    float c[K][kTile];
+    float y[kTile];
   };
-  static int blocks(const Params& p) {
-    return (p.q.groups + 2 * p.k.groups) * tile_parts_hd(p.l.lane_groups, LT);
-  }
+  static int blocks(const Params& p) { return (p.q.groups + 2 * p.k.groups) * p.l.lane_groups; }
   template <int P>
   STRIDE_DEVICE static void phase(const Params& p, int block, int t, Shared& s) {
-    const int parts = tile_parts(p.l.lane_groups, LT);
-    const int index = block / parts;
-    const int lt0 = (block % parts) * LT;
+    const int index = block / p.l.lane_groups;
+    const int lt = block % p.l.lane_groups;
     int kind, rt;
     const GemmMat* m;
     if (index < p.q.groups) {
@@ -276,11 +374,21 @@ struct TcQkv {
       m = &p.v;
     }
     const int col_tiles = m->cols / 16;
-    FragC c[LT];
-    for (int l = 0; l < LT; ++l) wmma::fill_fragment(c[l], 0.0f);
-    tile_chain<LT>(m->w + static_cast<int64_t>(rt) * col_tiles * kTile, p.x, col_tiles, lt0, p.l.lane_groups, c);
-    for (int l = 0; l < LT; ++l) wmma::store_matrix_sync(s.c[l], c[l], 16, wmma::mem_row_major);
-    __syncwarp();
+    const int warp = t / 32;
+    const int chunk = col_tiles / K;
+    FragC c[1];
+    wmma::fill_fragment(c[0], 0.0f);
+    tile_chain_blocked<1, 1>(m->w + static_cast<int64_t>(rt) * col_tiles * kTile, p.x, col_tiles, warp * chunk, (warp + 1) * chunk, lt,
+                             p.l.lane_groups, c);
+    wmma::store_matrix_sync(s.c[warp], c[0], 16, wmma::mem_row_major);
+    __syncthreads();
+    for (int e = t; e < kTile; e += kBlockSize) {
+      float y = s.c[0][e];
+      for (int i = 1; i < K; ++i) y = y + s.c[i][e];
+      s.y[e] = y;
+    }
+    __syncthreads();
+    if (t >= 32) return;
 
     const int D = p.head_dim;
     const int tiles_per_head = D / 16;
@@ -288,38 +396,35 @@ struct TcQkv {
     const int d0 = (rt % tiles_per_head) * 8;
     const int half = D / 2;
     const int pair = t % 8;
-    for (int l = 0; l < LT; ++l) {
-      const int lt = lt0 + l;
-      for (int n = 0; n < 4; ++n) {
-        const int jj = (t / 8) * 4 + n;
-        const int j = lt * 16 + jj;
-        if (j >= p.l.rows) continue;
-        const int pos = p.row_pos[j];
-        const int slot = p.row_slot[j];
-        const float a = s.c[l][pair * 16 + jj];
-        const float b = s.c[l][(8 + pair) * 16 + jj];
-        const int d = d0 + pair;
-        if (kind == 2) {
-          const int which = STRIDE_BUG(p.l, 113) ? 0 : 1;
-          uint16_t* dst = kv_ptr<uint16_t>(p.kv, p.layer, which, head, slot, pos);
-          dst[d] = static_cast<uint16_t>(bf16_round_bits(a));
-          dst[d + half] = static_cast<uint16_t>(bf16_round_bits(b));
+    for (int n = 0; n < 4; ++n) {
+      const int jj = (t / 8) * 4 + n;
+      const int j = lt * 16 + jj;
+      if (j >= p.l.rows) continue;
+      const int pos = p.row_pos[j];
+      const int slot = p.row_slot[j];
+      const float a = s.y[pair * 16 + jj];
+      const float b = s.y[(8 + pair) * 16 + jj];
+      const int d = d0 + pair;
+      if (kind == 2) {
+        const int which = STRIDE_BUG(p.l, 113) ? 0 : 1;
+        uint16_t* dst = kv_ptr<uint16_t>(p.kv, p.layer, which, head, slot, pos);
+        dst[d] = static_cast<uint16_t>(bf16_round_bits(a));
+        dst[d + half] = static_cast<uint16_t>(bf16_round_bits(b));
+      } else {
+        const int rp = STRIDE_BUG(p.l, 111) ? pos + 1 : pos;
+        const float* cs = p.rope + (static_cast<int64_t>(rp) * half + d) * 2;
+        const float co = cs[0], si = cs[1];
+        const float ra = a * co - b * si;
+        const float rb = STRIDE_BUG(p.l, 112) ? b * co - a * si : b * co + a * si;
+        if (kind == 0) {
+          float* q = p.q_out + static_cast<int64_t>(j) * p.q_stride + static_cast<int64_t>(head) * D;
+          q[d] = ra;
+          q[d + half] = rb;
         } else {
-          const int rp = STRIDE_BUG(p.l, 111) ? pos + 1 : pos;
-          const float* cs = p.rope + (static_cast<int64_t>(rp) * half + d) * 2;
-          const float co = cs[0], si = cs[1];
-          const float ra = a * co - b * si;
-          const float rb = STRIDE_BUG(p.l, 112) ? b * co - a * si : b * co + a * si;
-          if (kind == 0) {
-            float* q = p.q_out + static_cast<int64_t>(j) * p.q_stride + static_cast<int64_t>(head) * D;
-            q[d] = ra;
-            q[d + half] = rb;
-          } else {
-            const int which = STRIDE_BUG(p.l, 113) ? 1 : 0;
-            uint16_t* dst = kv_ptr<uint16_t>(p.kv, p.layer, which, head, slot, pos);
-            dst[d] = static_cast<uint16_t>(bf16_round_bits(ra));
-            dst[d + half] = static_cast<uint16_t>(bf16_round_bits(rb));
-          }
+          const int which = STRIDE_BUG(p.l, 113) ? 1 : 0;
+          uint16_t* dst = kv_ptr<uint16_t>(p.kv, p.layer, which, head, slot, pos);
+          dst[d] = static_cast<uint16_t>(bf16_round_bits(ra));
+          dst[d + half] = static_cast<uint16_t>(bf16_round_bits(rb));
         }
       }
     }
@@ -330,99 +435,130 @@ struct TcQkv {
 // no intermediate vector. K is warps per block. A matrix with few rows and many
 // columns gets K > 1 so its column tiles are worked on in parallel; the K partial
 // sums combine left to right, and K depends only on the matrix shape.
-template <int K>
+template <int K, int R, int LT>
 struct TcGemmResidual {
   using Params = TcGemmResidualParams;
   static constexpr int kPhases = 1;
   static constexpr int kBlockSize = 32 * K;
   struct Shared {
-    float c[K][kTile];
+    float c[K][R * LT][kTile];
   };
-  static int blocks(const Params& p) { return p.m.groups * p.l.lane_groups; }
+  static int blocks(const Params& p) {
+    return (p.m.groups / R) * tile_parts_hd(p.l.lane_groups, LT);
+  }
   template <int P>
   STRIDE_DEVICE static void phase(const Params& p, int block, int t, Shared& s) {
-    const int rt = block / p.l.lane_groups;
-    const int lt = block % p.l.lane_groups;
+    const int parts = tile_parts(p.l.lane_groups, LT);
+    const int rt0 = (block / parts) * R;
+    const int lt0 = (block % parts) * LT;
     const int col_tiles = p.m.cols / 16;
     const int h_tiles = p.m.groups;
     const int warp = t / 32;
     const int chunk = col_tiles / K;
-    float* h = p.h + (static_cast<int64_t>(lt) * h_tiles + rt) * kTile;
-    FragC c[1];
-    if (warp == 0 && !STRIDE_BUG(p.l, 132)) {
-      wmma::load_matrix_sync(c[0], h, 16, wmma::mem_col_major);
-    } else {
-      wmma::fill_fragment(c[0], 0.0f);
-    }
-    tile_chain_range<1>(p.m.w + static_cast<int64_t>(rt) * col_tiles * kTile, p.x, col_tiles, warp * chunk,
-                        (warp + 1) * chunk, lt, p.l.lane_groups, c);
-    if constexpr (K == 1) {
-      wmma::store_matrix_sync(h, c[0], 16, wmma::mem_col_major);
-    } else {
-      wmma::store_matrix_sync(s.c[warp], c[0], 16, wmma::mem_col_major);
-      __syncthreads();
-      for (int e = t; e < kTile; e += kBlockSize) {
-        float y = s.c[0][e];
-        if (STRIDE_BUG(p.l, 131)) {
-          y = s.c[K - 1][e];
-          for (int i = K - 2; i >= 0; --i) y = y + s.c[i][e];
+    FragC c[R * LT];
+    for (int r = 0; r < R; ++r) {
+      for (int l = 0; l < LT; ++l) {
+        const int lt = lt0 + l;
+        if (warp == 0 && lt < p.l.lane_groups && !STRIDE_BUG(p.l, 132)) {
+          wmma::load_matrix_sync(c[r * LT + l], p.h + (static_cast<int64_t>(lt) * h_tiles + rt0 + r) * kTile, 16, wmma::mem_col_major);
         } else {
-          for (int i = 1; i < K; ++i) y = y + s.c[i][e];
+          wmma::fill_fragment(c[r * LT + l], 0.0f);
         }
-        h[e] = y;
+      }
+    }
+    tile_chain_blocked<R, LT>(p.m.w + static_cast<int64_t>(rt0) * col_tiles * kTile, p.x, col_tiles, warp * chunk,
+                              (warp + 1) * chunk, lt0, p.l.lane_groups, c);
+    if constexpr (K == 1) {
+      for (int r = 0; r < R; ++r) {
+        for (int l = 0; l < LT; ++l) {
+          const int lt = lt0 + l;
+          if (lt >= p.l.lane_groups) break;
+          wmma::store_matrix_sync(p.h + (static_cast<int64_t>(lt) * h_tiles + rt0 + r) * kTile, c[r * LT + l], 16, wmma::mem_col_major);
+        }
+      }
+    } else {
+      for (int i = 0; i < R * LT; ++i) wmma::store_matrix_sync(s.c[warp][i], c[i], 16, wmma::mem_col_major);
+      __syncthreads();
+      for (int r = 0; r < R; ++r) {
+        for (int l = 0; l < LT; ++l) {
+          const int lt = lt0 + l;
+          if (lt >= p.l.lane_groups) break;
+          float* h = p.h + (static_cast<int64_t>(lt) * h_tiles + rt0 + r) * kTile;
+          for (int e = t; e < kTile; e += kBlockSize) {
+            float y = s.c[0][r * LT + l][e];
+            if (STRIDE_BUG(p.l, 131)) {
+              y = s.c[K - 1][r * LT + l][e];
+              for (int i = K - 2; i >= 0; --i) y = y + s.c[i][r * LT + l][e];
+            } else {
+              for (int i = 1; i < K; ++i) y = y + s.c[i][r * LT + l][e];
+            }
+            h[e] = y;
+          }
+        }
       }
     }
   }
 };
 
-// Gate and up projections combined with SiLU in the same warp.
-template <int LT>
+// Gate and up projections combined with SiLU inside the kernel; neither intermediate
+// vector reaches global memory.
+template <int K, int R, int LT>
 struct TcMlp13 {
   using Params = TcMlp13Params;
   static constexpr int kPhases = 1;
+  static constexpr int kBlockSize = 32 * K;
   struct Shared {
-    float a[LT][kTile];
-    float b[LT][kTile];
+    float a[K][R * LT][kTile];
+    float b[K][R * LT][kTile];
   };
-  static int blocks(const Params& p) { return p.w1.groups * tile_parts_hd(p.l.lane_groups, LT); }
+  static int blocks(const Params& p) { return (p.w1.groups / R) * tile_parts_hd(p.l.lane_groups, LT); }
   template <int P>
   STRIDE_DEVICE static void phase(const Params& p, int block, int t, Shared& s) {
     const int parts = tile_parts(p.l.lane_groups, LT);
-    const int rt = block / parts;
+    const int rt0 = (block / parts) * R;
     const int lt0 = (block % parts) * LT;
     const int col_tiles = p.w1.cols / 16;
     const int z_tiles = p.w1.groups;
-    FragC c1[LT], c3[LT];
-    for (int l = 0; l < LT; ++l) {
-      wmma::fill_fragment(c1[l], 0.0f);
-      wmma::fill_fragment(c3[l], 0.0f);
+    const int warp = t / 32;
+    const int chunk = col_tiles / K;
+    FragC c1[R * LT], c3[R * LT];
+    for (int i = 0; i < R * LT; ++i) {
+      wmma::fill_fragment(c1[i], 0.0f);
+      wmma::fill_fragment(c3[i], 0.0f);
     }
-    tile_chain<LT>(p.w1.w + static_cast<int64_t>(rt) * col_tiles * kTile, p.x, col_tiles, lt0, p.l.lane_groups, c1);
-    tile_chain<LT>(p.w3.w + static_cast<int64_t>(rt) * col_tiles * kTile, p.x, col_tiles, lt0, p.l.lane_groups, c3);
-    for (int l = 0; l < LT; ++l) {
-      wmma::store_matrix_sync(s.a[l], c1[l], 16, wmma::mem_col_major);
-      wmma::store_matrix_sync(s.b[l], c3[l], 16, wmma::mem_col_major);
+    tile_chain_pair<R, LT>(p.w1.w + static_cast<int64_t>(rt0) * col_tiles * kTile, p.w3.w + static_cast<int64_t>(rt0) * col_tiles * kTile, p.x,
+                           col_tiles, warp * chunk, (warp + 1) * chunk, lt0, p.l.lane_groups, c1, c3);
+    for (int i = 0; i < R * LT; ++i) {
+      wmma::store_matrix_sync(s.a[warp][i], c1[i], 16, wmma::mem_col_major);
+      wmma::store_matrix_sync(s.b[warp][i], c3[i], 16, wmma::mem_col_major);
     }
-    __syncwarp();
-    for (int l = 0; l < LT; ++l) {
-      const int lt = lt0 + l;
-      if (lt >= p.l.lane_groups) break;
-      uint32_t bits[8];
-      for (int e = 0; e < 8; ++e) {
-        const int i = t * 8 + e;
-        const float a = s.a[l][i];
-        const float b = s.b[l][i];
-        const float gate = STRIDE_BUG(p.l, 141) ? a : det_silu(a);
-        const float v = STRIDE_BUG(p.l, 142) ? det_silu(b) * a : gate * b;
-        bits[e] = bf16_round_bits(v);
+    __syncthreads();
+    if (t >= 32) return;
+    for (int r = 0; r < R; ++r) {
+      for (int l = 0; l < LT; ++l) {
+        const int lt = lt0 + l;
+        if (lt >= p.l.lane_groups) break;
+        uint32_t bits[8];
+        for (int e = 0; e < 8; ++e) {
+          const int i = t * 8 + e;
+          float a = s.a[0][r * LT + l][i];
+          float b = s.b[0][r * LT + l][i];
+          for (int w = 1; w < K; ++w) {
+            a = a + s.a[w][r * LT + l][i];
+            b = b + s.b[w][r * LT + l][i];
+          }
+          const float gate = STRIDE_BUG(p.l, 141) ? a : det_silu(a);
+          const float v = STRIDE_BUG(p.l, 142) ? det_silu(b) * a : gate * b;
+          bits[e] = bf16_round_bits(v);
+        }
+        uint4 o;
+        o.x = bits[0] | (bits[1] << 16);
+        o.y = bits[2] | (bits[3] << 16);
+        o.z = bits[4] | (bits[5] << 16);
+        o.w = bits[6] | (bits[7] << 16);
+        uint4* z = reinterpret_cast<uint4*>(p.z + (static_cast<int64_t>(lt) * z_tiles + rt0 + r) * kTile);
+        z[t] = o;
       }
-      uint4 o;
-      o.x = bits[0] | (bits[1] << 16);
-      o.y = bits[2] | (bits[3] << 16);
-      o.z = bits[4] | (bits[5] << 16);
-      o.w = bits[6] | (bits[7] << 16);
-      uint4* z = reinterpret_cast<uint4*>(p.z + (static_cast<int64_t>(lt) * z_tiles + rt) * kTile);
-      z[t] = o;
     }
   }
 };
@@ -451,24 +587,24 @@ struct TcCompact {
 };
 
 // Output projection fused with argmax; logits are never materialized.
-template <int LT>
+template <int R, int LT>
 struct TcLmGreedy {
   using Params = TcLmGreedyParams;
   static constexpr int kPhases = 1;
   struct Shared {
-    float c[LT][kTile];
+    float c[R * LT][kTile];
   };
-  static int blocks(const Params& p) { return p.m.groups * tile_parts_hd(p.l.lane_groups, LT); }
+  static int blocks(const Params& p) { return (p.m.groups / R) * tile_parts_hd(p.l.lane_groups, LT); }
   template <int P>
   STRIDE_DEVICE static void phase(const Params& p, int block, int t, Shared& s) {
     const int parts = tile_parts(p.l.lane_groups, LT);
-    const int rt = block / parts;
+    const int rt0 = (block / parts) * R;
     const int lt0 = (block % parts) * LT;
     const int col_tiles = p.m.cols / 16;
-    FragC c[LT];
-    for (int l = 0; l < LT; ++l) wmma::fill_fragment(c[l], 0.0f);
-    tile_chain<LT>(p.m.w + static_cast<int64_t>(rt) * col_tiles * kTile, p.x, col_tiles, lt0, p.l.lane_groups, c);
-    for (int l = 0; l < LT; ++l) wmma::store_matrix_sync(s.c[l], c[l], 16, wmma::mem_row_major);
+    FragC c[R * LT];
+    for (int i = 0; i < R * LT; ++i) wmma::fill_fragment(c[i], 0.0f);
+    tile_chain_blocked<R, LT>(p.m.w + static_cast<int64_t>(rt0) * col_tiles * kTile, p.x, col_tiles, 0, col_tiles, lt0, p.l.lane_groups, c);
+    for (int i = 0; i < R * LT; ++i) wmma::store_matrix_sync(s.c[i], c[i], 16, wmma::mem_row_major);
     __syncwarp();
     if (t >= 16) return;
     for (int l = 0; l < LT; ++l) {
@@ -476,14 +612,16 @@ struct TcLmGreedy {
       if (lane >= p.l.rows) continue;
       float best = as_f32(0xFF800000u);
       int32_t best_i = -1;
-      for (int r = 0; r < 16; ++r) {
-        const int index = rt * 16 + r;
-        if (index >= p.vocab) continue;
-        const float v = s.c[l][r * 16 + t];
-        const bool wins = STRIDE_BUG(p.l, 151) ? (v < best || best_i < 0) : v > best;
-        if (wins) {
-          best = v;
-          best_i = index;
+      for (int r = 0; r < R; ++r) {
+        for (int e = 0; e < 16; ++e) {
+          const int index = (rt0 + r) * 16 + e;
+          if (index >= p.vocab) continue;
+          const float v = s.c[r * LT + l][e * 16 + t];
+          const bool wins = STRIDE_BUG(p.l, 151) ? (v < best || best_i < 0) : v > best;
+          if (wins) {
+            best = v;
+            best_i = index;
+          }
         }
       }
       if (best_i >= 0) best_update(&p.best[lane], best, best_i);
@@ -536,9 +674,8 @@ void tc_norm(const TcNormParams& p, bool per_lane) {
   if (per_lane) launch<TcNormLane>(p);
   else launch<TcNorm>(p);
 }
-void tc_qkv(const TcQkvParams& p, int lt) {
-  if (lt == 1) launch<TcQkv<1>>(p);
-  else launch<TcQkv<2>>(p);
+void tc_qkv(const TcQkvParams& p) {
+  launch<TcQkv<kFewRowsWarps>>(p);
 }
 void tc_attention(const AttentionParams& p) {
   if (p.head_dim <= kBlockThreads) {
@@ -552,19 +689,20 @@ void tc_attention(const AttentionParams& p) {
     launch<AttentionCombine<TileWriter, 4>>(p);
   }
 }
-void tc_gemm_residual(const TcGemmResidualParams& p) {
-  // Fixed by shape, never by batch: this choice is part of the summation tree.
-  if (p.m.cols > 2048) launch<TcGemmResidual<4>>(p);
-  else launch<TcGemmResidual<1>>(p);
+void tc_gemm_residual(const TcGemmResidualParams& p, int r, int lt) {
+  if (r == 2 && lt == 2) launch<TcGemmResidual<kFewRowsWarps, 2, 2>>(p);
+  else launch<TcGemmResidual<kFewRowsWarps, 1, 1>>(p);
 }
-void tc_mlp13(const TcMlp13Params& p, int lt) {
-  if (lt == 1) launch<TcMlp13<1>>(p);
-  else launch<TcMlp13<2>>(p);
+void tc_mlp13(const TcMlp13Params& p, int r, int lt) {
+  if (r == 2 && lt == 2) launch<TcMlp13<1, 2, 2>>(p);
+  else if (r == 1 && lt == 2) launch<TcMlp13<1, 1, 2>>(p);
+  else launch<TcMlp13<1, 1, 1>>(p);
 }
 void tc_compact(const TcCompactParams& p) { launch<TcCompact>(p); }
-void tc_lm_greedy(const TcLmGreedyParams& p, int lt) {
-  if (lt == 1) launch<TcLmGreedy<1>>(p);
-  else launch<TcLmGreedy<2>>(p);
+void tc_lm_greedy(const TcLmGreedyParams& p, int r, int lt) {
+  if (r == 2 && lt == 2) launch<TcLmGreedy<2, 2>>(p);
+  else if (r == 1 && lt == 2) launch<TcLmGreedy<1, 2>>(p);
+  else launch<TcLmGreedy<1, 1>>(p);
 }
 void tc_lm_full(const TcLmFullParams& p, int lt) {
   if (lt == 1) launch<TcLmFull<1>>(p);

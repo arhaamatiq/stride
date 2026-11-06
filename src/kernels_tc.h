@@ -78,12 +78,12 @@ struct TcLmFullParams {
 
 void tc_embed(const TcEmbedParams& p);
 void tc_norm(const TcNormParams& p, bool per_lane);
-void tc_qkv(const TcQkvParams& p, int lane_tiles_per_block);
+void tc_qkv(const TcQkvParams& p);
 void tc_attention(const AttentionParams& p);
-void tc_gemm_residual(const TcGemmResidualParams& p);
-void tc_mlp13(const TcMlp13Params& p, int lane_tiles_per_block);
+void tc_gemm_residual(const TcGemmResidualParams& p, int row_tiles_per_warp, int lane_tiles_per_warp);
+void tc_mlp13(const TcMlp13Params& p, int row_tiles_per_warp, int lane_tiles_per_warp);
 void tc_compact(const TcCompactParams& p);
-void tc_lm_greedy(const TcLmGreedyParams& p, int lane_tiles_per_block);
+void tc_lm_greedy(const TcLmGreedyParams& p, int row_tiles_per_warp, int lane_tiles_per_warp);
 void tc_lm_full(const TcLmFullParams& p, int lane_tiles_per_block);
 
 }  // namespace stride

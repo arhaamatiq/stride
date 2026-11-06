@@ -31,8 +31,10 @@ struct EngineOptions {
   int bug = 0;
   KernelPath path = KernelPath::kExact;
   bool tc_norm_per_lane = true;  // false restores the per-tile norm for A/B runs
-  int tc_lt_mlp = 0;             // lane tiles per block, 0 = automatic
-  int tc_lt_lm = 0;
+  // Register blocking of the tile GEMMs: row tiles and lane tiles per warp. 0 picks
+  // automatically from the batch. Results are bit-identical for every choice.
+  int tc_micro_r = 0;
+  int tc_micro_lt = 0;
 };
 
 class Engine {
