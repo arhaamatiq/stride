@@ -63,16 +63,16 @@ def run_aiperf(args, concurrency, requests, seed, out_dir):
            "--tokenizer", args.model, "--concurrency", str(concurrency), "--request-count", str(requests),
            "--prompt-input-tokens-mean", str(args.isl), "--prompt-input-tokens-stddev", str(args.isl_stddev),
            "--prompt-output-tokens-mean", str(args.osl), "--prompt-output-tokens-stddev", "0",
-           "--extra-inputs", "ignore_eos:true", "--extra-inputs", "temperature:0.0", "--no-force-min-tokens", "--random-seed", str(seed),
+           "--extra-inputs", "ignore_eos:true", "--extra-inputs", "temperature:0.0", "--random-seed", str(seed),
            "--artifact-dir", out_dir, "--ui", "none", "--no-server-metrics", "--no-auto-plot"]
     with open(os.path.join(out_dir, "aiperf.log"), "w") as log:
-        subprocess.run(cmd, check=True, stdout=log, stderr=subprocess.STDOUT, env=dict(os.environ, HF_HUB_OFFLINE="1", TRANSFORMERS_OFFLINE="1"))
+        # AIPerf 0.13 mishandles a local tokenizer path under HF_HUB_OFFLINE. The path
+        # below is a verified local directory, so nothing is fetched without the flag.
+        env = {k: v for k, v in os.environ.items() if k not in ("HF_HUB_OFFLINE", "TRANSFORMERS_OFFLINE")}
+        subprocess.run(cmd, check=True, stdout=log, stderr=subprocess.STDOUT, env=env)
     with open(os.path.join(out_dir, "command.json"), "w") as f:
         json.dump(cmd, f)
-    candidates = [n for n in os.listdir(out_dir) if n.endswith(".json") and "aiperf" in n and "command" not in n]
-    if not candidates:
-        raise SystemExit(f"no AIPerf JSON export in {out_dir}")
-    return json.load(open(os.path.join(out_dir, sorted(candidates)[0])))
+    return json.load(open(os.path.join(out_dir, "profile_export_aiperf.json")))
 
 
 def pick(summary, name, field):
@@ -143,7 +143,7 @@ def main():
                     row = {"repeat": r}
                     for name, key in METRICS.items():
                         row[key] = {"avg": pick(summary, name, "avg"), "p50": pick(summary, name, "p50"), "p99": pick(summary, name, "p99")}
-                    row["errors"] = summary.get("error_request_count") or pick(summary, "error_request_count", "avg") or 0
+                    row["errors"] = pick(summary, "error_request_count", "avg") or 0
                     row["requests_ok"] = pick(summary, "request_count", "avg")
                     reps.append(row)
                     print(f"{label} c={concurrency} r={r}: {row['output_tok_per_s']['avg']} tok/s ttft_p50={row['ttft_ms']['p50']} itl_p50={row['itl_ms']['p50']} errors={row['errors']}", flush=True)
