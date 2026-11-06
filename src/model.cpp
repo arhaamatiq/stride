@@ -46,7 +46,7 @@ ModelConfig ModelConfig::load(const std::string& model_dir) {
       c.eos_tokens.push_back(j["eos_token_id"].get<int>());
     }
   }
-  if (c.heads % c.kv_heads != 0 || c.repeat() > 4) throw std::runtime_error("unsupported head layout");
+  if (c.heads % c.kv_heads != 0 || c.repeat() != 4) throw std::runtime_error("unsupported head layout");
   if (c.head_dim % 4 != 0 || c.head_dim > kMaxHeadDim) throw std::runtime_error("unsupported head_dim");
   return c;
 }

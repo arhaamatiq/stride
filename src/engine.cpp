@@ -3,6 +3,7 @@
 #include <cmath>
 #include <limits>
 #include <stdexcept>
+#include <utility>
 
 #include "device.h"
 #if defined(STRIDE_BACKEND_CUDA)
@@ -65,8 +66,18 @@ Engine::Engine(const std::string& model_dir, const EngineOptions& opts)
   row_pos_ = static_cast<int32_t*>(alloc_scratch(lanes * 4));
   lm_rows_ = static_cast<int32_t*>(alloc_scratch(lanes * 4));
 
+  // Unused lanes in a tile must never hold uninitialized memory.
+  for (auto [ptr, bytes] : {std::pair<void*, size_t>{h_, lanes * cfg_.hidden * 4},
+                            {nx_, lanes * cfg_.hidden * 4},
+                            {attn_, lanes * q_row * 4},
+                            {z_, lanes * cfg_.mlp * 4},
+                            {lm_x_, lanes * cfg_.hidden * 4}}) {
+    const std::vector<char> zeros(bytes, 0);
+    device_upload(ptr, zeros.data(), bytes);
+  }
+
   max_pages_ = (kMaxCtx + kKvBlockTokens - 1) >> kKvBlockShift;
-  rec_floats_ = cfg_.repeat() * cfg_.head_dim + 2 * cfg_.repeat();
+  rec_floats_ = 4 * cfg_.head_dim + 8;
   attn_items_ = static_cast<int32_t*>(alloc_scratch(lanes * max_pages_ * 2 * 4));
   attn_scratch_ = static_cast<float*>(alloc_scratch(lanes * cfg_.kv_heads * max_pages_ * rec_floats_ * 4));
 }
@@ -293,7 +304,7 @@ void Engine::step_tensor_core(const std::vector<StepRow>& rows, std::vector<Best
   auto* z = reinterpret_cast<uint16_t*>(z_);
   auto* lm_x = reinterpret_cast<uint16_t*>(lm_x_);
   // Sharing one weight load across two lane tiles pays off once the batch is large.
-  const int lt_shared = lane_tiles >= 4 ? 2 : 1;
+  const int lt_mlp = opts_.tc_lt_mlp > 0 ? opts_.tc_lt_mlp : (lane_tiles >= 4 ? 2 : 1);
 
   TcEmbedParams embed{};
   embed.l = lanes;
@@ -314,7 +325,7 @@ void Engine::step_tensor_core(const std::vector<StepRow>& rows, std::vector<Best
     const LayerWeights& w = weights_->layer(li);
 
     norm.weight = w.norm_attn;
-    tc_norm(norm);
+    tc_norm(norm, opts_.tc_norm_per_lane);
 
     TcQkvParams qkv{};
     qkv.l = lanes;
@@ -358,10 +369,10 @@ void Engine::step_tensor_core(const std::vector<StepRow>& rows, std::vector<Best
     o.x = attn_tiles;
     o.m = w.o;
     o.h = h_;
-    tc_gemm_residual(o, 1);
+    tc_gemm_residual(o);
 
     norm.weight = w.norm_mlp;
-    tc_norm(norm);
+    tc_norm(norm, opts_.tc_norm_per_lane);
 
     TcMlp13Params mlp{};
     mlp.l = lanes;
@@ -369,18 +380,18 @@ void Engine::step_tensor_core(const std::vector<StepRow>& rows, std::vector<Best
     mlp.w1 = w.w1;
     mlp.w3 = w.w3;
     mlp.z = z;
-    tc_mlp13(mlp, lt_shared);
+    tc_mlp13(mlp, lt_mlp);
 
     TcGemmResidualParams down{};
     down.l = lanes;
     down.x = z;
     down.m = w.w2;
     down.h = h_;
-    tc_gemm_residual(down, 1);
+    tc_gemm_residual(down);
   }
 
   norm.weight = weights_->norm_final();
-  tc_norm(norm);
+  tc_norm(norm, opts_.tc_norm_per_lane);
 
   const auto compact = [&](const std::vector<int32_t>& wanted) {
     device_upload(lm_rows_, wanted.data(), wanted.size() * 4);
@@ -407,7 +418,7 @@ void Engine::step_tensor_core(const std::vector<StepRow>& rows, std::vector<Best
     lm.m = weights_->lm();
     lm.vocab = cfg_.vocab;
     lm.best = best_;
-    tc_lm_greedy(lm, tiles >= 4 ? 2 : 1);
+    tc_lm_greedy(lm, opts_.tc_lt_lm > 0 ? opts_.tc_lt_lm : (tiles >= 4 ? 2 : 1));
 
     greedy.resize(count);
     device_download(greedy.data(), best_, count * sizeof(BestEntry));

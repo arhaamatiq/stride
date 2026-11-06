@@ -34,11 +34,12 @@ STRIDE_HD int tile_parts_hd(int lane_tiles, int lt_per_block) { return (lane_til
 // Chains A*B + C across column tiles for LT lane tiles that share weight loads.
 // Weights for the next four tiles are in flight before the first mma uses them.
 template <int LT>
-STRIDE_DEVICE void tile_chain(const uint16_t* wrow, const uint16_t* x, int col_tiles, int lt0, int lane_tiles, FragC* c) {
+STRIDE_DEVICE void tile_chain_range(const uint16_t* wrow, const uint16_t* x, int col_tiles, int ct0, int ct1, int lt0,
+                                    int lane_tiles, FragC* c) {
   const Bf16* w = as_bf16(wrow);
   const Bf16* xb = as_bf16(x);
-  int ct = 0;
-  for (; ct + 4 <= col_tiles; ct += 4) {
+  int ct = ct0;
+  for (; ct + 4 <= ct1; ct += 4) {
     FragA a0, a1, a2, a3;
     wmma::load_matrix_sync(a0, w + static_cast<int64_t>(ct) * kTile, 16);
     wmma::load_matrix_sync(a1, w + static_cast<int64_t>(ct + 1) * kTile, 16);
@@ -59,7 +60,7 @@ STRIDE_DEVICE void tile_chain(const uint16_t* wrow, const uint16_t* x, int col_t
       wmma::mma_sync(c[l], a3, b3, c[l]);
     }
   }
-  for (; ct < col_tiles; ++ct) {
+  for (; ct < ct1; ++ct) {
     FragA a;
     wmma::load_matrix_sync(a, w + static_cast<int64_t>(ct) * kTile, 16);
     for (int l = 0; l < LT; ++l) {
@@ -70,6 +71,11 @@ STRIDE_DEVICE void tile_chain(const uint16_t* wrow, const uint16_t* x, int col_t
       wmma::mma_sync(c[l], a, b, c[l]);
     }
   }
+}
+
+template <int LT>
+STRIDE_DEVICE void tile_chain(const uint16_t* wrow, const uint16_t* x, int col_tiles, int lt0, int lane_tiles, FragC* c) {
+  tile_chain_range<LT>(wrow, x, col_tiles, 0, col_tiles, lt0, lane_tiles, c);
 }
 
 struct TcEmbed {
@@ -171,6 +177,72 @@ struct TcNorm {
   }
 };
 
+// The same RMSNorm with one block per lane instead of one per lane tile. The
+// per-lane sums are identical, so the output is bit-identical; only the number of
+// warps reading memory at once changes. Nsight Systems showed the tile version
+// spends most of its time waiting on loads because a batch of 64 gets four warps.
+struct TcNormLane {
+  using Params = TcNormParams;
+  static constexpr int kPhases = 3;
+  struct Shared {
+    float partial[kBlockThreads];
+    float r;
+  };
+  static int blocks(const Params& p) { return p.l.rows; }
+  template <int P>
+  STRIDE_DEVICE static void phase(const Params& p, int block, int t, Shared& s) {
+    const int col_tiles = p.dim / 16;
+    const int lt = block / 16;
+    const int j = block % 16;
+    if constexpr (P == 0) {
+      float acc = 0.0f;
+      for (int ct = t; ct < col_tiles; ct += kBlockThreads) {
+        float v[16];
+        kv_load_16(p.h + (static_cast<int64_t>(lt) * col_tiles + ct) * kTile + j * 16, 0, v);
+        for (int c = 0; c < 16; ++c) acc = fmaf(v[c], v[c], acc);
+      }
+      s.partial[t] = acc;
+    } else if constexpr (P == 1) {
+      if (t == 0) {
+        float sum = s.partial[0];
+        if (STRIDE_BUG(p.l, 102)) {
+          sum = s.partial[kBlockThreads - 1];
+          for (int i = kBlockThreads - 2; i >= 0; --i) sum = sum + s.partial[i];
+        } else {
+          for (int i = 1; i < kBlockThreads; ++i) sum = sum + s.partial[i];
+        }
+        float denom = static_cast<float>(p.dim);
+        if (STRIDE_BUG(p.l, 103)) denom = static_cast<float>(p.dim - 1);
+        const float eps = STRIDE_BUG(p.l, 104) ? 0.0f : p.eps;
+        s.r = 1.0f / sqrtf(sum / denom + eps);
+      }
+    } else {
+      const float r = s.r;
+      for (int ct = t; ct < col_tiles; ct += kBlockThreads) {
+        const int64_t base = (static_cast<int64_t>(lt) * col_tiles + ct) * kTile + j * 16;
+        float v[16], g[16];
+        kv_load_16(p.h + base, 0, v);
+        kv_load_16(p.weight, ct * 16, g);
+        if (STRIDE_BUG(p.l, 105) && ct == 0) g[0] = 1.0f;
+        uint32_t b[16];
+        for (int c = 0; c < 16; ++c) b[c] = bf16_round_bits(g[c] * (v[c] * r));
+        uint4 o0, o1;
+        o0.x = b[0] | (b[1] << 16);
+        o0.y = b[2] | (b[3] << 16);
+        o0.z = b[4] | (b[5] << 16);
+        o0.w = b[6] | (b[7] << 16);
+        o1.x = b[8] | (b[9] << 16);
+        o1.y = b[10] | (b[11] << 16);
+        o1.z = b[12] | (b[13] << 16);
+        o1.w = b[14] | (b[15] << 16);
+        uint4* out = reinterpret_cast<uint4*>(p.x + base);
+        out[0] = o0;
+        out[1] = o1;
+      }
+    }
+  }
+};
+
 // Q, K, V projections fused with RoPE and the KV append. Each row tile holds eight
 // RoPE pairs: rows (d0 + i) and (d0 + D/2 + i) for i in 0..7.
 template <int LT>
@@ -255,36 +327,50 @@ struct TcQkv {
 };
 
 // h += W x with h as the initial accumulator: the residual costs no extra pass and
-// no intermediate vector.
-template <int LT>
+// no intermediate vector. K is warps per block. A matrix with few rows and many
+// columns gets K > 1 so its column tiles are worked on in parallel; the K partial
+// sums combine left to right, and K depends only on the matrix shape.
+template <int K>
 struct TcGemmResidual {
   using Params = TcGemmResidualParams;
   static constexpr int kPhases = 1;
+  static constexpr int kBlockSize = 32 * K;
   struct Shared {
-    char unused;
+    float c[K][kTile];
   };
-  static int blocks(const Params& p) { return p.m.groups * tile_parts_hd(p.l.lane_groups, LT); }
+  static int blocks(const Params& p) { return p.m.groups * p.l.lane_groups; }
   template <int P>
-  STRIDE_DEVICE static void phase(const Params& p, int block, int, Shared&) {
-    const int parts = tile_parts(p.l.lane_groups, LT);
-    const int rt = block / parts;
-    const int lt0 = (block % parts) * LT;
+  STRIDE_DEVICE static void phase(const Params& p, int block, int t, Shared& s) {
+    const int rt = block / p.l.lane_groups;
+    const int lt = block % p.l.lane_groups;
     const int col_tiles = p.m.cols / 16;
     const int h_tiles = p.m.groups;
-    FragC c[LT];
-    for (int l = 0; l < LT; ++l) {
-      const int lt = lt0 + l;
-      if (lt < p.l.lane_groups && !STRIDE_BUG(p.l, 132)) {
-        wmma::load_matrix_sync(c[l], p.h + (static_cast<int64_t>(lt) * h_tiles + rt) * kTile, 16, wmma::mem_col_major);
-      } else {
-        wmma::fill_fragment(c[l], 0.0f);
-      }
+    const int warp = t / 32;
+    const int chunk = col_tiles / K;
+    float* h = p.h + (static_cast<int64_t>(lt) * h_tiles + rt) * kTile;
+    FragC c[1];
+    if (warp == 0 && !STRIDE_BUG(p.l, 132)) {
+      wmma::load_matrix_sync(c[0], h, 16, wmma::mem_col_major);
+    } else {
+      wmma::fill_fragment(c[0], 0.0f);
     }
-    tile_chain<LT>(p.m.w + static_cast<int64_t>(rt) * col_tiles * kTile, p.x, col_tiles, lt0, p.l.lane_groups, c);
-    for (int l = 0; l < LT; ++l) {
-      const int lt = lt0 + l;
-      if (lt >= p.l.lane_groups) break;
-      wmma::store_matrix_sync(p.h + (static_cast<int64_t>(lt) * h_tiles + rt) * kTile, c[l], 16, wmma::mem_col_major);
+    tile_chain_range<1>(p.m.w + static_cast<int64_t>(rt) * col_tiles * kTile, p.x, col_tiles, warp * chunk,
+                        (warp + 1) * chunk, lt, p.l.lane_groups, c);
+    if constexpr (K == 1) {
+      wmma::store_matrix_sync(h, c[0], 16, wmma::mem_col_major);
+    } else {
+      wmma::store_matrix_sync(s.c[warp], c[0], 16, wmma::mem_col_major);
+      __syncthreads();
+      for (int e = t; e < kTile; e += kBlockSize) {
+        float y = s.c[0][e];
+        if (STRIDE_BUG(p.l, 131)) {
+          y = s.c[K - 1][e];
+          for (int i = K - 2; i >= 0; --i) y = y + s.c[i][e];
+        } else {
+          for (int i = 1; i < K; ++i) y = y + s.c[i][e];
+        }
+        h[e] = y;
+      }
     }
   }
 };
@@ -446,7 +532,10 @@ struct TileWriter {
 using namespace kimpl;
 
 void tc_embed(const TcEmbedParams& p) { launch<TcEmbed>(p); }
-void tc_norm(const TcNormParams& p) { launch<TcNorm>(p); }
+void tc_norm(const TcNormParams& p, bool per_lane) {
+  if (per_lane) launch<TcNormLane>(p);
+  else launch<TcNorm>(p);
+}
 void tc_qkv(const TcQkvParams& p, int lt) {
   if (lt == 1) launch<TcQkv<1>>(p);
   else launch<TcQkv<2>>(p);
@@ -463,9 +552,10 @@ void tc_attention(const AttentionParams& p) {
     launch<AttentionCombine<TileWriter, 4>>(p);
   }
 }
-void tc_gemm_residual(const TcGemmResidualParams& p, int lt) {
-  if (lt == 1) launch<TcGemmResidual<1>>(p);
-  else launch<TcGemmResidual<2>>(p);
+void tc_gemm_residual(const TcGemmResidualParams& p) {
+  // Fixed by shape, never by batch: this choice is part of the summation tree.
+  if (p.m.cols > 2048) launch<TcGemmResidual<4>>(p);
+  else launch<TcGemmResidual<1>>(p);
 }
 void tc_mlp13(const TcMlp13Params& p, int lt) {
   if (lt == 1) launch<TcMlp13<1>>(p);

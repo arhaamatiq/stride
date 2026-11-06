@@ -29,6 +29,9 @@ struct EngineOptions {
   uint32_t kv_shuffle_seed = 0;
   int bug = 0;
   KernelPath path = KernelPath::kExact;
+  bool tc_norm_per_lane = true;  // false restores the per-tile norm for A/B runs
+  int tc_lt_mlp = 0;             // lane tiles per block, 0 = automatic
+  int tc_lt_lm = 0;
 };
 
 class Engine {

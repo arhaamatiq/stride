@@ -92,14 +92,27 @@ struct AttentionPage {
   using Params = AttentionParams;
   static constexpr int kPhases = 6;
   static constexpr int kInFlight = 8;
+  // Four query heads share a KV group. Per-dim and per-position values sit in one
+  // float4, so a thread makes one shared load per four FMAs instead of four.
   struct Shared {
-    float q[4][kMaxHeadDim];
-    float s[4][kKvBlockTokens];
-    float m[kBlockThreads][4];
-    float mm[4];
-    float denom[4];
+    float4 q[kMaxHeadDim];
+    float4 s[kKvBlockTokens];
+    float4 m[kBlockThreads];
+    float4 mm;
+    float4 denom;
   };
   static int blocks(const Params& p) { return p.item_count * p.n_kv; }
+
+  STRIDE_DEVICE static void load_dims(const KvT* src, float* out) {
+    if constexpr (PT == 2 && sizeof(KvT) == 2) {
+      const uint32_t v = *reinterpret_cast<const uint32_t*>(src);
+      out[0] = bf16_lo(v);
+      out[1] = bf16_hi(v);
+    } else {
+      for (int dd = 0; dd < PT; ++dd) out[dd] = kv_widen(src[dd]);
+    }
+  }
+
   template <int P>
   STRIDE_DEVICE static void phase(const Params& p, int block, int t, Shared& s) {
     const int item = block / p.n_kv;
@@ -112,64 +125,93 @@ struct AttentionPage {
     const int n = visible - p0 < kKvBlockTokens ? visible - p0 : kKvBlockTokens;
     const int D = p.head_dim;
     if constexpr (P == 0) {
-      const int total = p.n_q * D;
-      const float* qrow = p.q + static_cast<int64_t>(j) * p.q_stride + static_cast<int64_t>(g * p.n_q) * D;
-      for (int i = t; i < total; i += kBlockThreads) s.q[i / D][i % D] = qrow[i];
+      const float* qrow = p.q + static_cast<int64_t>(j) * p.q_stride + static_cast<int64_t>(g * 4) * D;
+      for (int d = t; d < D; d += kBlockThreads) {
+        float4 v;
+        v.x = qrow[d];
+        v.y = qrow[D + d];
+        v.z = qrow[2 * D + d];
+        v.w = qrow[3 * D + d];
+        s.q[d] = v;
+      }
     } else if constexpr (P == 1) {
-      float local[4];
-      for (int q = 0; q < p.n_q; ++q) local[q] = as_f32(0xFF800000u);
+      const float neg_inf = as_f32(0xFF800000u);
+      float l0 = neg_inf, l1 = neg_inf, l2 = neg_inf, l3 = neg_inf;
       if (n > 0) {
         const KvT* keys = kv_ptr<KvT>(p.kv, p.layer, 0, g, slot, p0);
+        const float scale = STRIDE_BUG(p.l, 122) ? 1.0f : p.scale;
         for (int i = t; i < n; i += kBlockThreads) {
           const KvT* key = keys + static_cast<int64_t>(i) * D;
-          float acc[4];
-          for (int q = 0; q < p.n_q; ++q) acc[q] = 0.0f;
+          float a0 = 0.0f, a1 = 0.0f, a2 = 0.0f, a3 = 0.0f;
           for (int d = 0; d < D; d += 16) {
             float k[16];
             kv_load_16(key, d, k);
-            for (int q = 0; q < p.n_q; ++q)
-              for (int e = 0; e < 16; ++e) acc[q] = fmaf(s.q[q][d + e], k[e], acc[q]);
+            for (int e = 0; e < 16; ++e) {
+              const float4 q = s.q[d + e];
+              a0 = fmaf(q.x, k[e], a0);
+              a1 = fmaf(q.y, k[e], a1);
+              a2 = fmaf(q.z, k[e], a2);
+              a3 = fmaf(q.w, k[e], a3);
+            }
           }
-          for (int q = 0; q < p.n_q; ++q) {
-            const float score = acc[q] * (STRIDE_BUG(p.l, 122) ? 1.0f : p.scale);
-            s.s[q][i] = score;
-            if (score > local[q]) local[q] = score;
-          }
+          float4 score;
+          score.x = a0 * scale;
+          score.y = a1 * scale;
+          score.z = a2 * scale;
+          score.w = a3 * scale;
+          s.s[i] = score;
+          if (score.x > l0) l0 = score.x;
+          if (score.y > l1) l1 = score.y;
+          if (score.z > l2) l2 = score.z;
+          if (score.w > l3) l3 = score.w;
         }
       }
-      for (int q = 0; q < p.n_q; ++q) s.m[t][q] = local[q];
+      float4 local;
+      local.x = l0;
+      local.y = l1;
+      local.z = l2;
+      local.w = l3;
+      s.m[t] = local;
     } else if constexpr (P == 2) {
-      if (t < p.n_q) {
-        float mm = s.m[0][t];
-        for (int i = 1; i < kBlockThreads; ++i)
-          if (s.m[i][t] > mm) mm = s.m[i][t];
-        s.mm[t] = mm;
+      if (t < 4) {
+        float mm = (&s.m[0].x)[t];
+        for (int i = 1; i < kBlockThreads; ++i) {
+          const float v = (&s.m[i].x)[t];
+          if (v > mm) mm = v;
+        }
+        (&s.mm.x)[t] = mm;
       }
     } else if constexpr (P == 3) {
-      for (int i = t; i < n; i += kBlockThreads)
-        for (int q = 0; q < p.n_q; ++q) s.s[q][i] = det_exp(s.s[q][i] - s.mm[q]);
+      const float4 mm = s.mm;
+      for (int i = t; i < n; i += kBlockThreads) {
+        float4 v = s.s[i];
+        v.x = det_exp(v.x - mm.x);
+        v.y = det_exp(v.y - mm.y);
+        v.z = det_exp(v.z - mm.z);
+        v.w = det_exp(v.w - mm.w);
+        s.s[i] = v;
+      }
     } else if constexpr (P == 4) {
-      if (t < p.n_q) {
+      if (t < 4) {
         float denom = 0.0f;
         if (STRIDE_BUG(p.l, 123)) {
-          for (int i = n - 1; i >= 0; --i) denom = denom + s.s[t][i];
+          for (int i = n - 1; i >= 0; --i) denom = denom + (&s.s[i].x)[t];
         } else {
-          for (int i = 0; i < n; ++i) denom = denom + s.s[t][i];
+          for (int i = 0; i < n; ++i) denom = denom + (&s.s[i].x)[t];
         }
-        s.denom[t] = denom;
+        (&s.denom.x)[t] = denom;
       }
     } else {
       float* rec = p.scratch + (static_cast<int64_t>(j * p.n_kv + g) * p.max_pages + page) * p.rec_floats;
-      float* v_out = rec + 2 * p.n_q;
-      if (t < p.n_q) {
-        rec[t] = s.mm[t];
-        rec[p.n_q + t] = s.denom[t];
+      float* v_out = rec + 8;
+      if (t < 4) {
+        rec[t] = (&s.mm.x)[t];
+        rec[4 + t] = (&s.denom.x)[t];
       }
       const int d0 = t * PT;
       if (d0 >= D) return;
-      float acc[4][PT];
-      for (int q = 0; q < p.n_q; ++q)
-        for (int dd = 0; dd < PT; ++dd) acc[q][dd] = 0.0f;
+      float a0[PT], a1[PT], a2[PT], a3[PT];
+      for (int dd = 0; dd < PT; ++dd) a0[dd] = a1[dd] = a2[dd] = a3[dd] = 0.0f;
       if (n > 0) {
         const int which = STRIDE_BUG(p.l, 124) ? 0 : 1;
         const int vp = (STRIDE_BUG(p.l, 125) && page > 0) ? p0 - kKvBlockTokens : p0;
@@ -177,25 +219,35 @@ struct AttentionPage {
         int i = 0;
         for (; i + kInFlight <= n; i += kInFlight) {
           float v[kInFlight][PT];
-          for (int b = 0; b < kInFlight; ++b)
-            for (int dd = 0; dd < PT; ++dd) v[b][dd] = kv_widen(value[static_cast<int64_t>(i + b) * D + dd]);
+          for (int b = 0; b < kInFlight; ++b) load_dims(value + static_cast<int64_t>(i + b) * D, v[b]);
           for (int b = 0; b < kInFlight; ++b) {
-            for (int q = 0; q < p.n_q; ++q) {
-              const float w = s.s[q][i + b];
-              for (int dd = 0; dd < PT; ++dd) acc[q][dd] = fmaf(w, v[b][dd], acc[q][dd]);
+            const float4 w = s.s[i + b];
+            for (int dd = 0; dd < PT; ++dd) {
+              a0[dd] = fmaf(w.x, v[b][dd], a0[dd]);
+              a1[dd] = fmaf(w.y, v[b][dd], a1[dd]);
+              a2[dd] = fmaf(w.z, v[b][dd], a2[dd]);
+              a3[dd] = fmaf(w.w, v[b][dd], a3[dd]);
             }
           }
         }
         for (; i < n; ++i) {
-          for (int q = 0; q < p.n_q; ++q) {
-            const float w = s.s[q][i];
-            for (int dd = 0; dd < PT; ++dd)
-              acc[q][dd] = fmaf(w, kv_widen(value[static_cast<int64_t>(i) * D + dd]), acc[q][dd]);
+          float v[PT];
+          load_dims(value + static_cast<int64_t>(i) * D, v);
+          const float4 w = s.s[i];
+          for (int dd = 0; dd < PT; ++dd) {
+            a0[dd] = fmaf(w.x, v[dd], a0[dd]);
+            a1[dd] = fmaf(w.y, v[dd], a1[dd]);
+            a2[dd] = fmaf(w.z, v[dd], a2[dd]);
+            a3[dd] = fmaf(w.w, v[dd], a3[dd]);
           }
         }
       }
-      for (int q = 0; q < p.n_q; ++q)
-        for (int dd = 0; dd < PT; ++dd) v_out[q * D + d0 + dd] = acc[q][dd];
+      for (int dd = 0; dd < PT; ++dd) {
+        v_out[d0 + dd] = a0[dd];
+        v_out[D + d0 + dd] = a1[dd];
+        v_out[2 * D + d0 + dd] = a2[dd];
+        v_out[3 * D + d0 + dd] = a3[dd];
+      }
     }
   }
 };
@@ -218,7 +270,7 @@ struct AttentionCombine {
     const int D = p.head_dim;
     const float* recs = p.scratch + static_cast<int64_t>(j * p.n_kv + g) * p.max_pages * p.rec_floats;
     if constexpr (P == 0) {
-      if (t < p.n_q) {
+      if (t < 4) {
         float m = as_f32(0xFF800000u);
         for (int c = 0; c < pages; ++c) {
           const float mc = recs[static_cast<int64_t>(c) * p.rec_floats + t];
@@ -229,7 +281,7 @@ struct AttentionCombine {
           const float* rec = recs + static_cast<int64_t>(c) * p.rec_floats;
           const float f = det_exp(rec[t] - m);
           s.f[t][c] = f;
-          denom = fmaf(f, rec[p.n_q + t], denom);
+          denom = fmaf(f, rec[4 + t], denom);
         }
         s.denom[t] = denom;
       }
@@ -240,7 +292,7 @@ struct AttentionCombine {
       for (int q = 0; q < p.n_q; ++q)
         for (int dd = 0; dd < PT; ++dd) acc[q][dd] = 0.0f;
       for (int c = 0; c < pages; ++c) {
-        const float* v = recs + static_cast<int64_t>(c) * p.rec_floats + 2 * p.n_q;
+        const float* v = recs + static_cast<int64_t>(c) * p.rec_floats + 8;
         for (int q = 0; q < p.n_q; ++q) {
           const float f = s.f[q][c];
           for (int dd = 0; dd < PT; ++dd) acc[q][dd] = fmaf(f, v[q * D + d0 + dd], acc[q][dd]);
@@ -254,6 +306,16 @@ struct AttentionCombine {
       }
     }
   }
+};
+
+// Threads per block; a kernel overrides the default with kBlockSize.
+template <class K, class = void>
+struct BlockSize {
+  static constexpr int value = kBlockThreads;
+};
+template <class K>
+struct BlockSize<K, decltype(void(K::kBlockSize))> {
+  static constexpr int value = K::kBlockSize;
 };
 
 #if defined(__CUDACC__)
@@ -285,7 +347,7 @@ template <class K>
 void launch(const typename K::Params& p) {
   const int blocks = K::blocks(p);
   if (blocks <= 0) return;
-  kernel_entry<K><<<blocks, kBlockThreads, 0, kernel_stream()>>>(p);
+  kernel_entry<K><<<blocks, BlockSize<K>::value, 0, kernel_stream()>>>(p);
 }
 #else
 template <class K>
