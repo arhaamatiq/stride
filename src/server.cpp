@@ -1,6 +1,6 @@
 // OpenAI-compatible HTTP server over the scheduler.
 //   stride_server --model DIR [--host H] [--port P] [--kv-gb G] [--max-seqs N] [--max-rows N]
-//                 [--prefill-chunk N] [--max-new-default N] [--verbose]
+//                 [--prefill-chunk N] [--max-new-default N] [--path exact|tc] [--verbose]
 // One engine thread owns the engine and steps the scheduler. Request threads
 // tokenize, submit, and consume a per-request mailbox; they never touch the
 // engine. system_fingerprint is "stride-" plus the scheduler's 64-bit chain over
@@ -44,6 +44,12 @@ struct Args {
   std::string model, host = "0.0.0.0";
   int port = 8000;
   double kv_gb = 1.0;
+#if defined(STRIDE_BACKEND_CUDA)
+  std::string path = "tc";
+#else
+  std::string path = "exact";
+#endif
+  bool norm_tile = false;
   int max_seqs = 256;
   int max_rows = 256;
   int prefill_chunk = 64;
@@ -66,6 +72,8 @@ Args parse(int argc, char** argv) {
     else if (k == "--host") a.host = next();
     else if (k == "--port") a.port = std::stoi(next());
     else if (k == "--kv-gb") a.kv_gb = std::stod(next());
+    else if (k == "--path") a.path = next();
+    else if (k == "--norm-tile") a.norm_tile = true;
     else if (k == "--max-seqs") a.max_seqs = std::stoi(next());
     else if (k == "--max-rows") a.max_rows = std::stoi(next());
     else if (k == "--prefill-chunk") a.prefill_chunk = std::stoi(next());
@@ -80,7 +88,7 @@ Args parse(int argc, char** argv) {
       a.kv_gb <= 0 || a.port < 0 || a.port > 65535) {
     std::fprintf(stderr,
                  "usage: stride_server --model DIR [--host H] [--port P] [--kv-gb G] [--max-seqs N] [--max-rows N]\n"
-                 "                     [--prefill-chunk N] [--max-new-default N] [--verbose]\n");
+                 "                     [--prefill-chunk N] [--max-new-default N] [--path exact|tc] [--verbose]\n");
     std::exit(2);
   }
   return a;
@@ -319,6 +327,8 @@ class App {
     eo.max_slots = a.max_seqs;
     eo.max_full_rows = std::min(a.max_rows, a.max_seqs);
     eo.kv_bytes = static_cast<int64_t>(a.kv_gb * 1024.0 * 1024.0 * 1024.0);
+    eo.path = a.path == "tc" ? KernelPath::kTensorCore : KernelPath::kExact;
+    eo.tc_norm_per_lane = !a.norm_tile;
     return eo;
   }
   static SchedulerOptions sched_options(const Args& a) {
