@@ -14,7 +14,8 @@ PATTERNS = {
     "github": rb"gh[pousr]_[A-Za-z0-9]{20,}",
     "huggingface": rb"hf_[A-Za-z0-9]{20,}",
     "aws": rb"AKIA[0-9A-Z]{16}",
-    "generic_assignment": rb"(?:API_KEY|AUTH_TOKEN|ACCESS_TOKEN|SECRET_KEY|PASSWORD)=[^\s\"\x00]{8,}",
+    # A value already masked by redact_nsys.py (all X) does not count.
+    "generic_assignment": rb"(?:API_KEY|AUTH_TOKEN|ACCESS_TOKEN|SECRET_KEY|PASSWORD)=(?!X{8,}[\s\"\x00-\x1f])[^\s\"\x00]{8,}",
 }
 SKIP_DIRS = {"models", "__pycache__"}
 
