@@ -1,0 +1,33 @@
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=2048
+`torch_dtype` is deprecated! Use `dtype` instead!
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=2048
+ 101 embed      CAUGHT tolerance,golden                 sign flip on one embedding element
+ 102 norm       CAUGHT golden                           RMSNorm partial sums combined in reverse order
+ 103 norm       CAUGHT tolerance,golden                 mean divides by dim - 1
+ 104 norm       CAUGHT tolerance,golden                 epsilon dropped from RMSNorm
+ 105 norm       CAUGHT tolerance,golden                 learned norm gain ignored for some dims
+ 111 rope       CAUGHT golden                           RoPE uses position + 1
+ 112 rope       CAUGHT tolerance,golden                 sign error in one RoPE rotation term
+ 113 kv         CAUGHT tolerance,golden                 K and V swapped on append
+ 121 attention  CAUGHT tolerance,invariance,golden      query cannot see its own position
+ 122 attention  CAUGHT tolerance,golden                 score scale dropped
+ 123 attention  CAUGHT golden                           softmax denominator summed in reverse order
+ 124 attention  CAUGHT tolerance,golden                 value mix reads K instead of V
+ 125 kv         CAUGHT tolerance,golden                 value mix reads the previous KV page
+ 126 attention  CAUGHT tolerance,golden                 query heads swapped inside a KV group
+ 131 gemm       CAUGHT golden                           partial sums combined in reverse order
+ 132 gemm       CAUGHT tolerance,golden                 residual connection dropped
+ 141 mlp        CAUGHT tolerance,golden                 SiLU skipped
+ 142 mlp        CAUGHT tolerance,golden                 SiLU applied to the wrong projection
+ 151 sampling   CAUGHT invariance                       argmax picks the minimum
+ 201 scheduler  CAUGHT tolerance,invariance,golden      last row of a prefill chunk gets the wrong position
+ 202 scheduler  CAUGHT invariance                       preempted sequence resumes without replaying its KV
+ 203 scheduler  CAUGHT tolerance,invariance,golden      decode row feeds the previous token
+ 204 scheduler  CAUGHT invariance                       logits routed to the wrong sequence after a lane shuffle
+ 205 kv         CAUGHT invariance,golden                freed block returned to the pool twice
+ 206 kv         CAUGHT invariance,golden                new block not synced to the device table
+ 207 scheduler  CAUGHT tolerance,golden                 generated-token count off by one
+ 301 engine     CAUGHT tolerance,invariance,golden      all layers read KV from layer zero
+ 302 engine     CAUGHT tolerance,golden                 final norm uses a layer norm's weights
+ 303 engine     CAUGHT invariance                       logit lanes compacted from the wrong row
+caught 29/29; tolerance oracle alone 19; only bit-exact 10; missed []

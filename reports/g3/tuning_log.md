@@ -12,6 +12,14 @@ plus BOS (127 plus BOS in the earliest rows), with 256 generated tokens.
 | One thread per row | 74.1 |
 | One block per row, interleaved threads | 254.4 (253.9, 254.7, 254.4) |
 
+## Attention cost against context length, first kernels (one chain over all positions)
+
+Sum of Attention kernel time per decode step, from an Nsight Systems trace at batch 1:
+
+| Context position | 1 | 32 | 64 | 128 | 192 |
+| --- | --- | --- | --- | --- | --- |
+| Microseconds per step | 104 | 267 | 379 | 652 | 922 |
+
 ## Scaling of the first batched kernels (FMA, exact path)
 
 | Batch | tok/s | ms/step |

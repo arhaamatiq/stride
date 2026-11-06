@@ -1,0 +1,3 @@
+stride: sequential rerun differs on 0/100
+stride c=64: 0/256 requests differ, 0/100 prompts changed, stats 209
+stride c=128: 0/512 requests differ, 0/100 prompts changed, stats 670

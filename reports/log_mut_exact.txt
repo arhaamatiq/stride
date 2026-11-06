@@ -2,7 +2,7 @@
  102 norm       CAUGHT golden                           RMSNorm partial sums combined in reverse order
  103 norm       CAUGHT tolerance,golden                 mean divides by dim - 1
  104 norm       CAUGHT tolerance,golden                 epsilon dropped from RMSNorm
- 105 norm       CAUGHT tolerance,golden                 learned norm gain ignored for one dim
+ 105 norm       CAUGHT tolerance,golden                 learned norm gain ignored for some dims
  111 rope       CAUGHT golden                           RoPE uses position + 1
  112 rope       CAUGHT tolerance,golden                 sign error in one RoPE rotation term
  113 kv         CAUGHT tolerance,golden                 K and V swapped on append

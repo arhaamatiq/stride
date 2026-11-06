@@ -1,5 +1,5 @@
 stride: sequential rerun differs on 0/100
-stride c=4: 0/100 requests differ, 0/100 prompts changed
-stride c=16: 0/100 requests differ, 0/100 prompts changed
-stride c=64: 0/256 requests differ, 0/100 prompts changed
-stride c=128: 0/512 requests differ, 0/100 prompts changed
+stride c=4: 0/100 requests differ, 0/100 prompts changed, stats 0
+stride c=16: 0/100 requests differ, 0/100 prompts changed, stats 0
+stride c=64: 0/256 requests differ, 0/100 prompts changed, stats 0
+stride c=128: 0/512 requests differ, 0/100 prompts changed, stats 0

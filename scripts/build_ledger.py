@@ -205,6 +205,8 @@ def main():
     offline = L.load("reports/g3/offline.json")
     if offline:
         cmd = "python3 scripts/bench/offline.py"
+        L.add("offline", "g3.offline.prompt_tokens", offline["prompt_tokens"], "tokens", "G3", "token-id prompts", cmd, "reports/g3/offline.json")
+        L.add("offline", "g3.offline.repeats", offline["repeats"], "repeats", "G3", "per batch size", cmd, "reports/g3/offline.json")
         for p in offline["points"]:
             b = p["batch"]
             L.add("offline", f"g3.offline.b{b}.stride_tok_per_s", p["stride_tok_per_s"], "tok/s", "G3", f"no HTTP; mean of {offline['repeats']}", cmd, "reports/g3/offline.json")

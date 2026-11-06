@@ -84,7 +84,10 @@ intermediate buffer.
 | `GemmResidual`, `TcGemmResidual` | projection and residual add | an output buffer and an add pass; on tiles `h` is the initial accumulator |
 | `Mlp13`, `TcMlp13` | gate and up projections, SiLU, product | two intermediate vectors; on tiles one x load serves both matrices |
 | `LmGreedy`, `TcLmGreedy` | output projection and argmax | writing logits to memory |
-| `AttentionPage` | scores, softmax and value mix for one KV page | separate score and weight buffers |
+| `AttentionPage` | scores, page softmax terms and value mix for one KV page; `AttentionCombine` then finishes the softmax across pages | separate score and weight buffers |
+
+These are nine kernels from five designs: four designs exist once per path, and `AttentionPage` is
+shared. The serving path launches five of them.
 
 ## Paged KV cache
 
@@ -110,6 +113,8 @@ values, so a client can check for itself that load changed nothing.
   replay, seeded sampling. Runs in CI.
 - `tests/g1_real.py`: differential run on real weights.
 - `tests/mutations.py`: 29 injected bugs in kernels, KV and scheduler, each checked by a
-  tolerance oracle, an invariance oracle and a golden-bits oracle.
+  tolerance oracle, an invariance oracle and a golden-bits oracle. Four of them change only
+  rounding and are counted separately.
 - `scripts/cross_device.py`: byte comparison of exact-path logits across devices.
-- `scripts/run_all.sh`: reruns everything behind the numbers in the README.
+- `scripts/run_all.sh`: regenerates the benchmark evidence on one GPU host; the README lists
+  what it does not cover.

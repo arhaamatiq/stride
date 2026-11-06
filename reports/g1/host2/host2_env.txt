@@ -1,4 +1,7 @@
-09a4eb49c2f4
-NVIDIA GeForce RTX 4090, 595.91.07, GPU-5b897601-8756-e75a-8b92-ac2d33257ef4
-model name	: AMD EPYC 7543 32-Core Processor
-RUNPOD_DC_ID=EUR-NO-1
+Fri Nov  6 15:27:20 UTC 2026
+provider RunPod Secure Cloud, data center EU-RO-1
+4184421a0872
+GPU 0: NVIDIA GeForce RTX 4090 (UUID: GPU-4c8d1e81-a512-a12c-cc51-78f5d063ff3a)
+NVIDIA GeForce RTX 4090, 595.91.07
+model name	: AMD Ryzen 9 7950X 16-Core Processor
+unsloth/Llama-3.2-1B-Instruct@5a8abab4a5d6f164389b1079fb721cfab8d7126c snapshot_sha256=d52e42c7a850509573324484c1960b9affb5882dd3b63262a57bd55a6158c76a dir=/root/models/llama32-1b

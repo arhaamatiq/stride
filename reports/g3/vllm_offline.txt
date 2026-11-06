@@ -1,4 +1,0 @@
-{"engine": "vllm-offline", "batch": 1, "tokens": 256, "seconds": 0.8023313907906413, "tok_per_s": 319.07015347826535}
-{"engine": "vllm-offline", "batch": 8, "tokens": 2048, "seconds": 0.9085781201720238, "tok_per_s": 2254.0714491476488}
-{"engine": "vllm-offline", "batch": 64, "tokens": 16384, "seconds": 1.2119988959748298, "tok_per_s": 13518.164129037503}
-{"engine": "vllm-offline", "batch": 128, "tokens": 32768, "seconds": 1.583809494972229, "tok_per_s": 20689.35696118842}
