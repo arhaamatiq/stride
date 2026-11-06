@@ -2,7 +2,7 @@
 
 A C++/CUDA LLM inference engine whose greedy outputs did not change under load in any test here. Serves Llama-3.2-1B on an RTX 4090 with paged KV caching, continuous batching and an OpenAI-compatible streaming API, on original kernels with no PyTorch or vLLM in the runtime path.
 
-At concurrency 128, vLLM returned different text for {{g2.determinism.vllm.c128.requests_differing_pct|.1f}}% of temperature-0 requests, compared with the same requests sent one at a time. stride changed {{g2.determinism.stride.total_requests_differing}} of {{g2.determinism.stride.total_requests}} across all load levels, and it reaches {{g3.aiperf.pct_of_vllm.c64|.1f}}% of vLLM's serving throughput at concurrency 64.
+At concurrency 128, vLLM returned different text for {{g2.determinism.vllm.c128.requests_differing_pct|.2f}}% of temperature-0 requests, compared with the same requests sent one at a time. stride changed {{g2.determinism.stride.total_requests_differing}} of {{g2.determinism.stride.total_requests}} across all load levels, and it reaches {{g3.aiperf.pct_of_vllm.c64|.1f}}% of vLLM's serving throughput at concurrency 64.
 
 ## Results
 
@@ -12,10 +12,10 @@ One RTX 4090 instance, driver {{env.driver}}, and one pinned set of weight files
 
 | Concurrency | stride: requests that changed | vLLM {{env.vllm}}: requests that changed |
 | --- | --- | --- |
-| 4 | **{{g2.determinism.stride.c4.requests_differing}} / {{g2.determinism.stride.c4.requests}}** | {{g2.determinism.vllm.c4.requests_differing}} / {{g2.determinism.vllm.c4.requests}} ({{g2.determinism.vllm.c4.requests_differing_pct|.1f}}%) |
-| 16 | **{{g2.determinism.stride.c16.requests_differing}} / {{g2.determinism.stride.c16.requests}}** | {{g2.determinism.vllm.c16.requests_differing}} / {{g2.determinism.vllm.c16.requests}} ({{g2.determinism.vllm.c16.requests_differing_pct|.1f}}%) |
-| 64 | **{{g2.determinism.stride.c64.requests_differing}} / {{g2.determinism.stride.c64.requests}}** | {{g2.determinism.vllm.c64.requests_differing}} / {{g2.determinism.vllm.c64.requests}} ({{g2.determinism.vllm.c64.requests_differing_pct|.1f}}%) |
-| 128 | **{{g2.determinism.stride.c128.requests_differing}} / {{g2.determinism.stride.c128.requests}}** | {{g2.determinism.vllm.c128.requests_differing}} / {{g2.determinism.vllm.c128.requests}} ({{g2.determinism.vllm.c128.requests_differing_pct|.1f}}%) |
+| 4 | **{{g2.determinism.stride.c4.requests_differing}} / {{g2.determinism.stride.c4.requests}}** | {{g2.determinism.vllm.c4.requests_differing}} / {{g2.determinism.vllm.c4.requests}} ({{g2.determinism.vllm.c4.requests_differing_pct|.2f}}%) |
+| 16 | **{{g2.determinism.stride.c16.requests_differing}} / {{g2.determinism.stride.c16.requests}}** | {{g2.determinism.vllm.c16.requests_differing}} / {{g2.determinism.vllm.c16.requests}} ({{g2.determinism.vllm.c16.requests_differing_pct|.2f}}%) |
+| 64 | **{{g2.determinism.stride.c64.requests_differing}} / {{g2.determinism.stride.c64.requests}}** | {{g2.determinism.vllm.c64.requests_differing}} / {{g2.determinism.vllm.c64.requests}} ({{g2.determinism.vllm.c64.requests_differing_pct|.2f}}%) |
+| 128 | **{{g2.determinism.stride.c128.requests_differing}} / {{g2.determinism.stride.c128.requests}}** | {{g2.determinism.vllm.c128.requests_differing}} / {{g2.determinism.vllm.c128.requests}} ({{g2.determinism.vllm.c128.requests_differing_pct|.2f}}%) |
 
 Run sequentially twice, stride changed {{g2.determinism.stride.sequential_rerun_differs}} and vLLM {{g2.determinism.vllm.sequential_rerun_differs}} of 100 outputs, so these vLLM differences appear only when requests share the engine. That is consistent with batch-dependent numerics as [analyzed by Thinking Machines](https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/), though this test does not isolate the cause, and it is not a claim that vLLM has a bug. One flipped token changes everything after it, so a 256-token output is a sensitive test.
 

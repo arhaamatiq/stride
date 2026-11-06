@@ -2,7 +2,7 @@
 
 A C++/CUDA LLM inference engine whose greedy outputs did not change under load in any test here. Serves Llama-3.2-1B on an RTX 4090 with paged KV caching, continuous batching and an OpenAI-compatible streaming API, on original kernels with no PyTorch or vLLM in the runtime path.
 
-At concurrency 128, vLLM returned different text for 85.0% of temperature-0 requests, compared with the same requests sent one at a time. stride changed 0 of 968 across all load levels, and it reaches 87.5% of vLLM's serving throughput at concurrency 64.
+At concurrency 128, vLLM returned different text for 84.96% of temperature-0 requests, compared with the same requests sent one at a time. stride changed 0 of 968 across all load levels, and it reaches 87.5% of vLLM's serving throughput at concurrency 64.
 
 ## Results
 
@@ -12,10 +12,10 @@ One RTX 4090 instance, driver 595.91.07, and one pinned set of weight files for 
 
 | Concurrency | stride: requests that changed | vLLM 0.32.0: requests that changed |
 | --- | --- | --- |
-| 4 | **0 / 100** | 82 / 100 (82.0%) |
-| 16 | **0 / 100** | 84 / 100 (84.0%) |
-| 64 | **0 / 256** | 225 / 256 (87.9%) |
-| 128 | **0 / 512** | 435 / 512 (85.0%) |
+| 4 | **0 / 100** | 82 / 100 (82.00%) |
+| 16 | **0 / 100** | 84 / 100 (84.00%) |
+| 64 | **0 / 256** | 225 / 256 (87.89%) |
+| 128 | **0 / 512** | 435 / 512 (84.96%) |
 
 Run sequentially twice, stride changed 0 and vLLM 0 of 100 outputs, so these vLLM differences appear only when requests share the engine. That is consistent with batch-dependent numerics as [analyzed by Thinking Machines](https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/), though this test does not isolate the cause, and it is not a claim that vLLM has a bug. One flipped token changes everything after it, so a 256-token output is a sensitive test.
 
