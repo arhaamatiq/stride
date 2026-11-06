@@ -51,7 +51,7 @@ Single-run experiment numbers below are in `reports/g3/tuning_log.md`.
 | Item | Status |
 | --- | --- |
 | Nsight Compute | `ncu` fails with `ERR_NVGPUCTRPERM` on the RunPod hosts tried (`reports/env/ncu_probe.txt`, `reports/g1/host2/ncu_probe.txt`): `RmProfilingAdminOnly` is 1 and containers lack `CAP_SYS_ADMIN`. Nsight Systems works and supplies per-kernel timing. Per-kernel hardware counters need a VM where counters are enabled. |
-| Nsight Systems reports | They embed the container's environment, including a RunPod key and SSH client address, even when the profiled process has an empty environment. `scripts/redact_nsys.py` overwrites those values with same-length bytes, and reports still open afterward. |
+| Nsight Systems reports | They embed the container's environment, including secrets and network details, even when the profiled process has an empty environment. `scripts/redact_nsys.py` overwrites those values with same-length bytes, and reports still open afterward. |
 | Stretch: Llama-3.1-8B | Not attempted. First in the cut order. |
 | Prefix caching | Not implemented. Off in vLLM for every comparison. |
 | `min_tokens`, logprobs, penalties, tools | Not implemented, except that `min_tokens` is accepted together with `ignore_eos`, where it has no effect. Otherwise the server returns 400. |
