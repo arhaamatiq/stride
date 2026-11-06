@@ -1,0 +1,69 @@
+{
+  "engine": "stride",
+  "server_command": [
+    "/root/stride/build/stride_server",
+    "--model",
+    "/root/models/llama32-1b",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "8125",
+    "--path",
+    "tc",
+    "--kv-gb",
+    "16",
+    "--max-seqs",
+    "256",
+    "--max-rows",
+    "2048",
+    "--prefill-chunk",
+    "256"
+  ],
+  "pinned_weights": "unsloth/Llama-3.2-1B-Instruct@5a8abab4a5d6f164389b1079fb721cfab8d7126c snapshot_sha256=d52e42c7a850509573324484c1960b9affb5882dd3b63262a57bd55a6158c76a dir=/root/models/llama32-1b",
+  "prompts": 100,
+  "max_tokens": 256,
+  "temperature": 0.0,
+  "sequential_repeat_differs": 0,
+  "levels": [
+    {
+      "concurrency": 4,
+      "requests": 100,
+      "requests_differing": 0,
+      "requests_differing_pct": 0.0,
+      "prompts_changed": 0,
+      "prompts_changed_pct": 0.0,
+      "first_difference_char_p50": null,
+      "fingerprints_differing": 0
+    },
+    {
+      "concurrency": 16,
+      "requests": 100,
+      "requests_differing": 0,
+      "requests_differing_pct": 0.0,
+      "prompts_changed": 0,
+      "prompts_changed_pct": 0.0,
+      "first_difference_char_p50": null,
+      "fingerprints_differing": 0
+    },
+    {
+      "concurrency": 64,
+      "requests": 256,
+      "requests_differing": 0,
+      "requests_differing_pct": 0.0,
+      "prompts_changed": 0,
+      "prompts_changed_pct": 0.0,
+      "first_difference_char_p50": null,
+      "fingerprints_differing": 0
+    },
+    {
+      "concurrency": 128,
+      "requests": 512,
+      "requests_differing": 0,
+      "requests_differing_pct": 0.0,
+      "prompts_changed": 0,
+      "prompts_changed_pct": 0.0,
+      "first_difference_char_p50": null,
+      "fingerprints_differing": 0
+    }
+  ]
+}

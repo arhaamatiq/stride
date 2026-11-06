@@ -1,0 +1,22 @@
+{
+ "steps": 422,
+ "gpu_busy_us_per_step": 5647.095829383887,
+ "step_span_us": 5773.537658767773,
+ "between_steps_us": 113.58212559241706,
+ "wall_us_per_step": 5887.11978436019,
+ "kernel_us_per_step": {
+  "TcMlp13": 1799.8,
+  "TcGemmResidual": 1234.6,
+  "AttentionPage": 1182.3,
+  "TcLmGreedy": 626.3,
+  "TcQkv": 537.2,
+  "TcNormLane": 149.8,
+  "TileWriter": 108.2,
+  "TcEmbed": 8.9,
+  "TcCompact": 0.1
+ },
+ "aiperf_output_tok_per_s": 9300.55277523166,
+ "aiperf_itl_p50_ms": 5.553159209803922,
+ "aiperf_ttft_p50_ms": 303.78767
+}
+{"active": 0, "cancelled": 0, "completion_tokens": 32768, "generated": 32768, "kv_free_blocks": 8192, "kv_total_blocks": 8192, "max_context": 2048, "peak_blocks": 572, "peak_seqs": 64, "preemptions": 0, "prompt_tokens": 36599, "replayed_rows": 0, "requests": 128, "rows": 69239, "steps": 527}

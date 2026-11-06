@@ -4,6 +4,8 @@
 # run resumes. Benchmarks run one at a time, never alongside anything else on the GPU.
 set -u
 COMMIT=${1:?usage: run_all.sh <git commit>}
+# nsys embeds the process environment in its reports, and reports get committed.
+for v in $(env | cut -d= -f1 | grep -E 'KEY|TOKEN|SECRET|PASSWORD|RUNPOD'); do unset "$v"; done
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
 M=${MODEL_DIR:-/root/models/llama32-1b}
 OUT=${OUT_DIR:-/workspace/reports}
@@ -94,5 +96,7 @@ stage mut_ref mut_ref
 stage mut_exact python3 tests/mutations.py --cli build-mut/stride_cli --model "$M" --reference /tmp/mut_ref.jsonl --reference-logits /tmp/mut_ref.bin --prompts /tmp/mut_prompts.jsonl --path exact --tolerance 2e-4 --kv-gb 2 --tight-blocks 16 --timeout 300 --report "$OUT/g5/mutation_real_exact.json"
 stage mut_tc python3 tests/mutations.py --cli build-mut/stride_cli --model "$M" --reference /tmp/mut_ref1.jsonl --reference-logits /tmp/mut_ref1.bin --prompts /tmp/mut_prompts.jsonl --path tc --no-token-oracle --dump-steps 1 --tolerance 0.6 --kv-gb 2 --tight-blocks 16 --timeout 300 --report "$OUT/g5/mutation_real_tc.json"
 
+python3 scripts/redact_nsys.py "$OUT"/g3/*.nsys-rep "$OUT"/g3/server_c64/*.nsys-rep
+python3 scripts/scan_secrets.py "$OUT" || echo "SECRET FOUND IN $OUT: do not commit these reports"
 echo "[$(date -u +%H:%M:%S)] all stages finished"
 ls -la "$OUT"/.done_* | wc -l

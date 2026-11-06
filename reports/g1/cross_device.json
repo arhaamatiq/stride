@@ -5,7 +5,7 @@
     "gpu": {
       "device": "NVIDIA GeForce RTX 4090",
       "host": "NVIDIA GeForce RTX 4090, 595.91.07",
-      "tokens_per_second": 187.6360473576819,
+      "tokens_per_second": 186.5137128907062,
       "generated_tokens": 256,
       "logits_bytes": 131334144,
       "logits_sha256": "2b26561a89a2fc709d860e78128b260442d9650505c26eb2683f813171673c13",
@@ -23,7 +23,7 @@
     "x86": {
       "device": "cpu",
       "host": "AMD EPYC 7702 64-Core Processor",
-      "tokens_per_second": 11.10966152160783,
+      "tokens_per_second": 10.512247474743425,
       "generated_tokens": 256,
       "logits_bytes": 131334144,
       "logits_sha256": "2b26561a89a2fc709d860e78128b260442d9650505c26eb2683f813171673c13",
@@ -41,7 +41,7 @@
     "arm": {
       "device": "cpu",
       "host": "Apple M1 Pro",
-      "tokens_per_second": 10.162748863713945,
+      "tokens_per_second": 10.392690728732601,
       "generated_tokens": 256,
       "logits_bytes": 131334144,
       "logits_sha256": "2b26561a89a2fc709d860e78128b260442d9650505c26eb2683f813171673c13",

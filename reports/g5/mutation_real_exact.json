@@ -1,0 +1,346 @@
+{
+  "path": "exact",
+  "tolerance": 0.0002,
+  "clean": {
+    "max_logit_diff": 4.57763671875e-05,
+    "tokens_match_reference": true,
+    "invariant_mixed": true,
+    "invariant_tight": true,
+    "preemptions": 4
+  },
+  "clean_within_tolerance": true,
+  "mutants": 29,
+  "caught": 29,
+  "catch_rate_pct": 100.0,
+  "caught_by_oracle": {
+    "tolerance": 19,
+    "golden": 23,
+    "crash": 1,
+    "invariance": 9
+  },
+  "caught_only_by_bit_exact_oracles": [
+    102,
+    111,
+    123,
+    131,
+    151,
+    202,
+    204,
+    205,
+    303
+  ],
+  "missed": [],
+  "results": {
+    "101": {
+      "where": "embed",
+      "what": "sign flip on one embedding element",
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 0.46331024169921875,
+      "tokens_match_reference": true
+    },
+    "102": {
+      "where": "norm",
+      "what": "RMSNorm partial sums combined in reverse order",
+      "caught": true,
+      "caught_by": [
+        "golden"
+      ],
+      "max_logit_diff": 3.4332275390625e-05,
+      "tokens_match_reference": true
+    },
+    "103": {
+      "where": "norm",
+      "what": "mean divides by dim - 1",
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 0.01577281951904297,
+      "tokens_match_reference": true
+    },
+    "104": {
+      "where": "norm",
+      "what": "epsilon dropped from RMSNorm",
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 0.4013671875,
+      "tokens_match_reference": true
+    },
+    "105": {
+      "where": "norm",
+      "what": "learned norm gain ignored for one dim",
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 34.39919662475586,
+      "tokens_match_reference": false
+    },
+    "111": {
+      "where": "rope",
+      "what": "RoPE uses position + 1",
+      "caught": true,
+      "caught_by": [
+        "golden"
+      ],
+      "max_logit_diff": 4.1961669921875e-05,
+      "tokens_match_reference": true
+    },
+    "112": {
+      "where": "rope",
+      "what": "sign error in one RoPE rotation term",
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 19.363943099975586,
+      "tokens_match_reference": false
+    },
+    "113": {
+      "where": "kv",
+      "what": "K and V swapped on append",
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 33.90482711791992,
+      "tokens_match_reference": false
+    },
+    "121": {
+      "where": "attention",
+      "what": "query cannot see its own position",
+      "caught": true,
+      "caught_by": [
+        "crash"
+      ]
+    },
+    "122": {
+      "where": "attention",
+      "what": "score scale dropped",
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 34.708885192871094,
+      "tokens_match_reference": false
+    },
+    "123": {
+      "where": "attention",
+      "what": "softmax denominator summed in reverse order",
+      "caught": true,
+      "caught_by": [
+        "golden"
+      ],
+      "max_logit_diff": 4.00543212890625e-05,
+      "tokens_match_reference": true
+    },
+    "124": {
+      "where": "attention",
+      "what": "value mix reads K instead of V",
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 34.837188720703125,
+      "tokens_match_reference": false
+    },
+    "125": {
+      "where": "kv",
+      "what": "value mix reads the previous KV page",
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 4.57763671875e-05,
+      "tokens_match_reference": false
+    },
+    "126": {
+      "where": "attention",
+      "what": "query heads swapped inside a KV group",
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 33.73524856567383,
+      "tokens_match_reference": false
+    },
+    "131": {
+      "where": "gemm",
+      "what": "partial sums combined in reverse order",
+      "caught": true,
+      "caught_by": [
+        "golden"
+      ],
+      "max_logit_diff": 3.910064697265625e-05,
+      "tokens_match_reference": true
+    },
+    "132": {
+      "where": "gemm",
+      "what": "residual connection dropped",
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 33.6739387512207,
+      "tokens_match_reference": false
+    },
+    "141": {
+      "where": "mlp",
+      "what": "SiLU skipped",
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 33.639774322509766,
+      "tokens_match_reference": false
+    },
+    "142": {
+      "where": "mlp",
+      "what": "SiLU applied to the wrong projection",
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 39.093292236328125,
+      "tokens_match_reference": false
+    },
+    "151": {
+      "where": "sampling",
+      "what": "argmax picks the minimum",
+      "caught": true,
+      "caught_by": [
+        "invariance"
+      ],
+      "max_logit_diff": 4.57763671875e-05,
+      "tokens_match_reference": true
+    },
+    "201": {
+      "where": "scheduler",
+      "what": "last row of a prefill chunk gets the wrong position",
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "invariance",
+        "golden"
+      ],
+      "max_logit_diff": 22.85608673095703,
+      "tokens_match_reference": false
+    },
+    "202": {
+      "where": "scheduler",
+      "what": "preempted sequence resumes without replaying its KV",
+      "caught": true,
+      "caught_by": [
+        "invariance"
+      ],
+      "max_logit_diff": 4.57763671875e-05,
+      "tokens_match_reference": true
+    },
+    "203": {
+      "where": "scheduler",
+      "what": "decode row feeds the previous token",
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "invariance",
+        "golden"
+      ],
+      "max_logit_diff": 30.142196655273438,
+      "tokens_match_reference": false
+    },
+    "204": {
+      "where": "scheduler",
+      "what": "logits routed to the wrong sequence after a lane shuffle",
+      "caught": true,
+      "caught_by": [
+        "invariance"
+      ],
+      "max_logit_diff": 4.57763671875e-05,
+      "tokens_match_reference": true
+    },
+    "205": {
+      "where": "kv",
+      "what": "freed block returned to the pool twice",
+      "caught": true,
+      "caught_by": [
+        "invariance"
+      ],
+      "max_logit_diff": 4.57763671875e-05,
+      "tokens_match_reference": true
+    },
+    "206": {
+      "where": "kv",
+      "what": "new block not synced to the device table",
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "invariance",
+        "golden"
+      ],
+      "max_logit_diff": 4.57763671875e-05,
+      "tokens_match_reference": false
+    },
+    "207": {
+      "where": "scheduler",
+      "what": "generated-token count off by one",
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 4.57763671875e-05,
+      "tokens_match_reference": false
+    },
+    "301": {
+      "where": "engine",
+      "what": "all layers read KV from layer zero",
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "invariance",
+        "golden"
+      ],
+      "max_logit_diff": 35.7939338684082,
+      "tokens_match_reference": false
+    },
+    "302": {
+      "where": "engine",
+      "what": "final norm uses a layer norm's weights",
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 30.703567504882812,
+      "tokens_match_reference": false
+    },
+    "303": {
+      "where": "engine",
+      "what": "logit lanes compacted from the wrong row",
+      "caught": true,
+      "caught_by": [
+        "invariance"
+      ],
+      "max_logit_diff": 4.57763671875e-05,
+      "tokens_match_reference": true
+    }
+  }
+}

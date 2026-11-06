@@ -18,7 +18,7 @@ Decisions made during the build, with the reason and, where it exists, the data.
 | Hand-written `exp`, explicit `fmaf`, IEEE `/` and `sqrt`, `-fmad=false`, `-ffp-contract=off` | Results must not depend on a libm or on compiler contraction. This is what lets the exact path produce the same bytes on an RTX 4090, an x86 CPU and an ARM CPU. |
 | Fixed summation trees that depend only on matrix shape | Batch invariance by construction: an output element sees the same sequence of operations regardless of batch, lane, thread or KV placement. |
 | Two kernel families | The exact path (FMA, FP32) gives CPU/GPU byte identity and the G1 result. The tensor-core path (mma, BF16) gives batched throughput; scalar FMA cannot get close, because cuBLAS reaches 51 T MAC/s on these matrices at batch 128. |
-| Serving defaults to the tensor-core path | Measured at batch 64, 565 tok/s on the first FMA kernels against thousands on tiles. Its outputs are bit-stable under load but differ from the FP32 reference, as all BF16 inference does. |
+| Serving defaults to the tensor-core path | At batch 64 the first FMA kernels reached 565 tok/s and the first tile kernels 7,126 (`reports/g3/tuning_log.md`). Its outputs are bit-stable under load but differ from the FP32 reference, as all BF16 inference does. |
 
 ## Performance choices driven by measurement
 

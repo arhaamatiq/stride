@@ -66,6 +66,9 @@ def main():
     L = Ledger(root, commit, gpu, date)
 
     # Environment and the pinned snapshot.
+    export = os.path.join(root, "reports/g3/aiperf/stride_c1_r0/profile_export_aiperf.json")
+    if os.path.exists(export):
+        env["aiperf"] = json.load(open(export)).get("aiperf_version")
     for key, value in env.items():
         if value:
             L.add(f"env.{key}", value, "", "G0", "recorded at the start of run_all.sh", "scripts/run_all.sh", "reports/env/environment.txt")
@@ -86,6 +89,7 @@ def main():
             L.add(f"g1.greedy.{name}.identical_sequences", r["sequences_identical"], "of 100", "G1", "whole-sequence equality", cmd, art)
         for name, r in g1["logits"].items():
             L.add(f"g1.logits.{name}.max_abs_diff", r["max_abs_diff"], "logit units", "G1", f"{r['vectors']} logit vectors", cmd, art)
+            L.add(f"g1.logits.{name}.vectors", r["vectors"], "vectors", "G1", "logit vectors compared", cmd, art)
             L.add(f"g1.logits.{name}.p99_vector_max_abs_diff", r["p99_vector_max_abs_diff"], "logit units", "G1", f"{r['vectors']} logit vectors", cmd, art)
         for path, n in g1["fingerprints_equal_c1_vs_c32"].items():
             L.add(f"g1.fingerprints_equal_c1_vs_c32.{path}", n, "of 100", "G1", "shuffled lanes, shuffled KV pages, prefill chunk 13", cmd, art)
@@ -95,6 +99,15 @@ def main():
         L.add("g1.cross_device.logit_values", xd["logit_values_compared"], "FP32 values", "G1", "8 prompts x 32 steps x vocab", "scripts/cross_device.py", "reports/g1/cross_device.json")
         L.add("g1.cross_device.devices", len(xd["runs"]), "devices", "G1", ", ".join(r["host"] or r["device"] for r in xd["runs"].values()), "scripts/cross_device.py", "reports/g1/cross_device.json")
 
+    # Same commit and weights on a second physical RTX 4090.
+    for path in ("tc", "exact"):
+        here, there = os.path.join(root, f"reports/g1/stride_{path}_c1.jsonl"), os.path.join(root, f"reports/g1/host2/host2_{path}.jsonl")
+        if os.path.exists(here) and os.path.exists(there):
+            a = {r["id"]: r for r in map(json.loads, open(here))}
+            b = {r["id"]: r for r in map(json.loads, open(there))}
+            equal = sum(a[i]["fingerprint"] == b[i]["fingerprint"] and a[i]["tokens"] == b[i]["tokens"] for i in a)
+            L.add(f"g1.cross_host.{path}.identical", equal, f"of {len(a)} prompts", "G1", "fingerprints and tokens, second RTX 4090 in another data center; see reports/g1/host2/host2_env.txt", "stride_cli on both hosts", f"reports/g1/host2/host2_{path}.jsonl")
+
     # G2 and the nondeterminism study.
     for engine in ("stride", "vllm"):
         det = L.load(f"reports/g2/determinism_{engine}.json")
@@ -103,9 +116,13 @@ def main():
         art = f"reports/g2/determinism_{engine}.json"
         cmd = f"python3 scripts/bench/determinism.py --engine {engine}"
         L.add(f"g2.determinism.{engine}.sequential_rerun_differs", det["sequential_repeat_differs"], f"of {det['prompts']} prompts", "G2", "two sequential passes", cmd, art)
+        L.add(f"g2.determinism.{engine}.total_requests_differing", sum(lv["requests_differing"] for lv in det["levels"]), "requests", "G2", "all concurrency levels", cmd, art)
+        L.add(f"g2.determinism.{engine}.total_requests", sum(lv["requests"] for lv in det["levels"]), "requests", "G2", "all concurrency levels", cmd, art)
         for lv in det["levels"]:
             c = lv["concurrency"]
             L.add(f"g2.determinism.{engine}.c{c}.requests_differing_pct", lv["requests_differing_pct"], "%", "G2", f"{lv['requests_differing']}/{lv['requests']} requests differ from the sequential baseline", cmd, art)
+            L.add(f"g2.determinism.{engine}.c{c}.requests_differing", lv["requests_differing"], "requests", "G2", "compared with the sequential baseline", cmd, art)
+            L.add(f"g2.determinism.{engine}.c{c}.requests", lv["requests"], "requests", "G2", "requests sent at this concurrency", cmd, art)
             L.add(f"g2.determinism.{engine}.c{c}.prompts_changed_pct", lv["prompts_changed_pct"], "%", "G2", f"{lv['prompts_changed']}/{det['prompts']} prompts changed at least once", cmd, art)
             if "fingerprints_differing" in lv:
                 L.add(f"g2.determinism.{engine}.c{c}.fingerprints_differing", lv["fingerprints_differing"], f"of {lv['requests']}", "G2", "system_fingerprint compared with the sequential baseline", cmd, art)
@@ -117,6 +134,8 @@ def main():
             cmd = "python3 scripts/bench/roofline.py"
             art = "reports/g3/roofline.json"
             L.add(f"g3.batch1.{path}.tok_per_s", r["tok_per_s_mean"], "tok/s", "G3", f"mean of {r['repeats']} runs, std {r['tok_per_s_std']:.2f}", cmd, art)
+            L.add(f"g3.batch1.{path}.tok_per_s_std", r["tok_per_s_std"], "tok/s", "G3", f"std over {r['repeats']} runs", cmd, art)
+            L.add(f"g3.batch1.{path}.roofline_tok_per_s", r["roofline_tok_per_s"], "tok/s", "G3", f"{roof['peak_gb_per_s']} GB/s / {r['weight_bytes_per_pass']} weight bytes", cmd, art)
             L.add(f"g3.batch1.{path}.pct_of_roofline", r["pct_of_roofline"], "%", "G3", f"{roof['peak_gb_per_s']} GB/s / {r['weight_bytes_per_pass']} weight bytes = {r['roofline_tok_per_s']:.1f} tok/s", cmd, art)
     stride = L.load("reports/g3/aiperf/stride_summary.json")
     vllm = L.load("reports/g3/aiperf/vllm_summary.json")
@@ -130,10 +149,15 @@ def main():
             c = p["concurrency"]
             n = len(p["repeats"])
             L.add(f"g3.aiperf.{name}.c{c}.output_tok_per_s", p["output_tok_per_s_mean"], "tok/s", "G3", f"AIPerf, mean of {n} repeats, std {p['output_tok_per_s_std']:.1f}", cmd, art)
+            L.add(f"g3.aiperf.{name}.c{c}.output_tok_per_s_std", p["output_tok_per_s_std"], "tok/s", "G3", f"AIPerf, std over {n} repeats", cmd, art)
             for key, label in (("ttft_ms", "ttft"), ("itl_ms", "itl"), ("request_latency_ms", "request_latency")):
                 L.add(f"g3.aiperf.{name}.c{c}.{label}_p50_ms", mean_field(p, key, "p50"), "ms", "G3", f"AIPerf, mean of {n} repeats", cmd, art)
                 L.add(f"g3.aiperf.{name}.c{c}.{label}_p99_ms", mean_field(p, key, "p99"), "ms", "G3", f"AIPerf, mean of {n} repeats", cmd, art)
             L.add(f"g3.aiperf.{name}.c{c}.errors", sum(r["errors"] for r in p["repeats"]), "requests", "G2", f"AIPerf error count over {n} repeats", cmd, art)
+    if stride:
+        L.add("isl", stride["isl_mean"], "tokens", "G3", "AIPerf prompt length mean", "python3 scripts/bench/sweep.py", "reports/g3/aiperf/stride_summary.json")
+        L.add("isl_stddev", stride["isl_stddev"], "tokens", "G3", "AIPerf prompt length std", "python3 scripts/bench/sweep.py", "reports/g3/aiperf/stride_summary.json")
+        L.add("osl", stride["osl"], "tokens", "G3", "AIPerf output length", "python3 scripts/bench/sweep.py", "reports/g3/aiperf/stride_summary.json")
     if stride and vllm:
         for p in stride["points"]:
             v = sweep_point(vllm, p["concurrency"])
@@ -194,6 +218,7 @@ def main():
         art = f"reports/g5/{name}.json"
         cmd = "python3 tests/mutations.py"
         L.add(f"g5.{label}.caught", m["caught"], f"of {m['mutants']}", "G5", f"missed: {m['missed']}", cmd, art)
+        L.add(f"g5.{label}.mutants", m["mutants"], "mutants", "G5", "injected bugs", cmd, art)
         L.add(f"g5.{label}.catch_rate_pct", m["catch_rate_pct"], "%", "G5", "any oracle, crash or hang", cmd, art)
         L.add(f"g5.{label}.caught_by_tolerance", m["caught_by_oracle"].get("tolerance", 0), f"of {m['mutants']}", "G5", f"tolerance {m['tolerance']} and token match", cmd, art)
         L.add(f"g5.{label}.caught_only_by_bit_exact", len(m["caught_only_by_bit_exact_oracles"]), f"of {m['mutants']}", "G5", "invariance or golden oracle only", cmd, art)

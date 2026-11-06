@@ -1,7 +1,7 @@
 # Architecture
 
-stride serves Llama-3.2-1B from C++ and CUDA, with one property most engines do not have:
-a request's output bits do not depend on what else is running.
+stride serves Llama-3.2-1B from C++ and CUDA, with one defining property: a request's
+output bits do not depend on what else is running.
 
 ```
 HTTP (server.cpp) ──> per-request queues <── token events
@@ -34,10 +34,11 @@ Both run from one scheduler and one server, selected with `--path`.
 
 ## Why outputs do not depend on the batch
 
-Results change with batch size in most engines because a BLAS library picks a different
-blocking, and so a different summation order, for different shapes. Floating-point addition
-is not associative, so a different order gives different low bits, and over many steps those
-bits can flip a greedy choice.
+Floating-point addition is not associative, so summing in a different order gives different
+low bits, and over many steps those bits can flip a greedy choice. An engine's results can
+change with batch size when a library picks a different blocking, and so a different
+summation order, for different shapes; see
+[Thinking Machines' analysis](https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/).
 
 stride removes the dependency at its source. For any output element, the operations and
 their order depend only on the matrix shape:
