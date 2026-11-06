@@ -169,7 +169,7 @@ def main():
             if r["fingerprints"] != clean["fingerprints"]:
                 caught_by.append("golden")
             finite = r["max_logit_diff"] != float("inf")
-            detail = {"max_logit_diff": r["max_logit_diff"] if finite else None, "logits_non_finite_or_missing": not finite, "tokens_match_reference": r["tokens_match_reference"]}
+            detail = {"max_logit_diff": r["max_logit_diff"] if finite else None, "logits_non_finite_or_missing": not finite, "tokens_match_reference": None if args.no_token_oracle else r["tokens_match_reference"]}
         results[bug] = {"where": where, "what": what, "rounding_only": bug in ROUNDING_ONLY, "caught": bool(caught_by), "caught_by": caught_by, **detail}
         print(f"{bug:4d} {where:10s} {'CAUGHT' if caught_by else 'MISSED'} {','.join(caught_by):32s} {what}", flush=True)
 
@@ -185,7 +185,7 @@ def main():
         "functional_caught": sum(r["caught"] and not r["rounding_only"] for r in results.values()),
         "functional_caught_by_tolerance": sum("tolerance" in r["caught_by"] and not r["rounding_only"] for r in results.values()),
         "caught_only_by_crash_or_hang": [b for b, r in results.items() if r["caught"] and set(r["caught_by"]) <= {"crash", "hang"}],
-        "clean": {k: clean[k] for k in ("max_logit_diff", "tokens_match_reference", "invariant_mixed", "invariant_tight", "preemptions")},
+        "clean": {**{k: clean[k] for k in ("max_logit_diff", "invariant_mixed", "invariant_tight", "preemptions")}, "tokens_match_reference": None if args.no_token_oracle else clean["tokens_match_reference"]},
         "clean_within_tolerance": tolerance_ok,
         "mutants": len(results),
         "caught": caught,

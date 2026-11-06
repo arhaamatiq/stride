@@ -240,6 +240,7 @@ int main(int argc, char** argv) {
   summary["rows"] = s.rows;
   summary["generated"] = s.generated;
   summary["preemptions"] = s.preemptions;
+  summary["replayed_rows"] = s.replayed_rows;
   summary["peak_seqs"] = s.peak_seqs;
   summary["peak_blocks"] = s.peak_blocks;
   summary["total_blocks"] = engine.kv().total_blocks();

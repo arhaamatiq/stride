@@ -119,6 +119,7 @@ void Scheduler::preempt_youngest() {
   engine_.kv().release_slot(victim.slot);
   victim.slot = -1;
   ++stats_.preemptions;
+  stats_.replayed_rows += victim.next_pos;
   waiting_.push_front(std::move(*it));
   running_.erase(it);
 }

@@ -1,7 +1,7 @@
 # Architecture
 
-stride serves Llama-3.2-1B from C++ and CUDA, with one defining property: a request's
-output bits do not depend on what else is running.
+stride serves Llama-3.2-1B from C++ and CUDA. Its defining property: in every test here, a
+request's output bits did not depend on what else was running.
 
 ```
 HTTP (server.cpp) ──> per-request queues <── token events
@@ -27,7 +27,7 @@ Kernels    kernels.cu       exact path: FMA, FP32, runs on GPU or CPU
 | Activations and KV | FP32 | BF16 x tiles and KV, FP32 `h` |
 | Same bits at any batch or schedule | yes | yes |
 | Same bits on CPU and GPU | yes | no: the hardware's internal summation is not a simple IEEE sequence |
-| Agrees with HF at FP32 | to within FP32 rounding | to within BF16 rounding noise |
+| Agrees with HF at FP32 | logits within 5.72e-05, 100% of greedy tokens | logits within about 0.17 on first steps, 75.73% of greedy tokens |
 | Use | correctness oracle, reproducible runs | throughput |
 
 Both run from one scheduler and one server, selected with `--path`.
@@ -98,14 +98,16 @@ follows actual length rather than a reserved maximum, and allocation costs a vec
 
 Each step runs one decode row for every sequence that is ready, then prefill rows up to the
 step budget. Sequences join and leave between steps. If the arena fills, the youngest sequence
-is preempted, its blocks are freed, and it replays later. Replay is bit-exact, so a client
-cannot observe a preemption in its output. The test suite asserts that replay really happened.
+is preempted, its blocks are freed, and it replays later. Clients did not see a preemption in
+their output, in 768 requests across 670 preemptions. The test suite asserts that replay happened
+and that outputs still match.
 
 ## Verifying determinism from outside
 
 The API returns `system_fingerprint: stride-<hash>`, a hash chained over every generated token
 and the exact bits of its logit. Two responses with the same fingerprint computed the same
-values, so a client can check for itself that load changed nothing.
+values, up to the chance of a 64-bit hash collision, so a client can check for itself that load
+changed nothing.
 
 ## Test harness
 

@@ -77,6 +77,7 @@ def test_preemption_replay_is_bit_exact(tmp_path):
     solo, _ = cli(tmp_path, "solo", "--concurrency", "1", "--kv-gb", "0.25", "--max-new", "200")
     tight, stats = cli(tmp_path, "tight", "--concurrency", "24", "--kv-blocks", "16", "--max-slots", "24", "--prefill-chunk", "9", "--max-new", "200")
     assert stats["preemptions"] > 0, "arena was large enough that nothing was preempted"
+    assert stats["replayed_rows"] > 0, "preempted sequences were not replayed"
     for i in solo:
         assert solo[i]["fingerprint"] == tight[i]["fingerprint"]
 

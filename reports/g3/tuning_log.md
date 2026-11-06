@@ -12,6 +12,8 @@ plus BOS (127 plus BOS in the earliest rows), with 256 generated tokens.
 | One thread per row | 74.1 |
 | One block per row, interleaved threads | 254.4 (253.9, 254.7, 254.4) |
 
+After each change, tiny-model logits from the GPU were byte-identical to the CPU build's (`cmp`).
+
 ## Attention cost against context length, first kernels (one chain over all positions)
 
 Sum of Attention kernel time per decode step, from an Nsight Systems trace at batch 1:

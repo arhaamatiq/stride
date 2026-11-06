@@ -153,7 +153,14 @@ def main():
             if "fingerprints_differing" in lv:
                 L.add(stage, f"g2.determinism.{label}.c{c}.fingerprints_differing", lv["fingerprints_differing"], f"of {lv['requests']}", "G2", "system_fingerprint compared with the sequential baseline", cmd, art)
             if "stats_after" in lv:
-                L.add(stage, f"g2.determinism.{label}.c{c}.preemptions_so_far", lv["stats_after"].get("preemptions"), "preemptions", "G2", "server /stats after this level", cmd, art)
+                st = lv["stats_after"]
+                L.add(stage, f"g2.determinism.{label}.c{c}.preemptions_so_far", st.get("preemptions"), "preemptions", "G2", "server /stats after this level", cmd, art)
+        if det["levels"] and "stats_after" in det["levels"][-1]:
+            # Rows beyond one per generated-or-prompt token are replays: the last token of each
+            # prompt is fed once as a decode row, and each request's final token is never fed.
+            st = det["levels"][-1]["stats_after"]
+            replayed = st["rows"] - (st["completion_tokens"] + st["prompt_tokens"] - st["requests"])
+            L.add(stage, f"g2.determinism.{label}.replayed_rows_recomputed", replayed, "rows", "G2", "rows - (completion + prompt - requests), from server /stats", cmd, art)
         L.add(stage, f"g2.determinism.{label}.total_requests_differing", total_differs, "requests", "G2", "all concurrency levels", cmd, art)
         L.add(stage, f"g2.determinism.{label}.total_requests", total, "requests", "G2", "all concurrency levels", cmd, art)
         if total:
@@ -197,6 +204,8 @@ def main():
         L.add(stage, f"g3.aiperf.{name}.isl_stddev", s["isl_stddev"], "tokens", "G3", "AIPerf prompt length std", cmd, art)
         L.add(stage, f"g3.aiperf.{name}.osl", s["osl"], "tokens", "G3", "AIPerf output length", cmd, art)
     if stride and vllm:
+        total_errors = sum(r["errors"] for s in (stride, vllm) for p in s["points"] for r in p["repeats"])
+        L.add("sweep_vllm", "g3.aiperf.total_errors", total_errors, "requests", "G3", "AIPerf error counts over all points and repeats, both engines", "python3 scripts/bench/sweep.py", "reports/g3/aiperf/stride_summary.json")
         for p in stride["points"]:
             v = sweep_point(vllm, p["concurrency"])
             if v:
@@ -212,6 +221,10 @@ def main():
             L.add("offline", f"g3.offline.b{b}.stride_tok_per_s", p["stride_tok_per_s"], "tok/s", "G3", f"no HTTP; mean of {offline['repeats']}", cmd, "reports/g3/offline.json")
             L.add("offline", f"g3.offline.b{b}.vllm_tok_per_s", p["vllm_tok_per_s"], "tok/s", "G3", f"no HTTP; mean of {offline['repeats']}", cmd, "reports/g3/offline.json")
             L.add("offline", f"g3.offline.b{b}.pct_of_vllm", p["stride_pct_of_vllm"], "%", "G3", "no HTTP", cmd, "reports/g3/offline.json")
+    exact = L.load("reports/g3/exact_scaling.json")
+    if exact:
+        for p in exact["points"]:
+            L.add("exact_scaling", f"g3.exact.b{p['batch']}.tok_per_s", p["tok_per_s"], "tok/s", "G3", f"exact path, no HTTP, mean of {exact['repeats']}, on the offline prompts", "python3 scripts/bench/exact_scaling.py", "reports/g3/exact_scaling.json")
     trace = L.load("reports/g3/server_c64/trace_summary.json")
     if trace:
         cmd = "python3 scripts/bench/trace_server.py"
@@ -253,13 +266,14 @@ def main():
         for p in on["points"]:
             c = p["concurrency"]
             base = sweep_point(tile, c)
+            L.add("ab_norm_tile", f"g4.norm_lane.c{c}.baseline_std", base["output_tok_per_s_std"], "tok/s", "G4", "std over 3 repeats of the per-tile baseline", "python3 scripts/bench/sweep.py --label norm_tile", "reports/g4/norm_tile_summary.json")
             L.add("ab_norm_tile", f"g4.norm_lane.c{c}.throughput_gain_pct", 100.0 * (p["output_tok_per_s_mean"] / base["output_tok_per_s_mean"] - 1.0), "%", "G4", f"per-lane vs per-tile norm: {p['output_tok_per_s_mean']:.0f} vs {base['output_tok_per_s_mean']:.0f} tok/s", "python3 scripts/bench/sweep.py --label norm_tile", "reports/g4/norm_tile_summary.json")
     if os.path.exists(os.path.join(root, "reports/g4/bits_auto.jsonl")):
         a = open(os.path.join(root, "reports/g4/bits_auto.jsonl")).read()
         for name in ("bits_1x1", "bits_normtile"):
             path = os.path.join(root, f"reports/g4/{name}.jsonl")
             if os.path.exists(path):
-                L.add("ab_bits", f"g4.regression.{name}.identical", a == open(path).read(), "bool", "G4", "outputs and fingerprints compared with the optimized build, 100 prompts x 64 tokens", "scripts/run_all.sh ab_bits", f"reports/g4/{name}.jsonl")
+                L.add("ab_bits", f"g4.regression.{name}.identical", a == open(path).read(), "bool", "G4", f"outputs and fingerprints compared with the optimized build, {a.count(chr(10))} prompts x 64 tokens", "scripts/run_all.sh ab_bits", f"reports/g4/{name}.jsonl")
 
     # G5.
     for name, label, stage in (("mutation_cpu_tiny", "cpu_tiny", "mut_cpu"), ("mutation_real_exact", "real_exact", "mut_exact"), ("mutation_real_tc", "real_tc", "mut_tc")):
@@ -285,7 +299,12 @@ def main():
     fused = ["Qkv", "GemmResidual", "Mlp13", "LmGreedy", "TcQkv", "TcGemmResidual", "TcMlp13", "TcLmGreedy", "AttentionPage"]
     source = open(os.path.join(root, "src/kernels.cu")).read() + open(os.path.join(root, "src/kernels_tc.cu")).read() + open(os.path.join(root, "src/kernel_common.h")).read()
     present = [k for k in fused if re.search(rf"struct {k}\b", source)]
-    L.add("build", "g3.fused_kernels", len(present), "kernels", "G3", ", ".join(present) + "; see docs/ARCHITECTURE.md", "grep in scripts/build_ledger.py", "docs/ARCHITECTURE.md")
+    L.add("build", "g3.fused_kernels", len(present), "kernels", "G3", ", ".join(present) + "; see docs/ARCHITECTURE.md", "source count in scripts/build_ledger.py", "src/kernels.cu, src/kernels_tc.cu, src/kernel_common.h")
+    designs = {k.replace("Tc", "") for k in present}
+    L.add("build", "g3.fused_designs", len(designs), "designs", "G3", ", ".join(sorted(designs)), "source count in scripts/build_ledger.py", "src/kernels.cu, src/kernels_tc.cu, src/kernel_common.h")
+    ci = L.load("reports/g5/ci_run.json")
+    if ci:
+        L.add("ci", "g5.ci.conclusion", ci["conclusion"], "", "G5", f"GitHub Actions run {ci['run_id']} at {ci['head_sha'][:12]}; the workflow fails below a 100% catch rate", "GitHub Actions", "reports/g5/ci_run.json")
 
     out = os.path.join(root, "docs/resume/METRICS.jsonl")
     os.makedirs(os.path.dirname(out), exist_ok=True)

@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Fails unless a model directory is byte-identical to weights.lock.json.
 
-Every engine, reference and vLLM run calls this first and records the printed
-digest, so all three are provably loading the same files.
+scripts/run_all.sh calls this at the start, and the G1, load-study and sweep stages call
+it again and record the printed digest, so the engine, the reference and vLLM can be
+shown to have loaded the same files.
 """
 import argparse
 import hashlib

@@ -7,7 +7,9 @@
 #
 #   OUT_DIR=$PWD/reports MODEL_DIR=/path/to/model BENCH_VENV=/path/to/venv scripts/run_all.sh <git commit>
 #
-# BENCH_VENV holds vLLM and AIPerf. The system Python needs torch and transformers.
+# BENCH_VENV holds vLLM and AIPerf. The system Python needs torch and transformers, and
+# nvcc, nsys and ncu must be on PATH. Run scripts/compact_reports.sh on OUT_DIR before
+# committing; it drops regenerable files and compresses per-request exports.
 set -u
 COMMIT=${1:?usage: run_all.sh <git commit>}
 DC=$(tr '\0' '\n' < /proc/1/environ 2>/dev/null | grep -E '^RUNPOD_DC_ID=' | cut -d= -f2)
@@ -112,8 +114,9 @@ stage det_preempt "$GPU" python3 scripts/bench/determinism.py --engine stride --
 stage sweep_stride "$GPU" python3 scripts/bench/sweep.py --engine stride --model "$M" --out "$OUT/g3/aiperf" --port 8127 "${BENCH[@]}"
 stage sweep_vllm "$GPU" python3 scripts/bench/sweep.py --engine vllm --model "$M" --out "$OUT/g3/aiperf" --port 8128
 
-# Raw engines with no HTTP in the path.
+# Raw engines with no HTTP in the path, and the exact path at the same batch sizes.
 stage offline "$GPU" python3 scripts/bench/offline.py --cli build/stride_cli --model "$M" --report "$OUT/g3/offline.json"
+stage exact_scaling "$GPU" python3 scripts/bench/exact_scaling.py --cli build/stride_cli --model "$M" --report "$OUT/g3/exact_scaling.json"
 
 # G4: register-blocked microkernel A/B, plus the per-lane norm, both bit-identical by construction.
 stage ab_micro_off "$GPU" python3 scripts/bench/sweep.py --engine stride --label micro_1x1 --model "$M" --out "$OUT/g4" --concurrency 64,128 --port 8129 "${BENCH[@]}" --stride-flag=--micro-r --stride-flag=1 --stride-flag=--micro-lt --stride-flag=1
