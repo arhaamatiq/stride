@@ -26,13 +26,14 @@ struct GemmMat {
   int32_t cols;
 };
 
+// Offsets are in elements; the exact path stores FP32, the tensor-core path BF16.
 struct KvRef {
-  float* arena;
+  void* arena;
   const int32_t* table;
-  int64_t block_floats;
-  int64_t layer_floats;
-  int64_t which_floats;
-  int64_t group_floats;
+  int64_t block_elems;
+  int64_t layer_elems;
+  int64_t which_elems;
+  int64_t group_elems;
   int32_t max_blocks;
   int32_t head_dim;
 };
@@ -66,6 +67,7 @@ struct QkvParams {
   const float* x;
   GemmMat q, k, v;
   float* q_out;
+  int32_t q_stride;
   KvRef kv;
   const float* rope;
   const int32_t* row_slot;
@@ -76,11 +78,18 @@ struct QkvParams {
 
 struct AttentionParams {
   Lanes l;
-  const float* q;
-  float* out;
+  const float* q;  // [row][head][dim], FP32
+  int32_t q_stride;
+  void* out;
+  int32_t out_cols;
   KvRef kv;
   const int32_t* row_slot;
   const int32_t* row_pos;
+  const int32_t* items;  // (row, page) pairs to compute this step
+  int32_t item_count;
+  float* scratch;
+  int32_t max_pages;
+  int32_t rec_floats;
   int32_t layer;
   int32_t n_kv;
   int32_t n_q;
@@ -145,7 +154,5 @@ void k_compact(const CompactParams& p);
 void k_lm_greedy(const LmGreedyParams& p, int J);
 void k_lm_full(const LmFullParams& p, int J);
 
-// Number of fused kernels the runtime path launches; reported in the README.
-constexpr int kFusedKernelCount = 9;
 
 }  // namespace stride

@@ -36,6 +36,7 @@ struct Args {
   uint32_t row_shuffle = 0;
   uint32_t arrival_seed = 0;
   int bug = 0;
+  std::string path = "exact";
   bool full = false;
   int dump_steps = 1;
   bool use_eos = false;
@@ -71,6 +72,7 @@ Args parse(int argc, char** argv) {
     else if (k == "--row-shuffle") a.row_shuffle = static_cast<uint32_t>(std::stoul(next()));
     else if (k == "--arrival-seed") a.arrival_seed = static_cast<uint32_t>(std::stoul(next()));
     else if (k == "--bug") a.bug = std::stoi(next());
+    else if (k == "--path") a.path = next();
     else if (k == "--full") a.full = true;
     else if (k == "--use-eos") a.use_eos = true;
     else if (k == "--temperature") a.temperature = std::stof(next());
@@ -136,6 +138,7 @@ int main(int argc, char** argv) {
   eo.kv_bytes = static_cast<int64_t>(args.kv_gb * 1024.0 * 1024.0 * 1024.0);
   eo.kv_shuffle_seed = args.kv_shuffle;
   eo.bug = args.bug;
+  eo.path = args.path == "tc" ? KernelPath::kTensorCore : KernelPath::kExact;
 
   const auto t_load0 = std::chrono::steady_clock::now();
   Engine engine(args.model, eo);

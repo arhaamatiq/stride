@@ -1,0 +1,57 @@
+{
+  "repo": "unsloth/Llama-3.2-1B-Instruct",
+  "commit": "5a8abab4a5d6f164389b1079fb721cfab8d7126c",
+  "retrieved_utc": "2026-11-06T11:56:36Z",
+  "gated_upstream": "meta-llama/Llama-3.2-1B-Instruct",
+  "files": [
+    {
+      "path": "chat_template.jinja",
+      "bytes": 3827,
+      "sha256": "5816fce10444e03c2e9ee1ef8a4a1ea61ae7e69e438613f3b17b69d0426223a4",
+      "hf_lfs_oid": null,
+      "url": "https://huggingface.co/unsloth/Llama-3.2-1B-Instruct/resolve/5a8abab4a5d6f164389b1079fb721cfab8d7126c/chat_template.jinja"
+    },
+    {
+      "path": "config.json",
+      "bytes": 894,
+      "sha256": "dfb67fd8afe73a1c75245824ef9d64a6ba8983025447e3bf76aa1ea57ee46152",
+      "hf_lfs_oid": null,
+      "url": "https://huggingface.co/unsloth/Llama-3.2-1B-Instruct/resolve/5a8abab4a5d6f164389b1079fb721cfab8d7126c/config.json"
+    },
+    {
+      "path": "generation_config.json",
+      "bytes": 239,
+      "sha256": "6d4f979915331212d7672c68b22a4ddad9e21ed8126cf2bd1ea6b2b88f595c1c",
+      "hf_lfs_oid": null,
+      "url": "https://huggingface.co/unsloth/Llama-3.2-1B-Instruct/resolve/5a8abab4a5d6f164389b1079fb721cfab8d7126c/generation_config.json"
+    },
+    {
+      "path": "model.safetensors",
+      "bytes": 2471645608,
+      "sha256": "1ff795ff6a07e6a68085d206fb84417da2f083f68391c2843cd2b8ac6df8538f",
+      "hf_lfs_oid": "1ff795ff6a07e6a68085d206fb84417da2f083f68391c2843cd2b8ac6df8538f",
+      "url": "https://huggingface.co/unsloth/Llama-3.2-1B-Instruct/resolve/5a8abab4a5d6f164389b1079fb721cfab8d7126c/model.safetensors"
+    },
+    {
+      "path": "special_tokens_map.json",
+      "bytes": 454,
+      "sha256": "94e708c3f5e64acf85bbe5ad01467a1248faadb73e83b41793087ecced586e8f",
+      "hf_lfs_oid": null,
+      "url": "https://huggingface.co/unsloth/Llama-3.2-1B-Instruct/resolve/5a8abab4a5d6f164389b1079fb721cfab8d7126c/special_tokens_map.json"
+    },
+    {
+      "path": "tokenizer.json",
+      "bytes": 17209920,
+      "sha256": "6b9e4e7fb171f92fd137b777cc2714bf87d11576700a1dcd7a399e7bbe39537b",
+      "hf_lfs_oid": "6b9e4e7fb171f92fd137b777cc2714bf87d11576700a1dcd7a399e7bbe39537b",
+      "url": "https://huggingface.co/unsloth/Llama-3.2-1B-Instruct/resolve/5a8abab4a5d6f164389b1079fb721cfab8d7126c/tokenizer.json"
+    },
+    {
+      "path": "tokenizer_config.json",
+      "bytes": 54669,
+      "sha256": "9ddd255c19fe319c8d4e891163540382e9fbda99f394674f2a929efc47d57458",
+      "hf_lfs_oid": null,
+      "url": "https://huggingface.co/unsloth/Llama-3.2-1B-Instruct/resolve/5a8abab4a5d6f164389b1079fb721cfab8d7126c/tokenizer_config.json"
+    }
+  ]
+}

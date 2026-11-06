@@ -28,6 +28,7 @@ struct EngineOptions {
   int64_t kv_bytes = int64_t{16} << 30;
   uint32_t kv_shuffle_seed = 0;
   int bug = 0;
+  KernelPath path = KernelPath::kExact;
 };
 
 class Engine {
@@ -48,6 +49,9 @@ class Engine {
 
  private:
   void* alloc_scratch(size_t bytes);
+  void build_attention_items(int rows);
+  void step_exact(const std::vector<StepRow>& rows, std::vector<BestEntry>& greedy, std::vector<float>& full);
+  void step_tensor_core(const std::vector<StepRow>& rows, std::vector<BestEntry>& greedy, std::vector<float>& full);
 
   ModelConfig cfg_;
   EngineOptions opts_;
@@ -66,11 +70,16 @@ class Engine {
   int32_t* row_slot_ = nullptr;
   int32_t* row_pos_ = nullptr;
   int32_t* lm_rows_ = nullptr;
+  int32_t* attn_items_ = nullptr;
+  float* attn_scratch_ = nullptr;
+  int rec_floats_ = 0;
+  int max_pages_ = 0;
   std::vector<void*> scratch_;
 
   std::vector<int32_t> host_tokens_;
   std::vector<int32_t> host_slots_;
   std::vector<int32_t> host_pos_;
+  std::vector<int32_t> host_items_;
   std::vector<int32_t> greedy_rows_;
   std::vector<int32_t> full_rows_;
   std::vector<BestEntry> best_init_;
