@@ -1,0 +1,9 @@
+build*/
+.venv/
+__pycache__/
+*.pyc
+models/
+tests/data/
+.DS_Store
+.cache/
+*.nvperf
