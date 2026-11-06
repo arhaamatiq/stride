@@ -32,6 +32,7 @@ struct Args {
   int prefill_chunk = 64;
   int max_slots = 256;
   double kv_gb = 1.0;
+  int kv_blocks = 0;
   uint32_t kv_shuffle = 0;
   uint32_t row_shuffle = 0;
   uint32_t arrival_seed = 0;
@@ -71,6 +72,7 @@ Args parse(int argc, char** argv) {
     else if (k == "--prefill-chunk") a.prefill_chunk = std::stoi(next());
     else if (k == "--max-slots") a.max_slots = std::stoi(next());
     else if (k == "--kv-gb") a.kv_gb = std::stod(next());
+    else if (k == "--kv-blocks") a.kv_blocks = std::stoi(next());
     else if (k == "--kv-shuffle") a.kv_shuffle = static_cast<uint32_t>(std::stoul(next()));
     else if (k == "--row-shuffle") a.row_shuffle = static_cast<uint32_t>(std::stoul(next()));
     else if (k == "--arrival-seed") a.arrival_seed = static_cast<uint32_t>(std::stoul(next()));
@@ -142,6 +144,7 @@ int main(int argc, char** argv) {
   eo.max_slots = args.max_slots;
   eo.max_full_rows = std::min(args.max_rows, std::max(args.concurrency, 1));
   eo.kv_bytes = static_cast<int64_t>(args.kv_gb * 1024.0 * 1024.0 * 1024.0);
+  eo.kv_blocks = args.kv_blocks;
   eo.kv_shuffle_seed = args.kv_shuffle;
   eo.bug = args.bug;
   eo.path = args.path == "tc" ? KernelPath::kTensorCore : KernelPath::kExact;

@@ -1,0 +1,36 @@
+name: ci
+on:
+  push:
+  pull_request:
+jobs:
+  cpu:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ninja-build
+          pip install --quiet torch==2.8.0 --index-url https://download.pytorch.org/whl/cpu
+          pip install --quiet transformers==4.56.2 safetensors numpy pytest accelerate
+      - name: Build
+        run: |
+          cmake -S . -B build-cpu -G Ninja -DSTRIDE_SERVER=OFF
+          cmake --build build-cpu
+          cmake -S . -B build-cpu-mut -G Ninja -DSTRIDE_SERVER=OFF -DSTRIDE_MUTATION=ON
+          cmake --build build-cpu-mut
+      - name: Correctness against PyTorch, batch and schedule invariance
+        run: pytest -q tests/test_correctness.py
+      - name: Bug-injection suite
+        run: |
+          python tests/mutations.py --cli build-cpu-mut/stride_cli --model tests/data/tiny \
+            --reference tests/data/tiny/ref.jsonl --reference-logits tests/data/tiny/ref.bin \
+            --prompts tests/data/tiny/prompts.jsonl --tolerance 2e-4 --report mutation_report.json --min-catch-rate 95
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mutation-report
+          path: mutation_report.json

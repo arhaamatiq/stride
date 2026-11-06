@@ -36,6 +36,7 @@ class KvCache {
   // Pushes changed table entries to the device.
   void sync();
   KvRef ref() const { return ref_; }
+  void set_bug(int bug) { bug_ = bug; }
 
  private:
   KvRef ref_{};
@@ -54,6 +55,7 @@ class KvCache {
   int32_t* device_table_ = nullptr;
   std::mt19937 rng_;
   bool shuffle_ = false;
+  int bug_ = 0;
 };
 
 }  // namespace stride

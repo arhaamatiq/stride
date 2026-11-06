@@ -45,7 +45,10 @@ Engine::Engine(const std::string& model_dir, const EngineOptions& opts)
   device_init();
   weights_ = std::make_unique<Weights>(model_dir, cfg_, opts_.path);
   const int kv_elem_bytes = opts_.path == KernelPath::kTensorCore ? 2 : 4;
-  kv_ = std::make_unique<KvCache>(cfg_, opts_.kv_bytes, opts_.max_slots, kv_elem_bytes, opts_.kv_shuffle_seed);
+  const int64_t kv_block_bytes = int64_t{kKvBlockTokens} * cfg_.head_dim * cfg_.kv_heads * 2 * cfg_.layers * kv_elem_bytes;
+  const int64_t kv_bytes = opts_.kv_blocks > 0 ? opts_.kv_blocks * kv_block_bytes : opts_.kv_bytes;
+  kv_ = std::make_unique<KvCache>(cfg_, kv_bytes, opts_.max_slots, kv_elem_bytes, opts_.kv_shuffle_seed);
+  kv_->set_bug(opts_.bug);
 
   // Sized for FP32 in both paths; the BF16 tile buffers simply use half.
   const size_t lanes = round16(opts_.max_rows);
@@ -118,6 +121,9 @@ void Engine::step(const std::vector<StepRow>& rows, std::vector<BestEntry>& gree
     if (rows[i].mode == LogitMode::kGreedy) greedy_rows_.push_back(i);
     if (rows[i].mode == LogitMode::kFull) full_rows_.push_back(i);
   }
+  if (opts_.bug == 303 && greedy_rows_.size() > 1 && static_cast<int>(greedy_rows_.size()) < n) {
+    std::swap(greedy_rows_[0], greedy_rows_[1]);
+  }
   if (static_cast<int>(full_rows_.size()) > opts_.max_full_rows) {
     throw std::runtime_error("step exceeds max_full_rows");
   }
@@ -177,7 +183,7 @@ void Engine::step_exact(const std::vector<StepRow>& rows, std::vector<BestEntry>
     qkv.rope = weights_->rope();
     qkv.row_slot = row_slot_;
     qkv.row_pos = row_pos_;
-    qkv.layer = li;
+    qkv.layer = opts_.bug == 301 ? 0 : li;
     qkv.head_dim = cfg_.head_dim;
     k_qkv(qkv, shape.J);
 
@@ -195,7 +201,7 @@ void Engine::step_exact(const std::vector<StepRow>& rows, std::vector<BestEntry>
     attn.scratch = attn_scratch_;
     attn.max_pages = max_pages_;
     attn.rec_floats = rec_floats_;
-    attn.layer = li;
+    attn.layer = opts_.bug == 301 ? 0 : li;
     attn.n_kv = cfg_.kv_heads;
     attn.n_q = cfg_.repeat();
     attn.head_dim = cfg_.head_dim;
@@ -232,7 +238,7 @@ void Engine::step_exact(const std::vector<StepRow>& rows, std::vector<BestEntry>
 
   norm.in = h_;
   norm.out = nx_;
-  norm.weight = weights_->norm_final();
+  norm.weight = opts_.bug == 302 ? weights_->layer(0).norm_mlp : weights_->norm_final();
   k_norm(norm, shape.J);
 
   const auto compact = [&](const std::vector<int32_t>& wanted, const LaneShape& ls) {
@@ -339,7 +345,7 @@ void Engine::step_tensor_core(const std::vector<StepRow>& rows, std::vector<Best
     qkv.rope = weights_->rope();
     qkv.row_slot = row_slot_;
     qkv.row_pos = row_pos_;
-    qkv.layer = li;
+    qkv.layer = opts_.bug == 301 ? 0 : li;
     qkv.head_dim = cfg_.head_dim;
     tc_qkv(qkv, 1);
 
@@ -357,7 +363,7 @@ void Engine::step_tensor_core(const std::vector<StepRow>& rows, std::vector<Best
     attn.scratch = attn_scratch_;
     attn.max_pages = max_pages_;
     attn.rec_floats = rec_floats_;
-    attn.layer = li;
+    attn.layer = opts_.bug == 301 ? 0 : li;
     attn.n_kv = cfg_.kv_heads;
     attn.n_q = cfg_.repeat();
     attn.head_dim = cfg_.head_dim;
@@ -390,7 +396,7 @@ void Engine::step_tensor_core(const std::vector<StepRow>& rows, std::vector<Best
     tc_gemm_residual(down);
   }
 
-  norm.weight = weights_->norm_final();
+  norm.weight = opts_.bug == 302 ? weights_->layer(0).norm_mlp : weights_->norm_final();
   tc_norm(norm, opts_.tc_norm_per_lane);
 
   const auto compact = [&](const std::vector<int32_t>& wanted) {

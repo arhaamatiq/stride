@@ -26,6 +26,7 @@ struct EngineOptions {
   int max_full_rows = 32;
   int max_slots = 256;
   int64_t kv_bytes = int64_t{16} << 30;
+  int kv_blocks = 0;  // overrides kv_bytes when set
   uint32_t kv_shuffle_seed = 0;
   int bug = 0;
   KernelPath path = KernelPath::kExact;

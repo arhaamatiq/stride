@@ -54,6 +54,7 @@ int KvCache::acquire_slot() {
 void KvCache::release_slot(int slot) {
   auto& blocks = owned_[slot];
   free_.insert(free_.end(), blocks.begin(), blocks.end());
+  if (bug_ == 205 && !blocks.empty()) free_.push_back(blocks.front());
   if (shuffle_) std::shuffle(free_.begin(), free_.end(), rng_);
   blocks.clear();
   free_slots_.push_back(slot);
@@ -74,7 +75,7 @@ bool KvCache::ensure(int slot, int end_pos) {
     table_[static_cast<size_t>(slot) * max_blocks_ + owned_[slot].size()] = block;
     owned_[slot].push_back(block);
   }
-  if (need > 0 && !slot_dirty_[slot]) {
+  if (need > 0 && !slot_dirty_[slot] && bug_ != 206) {
     slot_dirty_[slot] = true;
     dirty_slots_.push_back(slot);
   }
