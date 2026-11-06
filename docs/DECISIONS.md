@@ -51,7 +51,25 @@ Single-run experiment numbers below are in `reports/g3/tuning_log.md`.
 | Item | Status |
 | --- | --- |
 | Nsight Compute | `ncu` fails with `ERR_NVGPUCTRPERM` on the RunPod hosts tried (`reports/env/ncu_probe.txt`, `reports/g1/host2/ncu_probe.txt`): `RmProfilingAdminOnly` is 1 and containers lack `CAP_SYS_ADMIN`. Nsight Systems works and supplies per-kernel timing. Per-kernel hardware counters need a VM where counters are enabled. |
-| Nsight Systems reports | They embed the container's environment, including secrets and network details, even when the profiled process has an empty environment. `scripts/redact_nsys.py` overwrites those values with same-length bytes, and reports still open afterward. |
+| Nsight Systems reports | They embed the container's environment, including secrets and network details, even when the profiled process has an empty environment. The block appears as plain text and again inside LZ4 frames, where a value is split across tokens and a text search sees only fragments. `scripts/redact_nsys.py` decodes each frame and overwrites the compressed bytes behind each value at the same length; `scripts/scan_secrets.py` checks the decoded text. An earlier version searched raw bytes only, which left the pod ID, part of the pod's public IP and an SSH public key readable. Changes are confined to environment text, and some neighboring text in that block is masked too, for example `/usr/local` in `PATH`. |
 | Stretch: Llama-3.1-8B | Not attempted. First in the cut order. |
 | Prefix caching | Not implemented. Off in vLLM for every comparison. |
 | `min_tokens`, logprobs, penalties, tools | Not implemented, except that `min_tokens` is accepted together with `ignore_eos`, where it has no effect. Otherwise the server returns 400. |
+
+## History rewrite
+
+`dev` was rewritten on 2026-11-06 to remove environment details from the three Nsight reports in older commits. Those reports are the only files that changed: every other file in every commit is byte-identical, and each commit keeps its message, author and dates.
+
+Hashes in the evidence record what ran at the time, so `reports/env/stages.jsonl`, `reports/env/environment_268d3ced7526.txt`, `reports/g5/ci_run.json` and `docs/resume/METRICS.jsonl` keep the old values. CI run 42257270485 ran on `fcab230`, now `2e9cc99`.
+
+| Old | New | Commit |
+| --- | --- | --- |
+| `ba98b3b` | `1da2821` | Add benchmark artifacts, metrics ledger, rendered README and resume lines |
+| `4a3dae2` | `9648962` | Treat masked values as clean in the secret scan |
+| `268d3ce` | `9e94c38` | Per-stage provenance, per-request determinism evidence, offline comparison, rounding-only mutants, NaN handling |
+| `508187c` | `9070e75` | Regenerate evidence with per-stage provenance; rewrite README, bullets and decisions from verified results |
+| `c52a652` | `3fe2a7a` | Show vLLM change rates to two decimals |
+| `c3eda3a` | `1e018f6` | Mask network details in Nsight reports, wire up the replay counter, add exact-path scaling, tighten docs |
+| `42d8c82` | `0dca516` | Add exact-path scaling evidence and corrected stage times, rebuild ledger and docs |
+| `fcab230` | `2e9cc99` | Tighten wording in the decisions log |
+| `107af67` | `410f27c` | Record the CI run in the ledger |

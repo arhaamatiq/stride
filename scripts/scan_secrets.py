@@ -2,12 +2,15 @@
 """Fails if a file contains a token-shaped string. Prints where, never the value.
 
 Profilers and logs can capture the process environment: nsys embeds it in .nsys-rep
-files. scripts/run_all.sh scans its output, and the pre-push check runs this too.
+files, partly inside LZ4 frames that a text search cannot read, so those are decoded
+first. scripts/run_all.sh scans its output, and the pre-push check runs this too.
 """
 import gzip
 import os
 import re
 import sys
+
+import redact_nsys
 
 PATTERNS = {
     "runpod": rb"rpa_[A-Za-z0-9]{20,}",
@@ -37,6 +40,12 @@ def main():
                         blob = gzip.decompress(blob)
                 except OSError:
                     continue
+                if name.endswith(".nsys-rep"):
+                    counts = redact_nsys.findings(blob)
+                    left = {k: v for k, v in counts.items() if k != "frames" and v}
+                    if left:
+                        print(f"{path}: unmasked report values {left}", file=sys.stderr)
+                        found += 1
                 for kind, pattern in PATTERNS.items():
                     count = len(re.findall(pattern, blob))
                     if count:

@@ -23,7 +23,7 @@ jobs:
           cmake -S . -B build-cpu-mut -G Ninja -DSTRIDE_SERVER=OFF -DSTRIDE_MUTATION=ON
           cmake --build build-cpu-mut
       - name: Correctness against PyTorch, batch and schedule invariance
-        run: pytest -q tests/test_correctness.py
+        run: pytest -q tests/test_correctness.py tests/test_redact_nsys.py
       - name: Bug-injection suite
         run: |
           python tests/mutations.py --cli build-cpu-mut/stride_cli --model tests/data/tiny \
