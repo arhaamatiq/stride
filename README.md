@@ -6,7 +6,7 @@ At concurrency 128, vLLM returned different text for 84.96% of temperature-0 req
 
 ## Results
 
-One RTX 4090 instance, driver 595.91.07, and one pinned set of weight files for every engine. Every number comes from [the ledger](docs/resume/METRICS.jsonl), which records its artifact, commit and device.
+One RTX 4090 host, driver 595.91.07, and one pinned set of weight files for every engine comparison. Every number comes from [the ledger](docs/resume/METRICS.jsonl), which records its artifact, commit and device.
 
 **Same request, alone and under load.** 100 prompts of 43 to 51 tokens, 256 output tokens, temperature 0, seed 0, EOS ignored, prefix caching off. Each response is compared with that request's own sequential output.
 
@@ -19,7 +19,7 @@ One RTX 4090 instance, driver 595.91.07, and one pinned set of weight files for 
 
 Run sequentially twice, stride changed 0 and vLLM 0 of 100 outputs, so these vLLM differences appear only when requests share the engine. That is consistent with batch-dependent numerics as [analyzed by Thinking Machines](https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/), though this test does not isolate the cause, and it is not a claim that vLLM has a bug. One flipped token changes everything after it, so a 256-token output is a sensitive test.
 
-stride's `system_fingerprint`, which covers the exact bits of every chosen logit, also matched on every request. A separate run with a KV arena small enough to force 670 preemptions and replays changed 0 of 768 requests. Per-request hashes are in [`reports/g2`](reports/g2).
+stride's `system_fingerprint`, which covers the exact bits of every chosen logit, also matched on every request. A separate run with a KV arena small enough to force 670 preemptions, replaying 62,599 rows, changed 0 of 768 requests. Per-request hashes are in [`reports/g2`](reports/g2).
 
 **HTTP serving throughput and latency.** NVIDIA AIPerf 0.13.0 on the OpenAI chat endpoint, streaming, mean of 3 repeats. AIPerf requested 256 ± 32 prompt tokens, about 290 on the wire after the chat template, and 256 output tokens. vLLM ran on its default scheduler settings; stride's were chosen on these shapes.
 
@@ -31,9 +31,9 @@ stride's `system_fingerprint`, which covers the exact bits of every chosen logit
 | 64 | 9,540 ± 11.8 | 10,907 ± 22.2 | 87.5% | 215 / 219 | 5.83 / 4.98 | 2,012 / 1,531 |
 | 128 | 11,814 ± 8.2 | 14,947 ± 39.7 | 79.0% | 222 / 403 | 9.96 / 6.96 | 3,562 / 2,209 |
 
-AIPerf reported 0 errors at every point, on both engines.
+AIPerf reported 0 errors across all points on both engines.
 
-**Raw engines, no HTTP.** The serving comparison includes each server's overhead; at large batches vLLM's raw engine is further ahead. Same token-id prompts (256 tokens), 256 output tokens, mean of 3 repeats.
+**Engines without HTTP.** The serving comparison includes each server's overhead; at large batches vLLM's engine is further ahead without it. `stride_cli` against vLLM's `LLM` class on the same token-id prompts (256 tokens), 256 output tokens, mean of 3 repeats. vLLM's time still includes its Python front end and default detokenization; `stride_cli` links no tokenizer.
 
 | Batch | stride tok/s | vLLM tok/s | stride / vLLM |
 | --- | --- | --- | --- |
@@ -48,13 +48,13 @@ AIPerf reported 0 errors at every point, on both engines.
 | --- | --- | --- |
 | stride exact path vs HF, FP32 activations | **100.000%** | 100 / 100 |
 | stride serving path vs HF, FP32 activations | 75.73% | 52 / 100 |
-| HF BF16 vs HF FP32, the noise floor of BF16 itself | 38.76% | 6 / 100 |
+| HF BF16 vs HF FP32: how far PyTorch's BF16 mode drifts | 38.76% | 6 / 100 |
 | stride exact path, batch 1 vs batch 32 with shuffled lanes and pages | 100.000% | 100 / 100 |
 | stride serving path, batch 1 vs batch 32 with shuffled lanes and pages | 100.000% | 100 / 100 |
 
-Exact-path logits stay within 5.72e-05 of the FP32 reference across 400 vectors.
+Token match is position-wise on free-running sequences, so one early flip counts every later token as a miss. Exact-path logits stay within 5.72e-05 of the FP32 reference across 400 vectors.
 
-**Same bytes on different hardware.** On real Llama weights, the exact path produced byte-identical logits on an RTX 4090, an AMD EPYC 7702 and an Apple M1 Pro: 32,833,536 FP32 values from 8 prompts × 32 steps, with one SHA-256. The serving path does not reproduce on a CPU, but a second RTX 4090 in another data center matched on 100 of 100 prompts, by fingerprint and tokens over 25,600 generated tokens ([host details](reports/g1/host2)).
+**Same bytes on different hardware.** On real Llama weights, the exact path produced byte-identical logits on an RTX 4090, an AMD EPYC 7702 and an Apple M1 Pro: 32,833,536 FP32 values from 8 prompts × 32 steps, with one SHA-256. The serving path runs only on a GPU, but a second RTX 4090 in another data center matched on 100 of 100 prompts at concurrency 1, by fingerprint and tokens over 25,600 generated tokens ([host details](reports/g1/host2)).
 
 **Other measurements**
 
@@ -62,8 +62,9 @@ Exact-path logits stay within 5.72e-05 of the FP32 reference across 400 vectors.
 | --- | --- |
 | Batch-1 decode, serving path | 310.1 ± 0.3 tok/s, **76.0%** of a 407.8 tok/s roofline |
 | Batch-1 decode, exact path | 285.0 ± 0.1 tok/s, 69.9% of the roofline |
-| Register-blocked tensor-core kernels (A/B, 2×2 vs 1×1, identical output bits) | Concurrency 128: inter-token p50 cut 33.8%, throughput up 50.2%. Concurrency 64: 16.4% and 25.4%. No effect below 49 rows, where 2×2 is not used |
-| Per-lane RMSNorm (A/B, identical output bits) | Throughput up 19.9% at concurrency 64, 11.3% at 128 |
+| Register-blocked tensor-core kernels (A/B, 2×2 vs 1×1, identical output bits) | Concurrency 128: inter-token p50 cut 33.8%, throughput up 50.2%. Concurrency 64: 16.4% and 25.4%. Below 49 rows per step the automatic rule selects 1×1; not A/B tested below concurrency 64 |
+| Per-lane RMSNorm (A/B, identical output bits) | Throughput up 19.9% at concurrency 64, with a noisy baseline (std 181 tok/s); up 11.3% at 128 |
+| Exact path against serving path, no HTTP | Batch 64: 450 against 10,061 tok/s. Batch 128: 449 against 12,622 tok/s |
 | GPU idle between steps at concurrency 64, under Nsight Systems | 106 µs of 5,884 µs per step |
 | GPU memory peak, stride / vLLM | 19,938 / 21,068 MiB: each engine's configured allocation, not its minimum |
 
@@ -75,16 +76,16 @@ Exact-path logits stay within 5.72e-05 of the FP32 reference across 400 vectors.
 | Real weights, serving path | 29 / 29 | 25 / 25 | 12 |
 | Small random model on CPU, as in CI | 29 / 29 | 25 / 25 | 19 |
 
-The tolerance check runs one request at a time on the full-logits path, so it cannot reach bugs in the fused argmax or in concurrent scheduling; the invariance and golden-bits oracles reach those. On the serving path its threshold is wide (±0.6 on first-step logits, no token check) because of BF16 noise, so it misses more. The rounding-only bugs show the golden oracle is sensitive, not that it finds functional bugs.
+The exact-path count includes 1 bug caught only because it crashed the run. The tolerance check runs one request at a time on the full-logits path, so it cannot reach bugs in the fused argmax or in concurrent scheduling; the invariance and golden-bits oracles reach those. On the serving path its threshold is wide (±0.6 on first-step logits, no token check) because of BF16 noise, so it misses more. The rounding-only bugs show the golden oracle is sensitive, not that it finds functional bugs.
 
 ## How it works
 
-For any output element, the operations and their order depend only on the matrix shape, never on the batch, the lane, the thread or where KV pages live. Dot products use fixed summation trees, `exp` is hand-written from FMA steps, attention sums pages in position order, and argmax is order-independent. An optimization that only moves work between warps therefore should not change a bit, and the tests check that it does not.
+For any output element, the operations and their order depend only on the matrix shape, never on the batch, the lane, the thread or where KV pages live. Dot products use fixed summation trees, `exp` is hand-written from FMA steps, attention sums pages in position order, and argmax is order-independent. An optimization that only moves work between warps therefore should not change a bit, and the tests check that it does not. On the exact path this follows from the IEEE operations used. On the serving path it depends on how the tensor cores round, so it is established by testing, not guaranteed.
 
 Two kernel families share one scheduler and server:
 
-- **Serving path** (`--path tc`, default on CUDA): tensor-core `mma` tiles with BF16 activations. Fast and stable under load in these tests, but not reproducible on a CPU, and it differs from an FP32 reference as all BF16 inference does.
-- **Exact path** (`--path exact`): scalar FMA chains with FP32 activations. Matches PyTorch to FP32 rounding and produces the same bytes on GPU and CPU, but it is much slower at large batches.
+- **Serving path** (`--path tc`, default on CUDA): tensor-core `mma` tiles with BF16 activations. Fast and stable under load in these tests, but it runs only on a GPU, and it differs from an FP32 reference as BF16 inference generally does.
+- **Exact path** (`--path exact`): scalar FMA chains with FP32 activations. Matches PyTorch to FP32 rounding and produces the same bytes on GPU and CPU, but it is slower at large batches; see the table above.
 
 Responses carry `system_fingerprint: stride-<hash>`, chained over every token and the exact bits of its logit, so a client can check that load changed nothing.
 
@@ -93,9 +94,10 @@ Details: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). Choices and the measureme
 ## Methodology
 
 - **Weights:** `unsloth/Llama-3.2-1B-Instruct` at commit `5a8abab4a5d6f164389b1079fb721cfab8d7126c`. The engine, the PyTorch reference and vLLM load one directory, which [`scripts/verify_weights.py`](scripts/verify_weights.py) checks against [`weights.lock.json`](weights.lock.json) before each run.
-- **Fairness:** same instance and driver, though not the same CUDA libraries: stride builds with toolkit 12.8.93, and vLLM runs on PyTorch 2.13.0+cu130. Prefix caching is off in vLLM and absent from stride. Warmup is a separate AIPerf run with a different seed, so its prompts differ from measured prompts (AIPerf issue #1656), and it is excluded. 3 repeats per point.
+- **Runs:** the comparison numbers come from two `run_all.sh` passes on one container, judged by process and cache continuity; the GPU UUID was recorded only in the second. Engine source is identical between the passes. The HF reference runs predate the final G1 stage and are reused.
+- **Fairness:** same host and driver, though not the same CUDA libraries: stride builds with toolkit 12.8.93, and vLLM runs on PyTorch 2.13.0+cu130. Prefix caching is off in vLLM and absent from stride. Warmup is a separate AIPerf run with a different seed, so its prompts differ from measured prompts (AIPerf issue #1656), and it is excluded. 3 repeats per point.
 - **Roofline:** 1,008 GB/s, the RTX 4090's specified peak, divided by 2,471,628,800 weight bytes per forward pass from the safetensors header. It is a bound from a data-sheet figure, not a counter measurement, and KV and activation traffic are not counted.
-- **Reference:** HF transformers with BF16 weights and FP32 activations. The noise-floor row above shows why BF16 activations cannot serve as a precise reference.
+- **Reference:** HF transformers with BF16 weights and FP32 activations. The HF BF16 row above shows why BF16 activations cannot serve as a precise reference.
 - **Environment:** RunPod Secure Cloud, data center EUR-IS-1, NVIDIA GeForce RTX 4090, driver 595.91.07, AMD EPYC 7702 64-Core Processor. See [`reports/env`](reports/env).
 
 | Weight file | SHA-256 |
@@ -112,10 +114,11 @@ Details: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). Choices and the measureme
 
 - **Misses against the targets.** Batch-1 decode is 76.0% of the roofline against a target of 85%. Serving throughput at concurrency 64 is 87.5% of vLLM, past the 70% target but short of the 90% stretch. At concurrency 128 it is 79.0%, and request p99 latency is worse than vLLM's at both of those levels.
 - **The serving path does not match FP32 token for token**, at 75.73%. It is closer than HF's own BF16 mode at 38.76%, but the 100% result belongs to the exact path, which is too slow at large batches to be the serving default.
-- **What the stability result covers.** Greedy decoding, 100 distinct short prompts, one server configuration, concurrency up to 128, this model, and two RTX 4090s on one driver. A different GPU architecture may round differently inside `mma`, which has not been tested. The exact-path byte comparison covers 8 prompts × 32 steps.
+- **What the stability result covers.** Greedy decoding, 100 distinct short prompts, one server configuration, concurrency up to 128, this model, and one RTX 4090 under load; a second RTX 4090 reproduced the outputs at concurrency 1. A different GPU architecture may round differently inside `mma`, which has not been tested. The exact-path byte comparison covers 8 prompts × 32 steps.
 - **The weights come from a mirror.** The upstream `meta-llama` repo is gated and masks its file hash, so byte identity with it is not verified. `model.safetensors` has the same size as upstream's. `config.json` is the mirror's own edited version.
 - **Nsight Compute reports are missing.** `ncu` fails with `ERR_NVGPUCTRPERM` on the RunPod hosts tried ([one](reports/env/ncu_probe.txt), [two](reports/g1/host2/ncu_probe.txt)), because GPU counters need admin rights the containers lack. Timing comes from Nsight Systems.
-- **Nsight Systems reports are redacted.** They embed the container's environment, so secret values are overwritten by [`scripts/redact_nsys.py`](scripts/redact_nsys.py). The scan covers raw bytes, not any compressed sections.
+- **Nsight Systems reports are redacted.** They embed the container's environment, so secrets and network details are overwritten by [`scripts/redact_nsys.py`](scripts/redact_nsys.py). The scan covers raw bytes, not any compressed sections.
+- **One report field reads wrong.** `replayed_rows` was not wired up when the load study ran, so [`determinism_stride_preempt.json`](reports/g2/determinism_stride_preempt.json) shows 0. The number above is recomputed from that report's own row and token counts; the counter has since been fixed, with no effect on arithmetic.
 - **Not implemented:** prefix caching, multi-GPU, logprobs and tools. `min_tokens` is accepted only together with `ignore_eos`. Llama-3.1-8B was not attempted. Maximum context is 2048 tokens.
 
 ## Reproduce
@@ -131,18 +134,28 @@ cmake --build build
 build/stride_server --model models/llama32-1b --port 8000 --kv-gb 16 --max-seqs 256 --max-rows 2048 --prefill-chunk 256
 
 # CPU tests, as in CI. No GPU or gated weights needed.
+pip install torch transformers safetensors numpy pytest accelerate
 cmake -S . -B build-cpu -G Ninja -DSTRIDE_SERVER=OFF
 cmake --build build-cpu
 pytest tests/test_correctness.py
 ```
 
-To regenerate the evidence on one RTX 4090, with vLLM and AIPerf installed in `BENCH_VENV` and PyTorch and transformers in the system Python:
+To regenerate the evidence on one RTX 4090, with vLLM and AIPerf installed in `BENCH_VENV`, PyTorch and transformers in the system Python, and `nvcc`, `nsys` and `ncu` on `PATH`:
 
 ```bash
 OUT_DIR=$PWD/reports MODEL_DIR=$PWD/models/llama32-1b BENCH_VENV=/path/to/venv scripts/run_all.sh $(git rev-parse HEAD)
+scripts/compact_reports.sh reports
 python3 scripts/build_ledger.py && python3 scripts/render_docs.py
 ```
 
-Not produced by `run_all.sh`: the ARM leg of the cross-device comparison ([`scripts/cross_device.py`](scripts/cross_device.py), needs an ARM machine), the second-host run ([`scripts/cross_host.sh`](scripts/cross_host.sh), needs a second GPU host), and the hand-collected design experiments in [`reports/g3/tuning_log.md`](reports/g3/tuning_log.md), which are not used for any reported result. `run_all.sh` assumes a RunPod-style `/usr/local/cuda` toolkit.
+Not produced by `run_all.sh`:
+
+- `reports/g1/cross_device.json` and its ARM leg. `run_all.sh` only compares the GPU and x86 logits; [`scripts/cross_device.py`](scripts/cross_device.py) makes the report.
+- The second-host run, from [`scripts/cross_host.sh`](scripts/cross_host.sh).
+- `weights.lock.json`, from [`scripts/pin_weights.py`](scripts/pin_weights.py).
+- Stage records for those, from [`scripts/record_stage.py`](scripts/record_stage.py).
+- [`reports/g3/tuning_log.md`](reports/g3/tuning_log.md), hand-collected design experiments used in `docs/DECISIONS.md` but not for any reported result.
+
+The committed first pass predates per-stage records, so its records were backfilled from `reports/run_all.log`. Reports were reduced as in [`scripts/compact_reports.sh`](scripts/compact_reports.sh): AIPerf per-request exports are compressed, and regenerable inputs, logit dumps and stage markers are removed. `run_all.sh` assumes a `/usr/local/cuda` toolkit.
 
 [ATTRIBUTION.md](ATTRIBUTION.md) lists libraries and prior work. Built with Llama. Code is Apache-2.0; the model is under the Llama 3.2 Community License.

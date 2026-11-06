@@ -23,6 +23,7 @@
 {"stage": "mut_exact", "commit": "268d3ced7526def19faa5faceeaff606bdd7c97b", "device": "RTX 4090", "finished_utc": "2026-11-06T15:50:35Z"}
 {"stage": "mut_tc", "commit": "268d3ced7526def19faa5faceeaff606bdd7c97b", "device": "RTX 4090", "finished_utc": "2026-11-06T16:00:02Z"}
 {"stage": "mut_cpu", "commit": "268d3ced7526def19faa5faceeaff606bdd7c97b", "device": "CPU", "finished_utc": "2026-11-06T16:10:37Z"}
-{"stage": "cross_device_arm", "commit": "268d3ced7526def19faa5faceeaff606bdd7c97b", "device": "RTX 4090; AMD EPYC 7702; Apple M1 Pro", "finished_utc": "2026-11-06T16:11:19Z"}
-{"stage": "cross_host", "commit": "268d3ced7526def19faa5faceeaff606bdd7c97b", "device": "two RTX 4090 hosts; see reports/g1/host2/host2_env.txt", "finished_utc": "2026-11-06T16:11:19Z"}
-{"stage": "pin", "commit": "71b0906", "device": "RTX 4090 host", "finished_utc": "2026-11-06T11:56:36Z"}
+{"stage": "cross_device_arm", "commit": "268d3ced7526def19faa5faceeaff606bdd7c97b", "device": "RTX 4090; AMD EPYC 7702; Apple M1 Pro", "finished_utc": "2026-11-06T15:41:42Z"}
+{"stage": "cross_host", "commit": "268d3ced7526def19faa5faceeaff606bdd7c97b", "device": "two RTX 4090 hosts; see reports/g1/host2/host2_env.txt", "finished_utc": "2026-11-06T15:30:12Z", "note": "host2_env.txt start time plus load and run seconds from the stderr summaries"}
+{"stage": "pin", "commit": "71b0906", "device": "RTX 4090 host", "finished_utc": "2026-11-06T11:56:36Z", "note": "retrieved just before the commit that first records the lock"}
+{"stage": "exact_scaling", "commit": "c3eda3a32776de62bc58c646a168a2fedac2b334", "device": "RTX 4090, third host", "finished_utc": "2026-11-06T16:56:00Z", "note": "time to the minute, from the run's console clock"}
