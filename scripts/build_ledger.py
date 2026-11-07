@@ -129,6 +129,7 @@ def main():
             b = {r["id"]: r for r in map(json.loads, open(there))}
             equal = sum(a[i]["fingerprint"] == b[i]["fingerprint"] and a[i]["tokens"] == b[i]["tokens"] for i in a)
             L.add("cross_host", f"g1.cross_host.{path}.identical", equal, f"of {len(a)} prompts", "G1", "fingerprints and tokens; host details and timings in reports/g1/host2", "stride_cli on both hosts", f"reports/g1/host2/host2_{path}.jsonl")
+            L.add("cross_host", f"g1.cross_host.{path}.generated_tokens", sum(len(r["tokens"]) for r in b.values()), "tokens", "G1", "tokens generated on the second host and compared", "stride_cli on both hosts", f"reports/g1/host2/host2_{path}.jsonl")
 
     # G2 and the load study. Counts are recomputed from the per-request hashes.
     for label, stage in (("stride", "det_stride"), ("vllm", "det_vllm"), ("stride_preempt", "det_preempt")):
