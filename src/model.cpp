@@ -46,7 +46,7 @@ ModelConfig ModelConfig::load(const std::string& model_dir) {
       c.eos_tokens.push_back(j["eos_token_id"].get<int>());
     }
   }
-  if (c.heads % c.kv_heads != 0 || c.repeat() > 4) throw std::runtime_error("unsupported head layout");
+  if (c.heads % c.kv_heads != 0 || c.repeat() != 4) throw std::runtime_error("unsupported head layout");
   if (c.head_dim % 4 != 0 || c.head_dim > kMaxHeadDim) throw std::runtime_error("unsupported head_dim");
   return c;
 }
@@ -110,6 +110,28 @@ std::vector<uint16_t> pack(const TensorView& t, int groups, const std::function<
   return out;
 }
 
+// Packs rows into 16-row tiles: dst[row tile][col tile][slot][col % 16].
+std::vector<uint16_t> pack_tiles(const TensorView& t, int row_tiles, const std::function<int(int, int)>& row_of) {
+  if (t.dtype != "BF16") throw std::runtime_error("expected BF16 weights, got " + t.dtype);
+  const int rows = static_cast<int>(t.shape[0]);
+  const int cols = static_cast<int>(t.shape[1]);
+  const int col_tiles = cols / 16;
+  const auto* src = reinterpret_cast<const uint16_t*>(t.data);
+  std::vector<uint16_t> out(static_cast<size_t>(row_tiles) * col_tiles * 256, 0);
+  for (int rt = 0; rt < row_tiles; ++rt) {
+    for (int slot = 0; slot < 16; ++slot) {
+      const int row = row_of(rt, slot);
+      if (row < 0) continue;
+      if (row >= rows) throw std::runtime_error("tile packing row out of range");
+      const uint16_t* r = src + static_cast<int64_t>(row) * cols;
+      for (int ct = 0; ct < col_tiles; ++ct) {
+        std::memcpy(&out[(static_cast<size_t>(rt) * col_tiles + ct) * 256 + slot * 16], r + ct * 16, 32);
+      }
+    }
+  }
+  return out;
+}
+
 std::vector<float> widen(const TensorView& t) {
   if (t.dtype != "BF16") throw std::runtime_error("expected BF16 weights, got " + t.dtype);
   const auto* src = reinterpret_cast<const uint16_t*>(t.data);
@@ -124,7 +146,7 @@ std::vector<float> widen(const TensorView& t) {
 
 }  // namespace
 
-Weights::Weights(const std::string& model_dir, const ModelConfig& cfg) {
+Weights::Weights(const std::string& model_dir, const ModelConfig& cfg, KernelPath path) {
   SafeTensors st(model_dir + "/model.safetensors");
 
   const auto place = [this](const void* data, size_t bytes) {
@@ -151,15 +173,26 @@ Weights::Weights(const std::string& model_dir, const ModelConfig& cfg) {
   };
   const auto plain_rows = [](int g, int slot) { return g * 4 + slot; };
 
-  const auto mat = [&](const TensorView& t, const std::function<int(int, int)>& row_of) {
+  const bool tiles = path == KernelPath::kTensorCore;
+  // A row tile holds eight RoPE pairs: (d0 + i) and (d0 + D/2 + i).
+  const auto rope_tile_rows = [D](int rt, int slot) {
+    const int per_head = D / 16;
+    const int head = rt / per_head;
+    const int d0 = (rt % per_head) * 8;
+    return head * D + (slot < 8 ? d0 + slot : d0 + D / 2 + slot - 8);
+  };
+  const auto plain_tile_rows = [](int rt, int slot) { return rt * 16 + slot; };
+
+  const auto mat_of = [&](const TensorView& t, bool rope) {
     const int rows = static_cast<int>(t.shape[0]);
     const int cols = static_cast<int>(t.shape[1]);
-    if (rows % 4 != 0 || cols % 8 != 0) {
+    if (tiles ? (rows % 16 != 0 || cols % 16 != 0) : (rows % 4 != 0 || cols % 8 != 0)) {
       throw std::runtime_error("matrix shape incompatible with the packed kernels");
     }
-    const int groups = rows / 4;
+    const int groups = rows / (tiles ? 16 : 4);
     GemmMat m{};
-    m.w = place_u16(pack(t, groups, row_of));
+    m.w = tiles ? place_u16(pack_tiles(t, groups, rope ? std::function<int(int, int)>(rope_tile_rows) : std::function<int(int, int)>(plain_tile_rows)))
+                : place_u16(pack(t, groups, rope ? std::function<int(int, int)>(rope_rows) : std::function<int(int, int)>(plain_rows)));
     m.groups = groups;
     m.cols = cols;
     bytes_per_pass_ += static_cast<uint64_t>(rows) * cols * 2;
@@ -170,28 +203,30 @@ Weights::Weights(const std::string& model_dir, const ModelConfig& cfg) {
   for (int i = 0; i < cfg.layers; ++i) {
     const std::string pre = "model.layers." + std::to_string(i) + ".";
     LayerWeights& l = layers_[i];
-    l.q = mat(st.get(pre + "self_attn.q_proj.weight"), rope_rows);
-    l.k = mat(st.get(pre + "self_attn.k_proj.weight"), rope_rows);
-    l.v = mat(st.get(pre + "self_attn.v_proj.weight"), rope_rows);
-    l.o = mat(st.get(pre + "self_attn.o_proj.weight"), plain_rows);
-    l.w1 = mat(st.get(pre + "mlp.gate_proj.weight"), plain_rows);
-    l.w3 = mat(st.get(pre + "mlp.up_proj.weight"), plain_rows);
-    l.w2 = mat(st.get(pre + "mlp.down_proj.weight"), plain_rows);
+    l.q = mat_of(st.get(pre + "self_attn.q_proj.weight"), true);
+    l.k = mat_of(st.get(pre + "self_attn.k_proj.weight"), true);
+    l.v = mat_of(st.get(pre + "self_attn.v_proj.weight"), true);
+    l.o = mat_of(st.get(pre + "self_attn.o_proj.weight"), false);
+    l.w1 = mat_of(st.get(pre + "mlp.gate_proj.weight"), false);
+    l.w3 = mat_of(st.get(pre + "mlp.up_proj.weight"), false);
+    l.w2 = mat_of(st.get(pre + "mlp.down_proj.weight"), false);
     l.norm_attn = place_f32(widen(st.get(pre + "input_layernorm.weight")));
     l.norm_mlp = place_f32(widen(st.get(pre + "post_attention_layernorm.weight")));
   }
   norm_final_ = place_f32(widen(st.get("model.norm.weight")));
 
-  const int vocab_rows = (cfg.vocab + 3) / 4 * 4;
-  const auto vocab_row = [&cfg](int g, int slot) {
-    const int row = g * 4 + slot;
+  const int group_rows = tiles ? 16 : 4;
+  const int vocab_groups = (cfg.vocab + group_rows - 1) / group_rows;
+  const std::function<int(int, int)> vocab_row = [&cfg, group_rows](int g, int slot) {
+    const int row = g * group_rows + slot;
     return row < cfg.vocab ? row : -1;
   };
-  const TensorView& embed = st.get("model.embed_tokens.weight");
-  const int vocab_groups = vocab_rows / 4;
-  embed_ = place_u16(pack(embed, vocab_groups, vocab_row));
+  const auto pack_vocab = [&](const TensorView& t) {
+    return tiles ? pack_tiles(t, vocab_groups, vocab_row) : pack(t, vocab_groups, vocab_row);
+  };
+  embed_ = place_u16(pack_vocab(st.get("model.embed_tokens.weight")));
   if (st.has("lm_head.weight")) {
-    lm_.w = place_u16(pack(st.get("lm_head.weight"), vocab_groups, vocab_row));
+    lm_.w = place_u16(pack_vocab(st.get("lm_head.weight")));
   } else {
     lm_.w = embed_;
   }

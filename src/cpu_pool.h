@@ -14,9 +14,11 @@ namespace stride {
 
 class CpuPool {
  public:
+  // Never destroyed: the workers are detached and block on the condition variable
+  // for the life of the process, and glibc blocks destroying a condvar with waiters.
   static CpuPool& instance() {
-    static CpuPool pool;
-    return pool;
+    static CpuPool* pool = new CpuPool;
+    return *pool;
   }
 
   void run(int n, const std::function<void(int)>& fn) {

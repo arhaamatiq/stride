@@ -37,10 +37,18 @@ def build(out_dir: str, seed: int) -> None:
         attention_bias=False,
         mlp_bias=False,
         rms_norm_eps=1e-5,
+        initializer_range=0.2,
         bos_token_id=1,
         eos_token_id=2,
     )
-    model = LlamaForCausalLM(cfg).to(torch.bfloat16)
+    model = LlamaForCausalLM(cfg)
+    # Default init leaves every norm gain at exactly 1.0 and attention nearly silent,
+    # which would hide whole classes of bugs. Make every component matter.
+    with torch.no_grad():
+        for name, param in model.named_parameters():
+            if "norm" in name:
+                param.copy_(1.0 + 0.2 * torch.randn_like(param))
+    model = model.to(torch.bfloat16)
     os.makedirs(out_dir, exist_ok=True)
     state = {k: v.clone().contiguous() for k, v in model.state_dict().items() if k != "lm_head.weight"}
     save_file(state, os.path.join(out_dir, "model.safetensors"), metadata={"format": "pt"})

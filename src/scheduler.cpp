@@ -104,7 +104,8 @@ void Scheduler::admit() {
     const int slot = engine_.kv().acquire_slot();
     if (slot < 0) break;
     next.slot = slot;
-    next.next_pos = 0;
+    // Replay from the start: the blocks were released on preemption.
+    if (opts_.bug != 202) next.next_pos = 0;
     running_.push_back(std::move(waiting_.front()));
     waiting_.pop_front();
   }
@@ -117,8 +118,8 @@ void Scheduler::preempt_youngest() {
   Seq& victim = **it;
   engine_.kv().release_slot(victim.slot);
   victim.slot = -1;
-  victim.next_pos = 0;
   ++stats_.preemptions;
+  stats_.replayed_rows += victim.next_pos;
   waiting_.push_front(std::move(*it));
   running_.erase(it);
 }
@@ -161,7 +162,7 @@ bool Scheduler::build_rows() {
         StepRow row{};
         row.slot = seq->slot;
         row.pos = (opts_.bug == 201 && i == count - 1 && count > 1) ? pos - 1 : pos;
-        row.token = seq->tokens[pos];
+        row.token = (opts_.bug == 203 && pos > 0 && count == 1) ? seq->tokens[pos - 1] : seq->tokens[pos];
         const bool last = pos == static_cast<int>(seq->tokens.size()) - 1;
         row.mode = !last ? LogitMode::kNone : seq->wants_full() ? LogitMode::kFull : LogitMode::kGreedy;
         rows_.push_back(row);
@@ -182,7 +183,7 @@ bool Scheduler::build_rows() {
         owners[i] = row_owner_[order_[i]];
       }
       rows_.swap(shuffled);
-      row_owner_.swap(owners);
+      if (opts_.bug != 204) row_owner_.swap(owners);
     }
     for (const auto& [seq, count] : plan) seq->next_pos += count;
     return true;
@@ -290,7 +291,7 @@ bool Scheduler::step() {
     if (std::find(stops.begin(), stops.end(), token) != stops.end()) {
       event.finished = true;
       event.finish_reason = "stop";
-    } else if (seq.generated >= seq.req.max_new_tokens) {
+    } else if (seq.generated >= seq.req.max_new_tokens - (opts_.bug == 207 ? 1 : 0)) {
       event.finished = true;
       event.finish_reason = "length";
     }

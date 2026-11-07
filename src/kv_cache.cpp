@@ -7,17 +7,17 @@
 
 namespace stride {
 
-KvCache::KvCache(const ModelConfig& cfg, int64_t arena_bytes, int max_slots, uint32_t shuffle_seed)
-    : max_slots_(max_slots), rng_(shuffle_seed), shuffle_(shuffle_seed != 0) {
-  const int64_t group_floats = static_cast<int64_t>(kKvBlockTokens) * cfg.head_dim;
-  const int64_t which_floats = group_floats * cfg.kv_heads;
-  const int64_t layer_floats = which_floats * 2;
-  block_floats_ = layer_floats * cfg.layers;
-  total_blocks_ = static_cast<int>(arena_bytes / (block_floats_ * 4));
+KvCache::KvCache(const ModelConfig& cfg, int64_t arena_bytes, int max_slots, int elem_bytes, uint32_t shuffle_seed)
+    : elem_bytes_(elem_bytes), max_slots_(max_slots), rng_(shuffle_seed), shuffle_(shuffle_seed != 0) {
+  const int64_t group_elems = static_cast<int64_t>(kKvBlockTokens) * cfg.head_dim;
+  const int64_t which_elems = group_elems * cfg.kv_heads;
+  const int64_t layer_elems = which_elems * 2;
+  block_elems_ = layer_elems * cfg.layers;
+  total_blocks_ = static_cast<int>(arena_bytes / (block_elems_ * elem_bytes_));
   if (total_blocks_ <= 0) throw std::runtime_error("KV arena smaller than one block");
   max_blocks_ = (kMaxCtx + kKvBlockTokens - 1) >> kKvBlockShift;
 
-  arena_ = static_cast<float*>(device_alloc(static_cast<size_t>(total_blocks_) * block_floats_ * 4));
+  arena_ = device_alloc(static_cast<size_t>(total_blocks_) * block_elems_ * elem_bytes_);
   table_.assign(static_cast<size_t>(max_slots_) * max_blocks_, 0);
   device_table_ = static_cast<int32_t*>(device_alloc(table_.size() * sizeof(int32_t)));
   device_upload(device_table_, table_.data(), table_.size() * sizeof(int32_t));
@@ -31,10 +31,10 @@ KvCache::KvCache(const ModelConfig& cfg, int64_t arena_bytes, int max_slots, uin
 
   ref_.arena = arena_;
   ref_.table = device_table_;
-  ref_.block_floats = block_floats_;
-  ref_.layer_floats = layer_floats;
-  ref_.which_floats = which_floats;
-  ref_.group_floats = group_floats;
+  ref_.block_elems = block_elems_;
+  ref_.layer_elems = layer_elems;
+  ref_.which_elems = which_elems;
+  ref_.group_elems = group_elems;
   ref_.max_blocks = max_blocks_;
   ref_.head_dim = cfg.head_dim;
 }
@@ -54,6 +54,7 @@ int KvCache::acquire_slot() {
 void KvCache::release_slot(int slot) {
   auto& blocks = owned_[slot];
   free_.insert(free_.end(), blocks.begin(), blocks.end());
+  if (bug_ == 205 && !blocks.empty()) free_.push_back(blocks.front());
   if (shuffle_) std::shuffle(free_.begin(), free_.end(), rng_);
   blocks.clear();
   free_slots_.push_back(slot);
@@ -74,7 +75,7 @@ bool KvCache::ensure(int slot, int end_pos) {
     table_[static_cast<size_t>(slot) * max_blocks_ + owned_[slot].size()] = block;
     owned_[slot].push_back(block);
   }
-  if (need > 0 && !slot_dirty_[slot]) {
+  if (need > 0 && !slot_dirty_[slot] && bug_ != 206) {
     slot_dirty_[slot] = true;
     dirty_slots_.push_back(slot);
   }

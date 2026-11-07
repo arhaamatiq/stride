@@ -1,0 +1,5 @@
+vllm: sequential rerun differs on 0/100
+vllm c=4: 82/100 requests differ, 82/100 prompts changed, stats None
+vllm c=16: 84/100 requests differ, 84/100 prompts changed, stats None
+vllm c=64: 225/256 requests differ, 98/100 prompts changed, stats None
+vllm c=128: 435/512 requests differ, 100/100 prompts changed, stats None

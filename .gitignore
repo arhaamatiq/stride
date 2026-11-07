@@ -7,3 +7,6 @@ tests/data/
 .DS_Store
 .cache/
 *.nvperf
+reports/.work_g1/
+reports/.done_*
+reports/g1/xdev/*/logits.bin
