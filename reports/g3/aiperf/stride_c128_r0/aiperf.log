@@ -1,0 +1,362 @@
+13:49:12.802 INFO     Starting AIPerf System (_single_run.py:81)
+13:49:12.810 INFO     [OK] Tokenizer /root/models/llama32-1b detected (tokenizer_display.py:297)
+13:49:12.810 INFO     1 tokenizer validated | 0.0s (tokenizer_display.py:306)
+13:49:12.812 INFO     Prefetching 1 tokenizer into HF cache... (tokenizer_validator.py:129)
+13:49:19.568 INFO       Cached /root/models/llama32-1b (6.74s) (tokenizer_validator.py:146)
+13:49:19.686 INFO     1 tokenizer cached • 6.9s (tokenizer_validator.py:166)
+13:49:20.030 INFO     Server metrics disabled via --no-server-metrics (system_controller.py:512)
+13:49:20.056 INFO     GPU telemetry export enabled: /workspace/reports/g3/aiperf/stride_c128_r0/gpu_telemetry_export.jsonl (jsonl_writer.py:56)
+13:49:20.064 INFO     Telemetry streaming is disabled (set --otel-url and/or --mlflow-tracking-uri to enable) (otel_metrics_results_processor.py:127)
+13:49:20.066 INFO     Record metrics export enabled: /workspace/reports/g3/aiperf/stride_c128_r0/profile_export.jsonl (record_export_jsonl_writer.py:62)
+13:49:20.084 INFO     Registered: Worker_Manager ('worker_manager') [0/0] (service_registry.py:196)
+13:49:20.085 INFO     Registered Worker Manager (id: 'worker_manager') (system_controller_dispatch.py:146)
+13:49:20.086 INFO     Registered: Gpu_Telemetry_Manager ('gpu_telemetry_manager') [0/0] (service_registry.py:196)
+13:49:20.087 INFO     Registered Gpu Telemetry Manager (id: 'gpu_telemetry_manager') (system_controller_dispatch.py:146)
+13:49:20.202 INFO     Registered Worker Manager (id: 'worker_manager') (system_controller_dispatch.py:146)
+13:49:20.204 INFO     Registered Gpu Telemetry Manager (id: 'gpu_telemetry_manager') (system_controller_dispatch.py:146)
+13:49:20.204 INFO     Registered: Dataset_Manager ('dataset_manager') [0/0] (service_registry.py:196)
+13:49:20.205 INFO     Registered Dataset Manager (id: 'dataset_manager') (system_controller_dispatch.py:146)
+13:49:20.280 INFO     Connection probe for dataset_manager succeeded after 3 attempts (0.2s) (message_bus_mixin.py:106)
+13:49:20.696 INFO     Registered: Records_Manager ('records_manager') [0/0] (service_registry.py:196)
+13:49:20.700 INFO     Registered Records Manager (id: 'records_manager') (system_controller_dispatch.py:146)
+13:49:20.700 INFO     Registered Dataset Manager (id: 'dataset_manager') (system_controller_dispatch.py:146)
+13:49:20.701 INFO     Registered Records Manager (id: 'records_manager') (system_controller_dispatch.py:146)
+13:49:20.705 INFO     Registered: Worker ('worker_0eda17d2') [0/0] (service_registry.py:196)
+13:49:20.705 INFO     Registered Worker (id: 'worker_0eda17d2') (system_controller_dispatch.py:146)
+13:49:20.706 INFO     Registered: Worker ('worker_00485bd2') [0/0] (service_registry.py:196)
+13:49:20.707 INFO     Registered Worker (id: 'worker_00485bd2') (system_controller_dispatch.py:146)
+13:49:20.708 INFO     Registered: Worker ('worker_05c4ef74') [0/0] (service_registry.py:196)
+13:49:20.709 INFO     Registered Worker (id: 'worker_05c4ef74') (system_controller_dispatch.py:146)
+13:49:20.709 INFO     Registered: Worker ('worker_af5de00f') [0/0] (service_registry.py:196)
+13:49:20.710 INFO     Registered Worker (id: 'worker_af5de00f') (system_controller_dispatch.py:146)
+13:49:20.710 INFO     Registered: Worker ('worker_d00ed336') [0/0] (service_registry.py:196)
+13:49:20.711 INFO     Registered Worker (id: 'worker_d00ed336') (system_controller_dispatch.py:146)
+13:49:20.712 INFO     Registered: Timing_Manager ('timing_manager') [0/0] (service_registry.py:196)
+13:49:20.712 INFO     Registered Timing Manager (id: 'timing_manager') (system_controller_dispatch.py:146)
+13:49:20.713 INFO     Registered: Worker ('worker_9f2d883a') [0/0] (service_registry.py:196)
+13:49:20.713 INFO     Registered Worker (id: 'worker_9f2d883a') (system_controller_dispatch.py:146)
+13:49:20.714 INFO     Registered: Worker ('worker_a8808dd3') [0/0] (service_registry.py:196)
+13:49:20.715 INFO     Registered Worker (id: 'worker_a8808dd3') (system_controller_dispatch.py:146)
+13:49:20.715 INFO     Registered: Worker ('worker_b782fb92') [0/0] (service_registry.py:196)
+13:49:20.716 INFO     Registered Worker (id: 'worker_b782fb92') (system_controller_dispatch.py:146)
+13:49:20.904 INFO     Registered: Worker ('worker_baccdc3e') [0/0] (service_registry.py:196)
+13:49:20.905 INFO     Registered Worker (id: 'worker_baccdc3e') (system_controller_dispatch.py:146)
+13:49:20.905 INFO     Connection probe for worker_d00ed336 succeeded after 3 attempts (0.2s) (message_bus_mixin.py:106)
+13:49:20.905 INFO     Connection probe for record_processor_e9a0186f succeeded after 3 attempts (0.2s) (message_bus_mixin.py:106)
+13:49:20.905 INFO     Registered: Worker ('worker_52512ff7') [0/0] (service_registry.py:196)
+13:49:20.905 INFO     Connection probe for worker_9f2d883a succeeded after 3 attempts (0.2s) (message_bus_mixin.py:106)
+13:49:20.905 INFO     Connection probe for worker_c2aff8e7 succeeded after 3 attempts (0.2s) (message_bus_mixin.py:106)
+13:49:20.905 INFO     Connection probe for worker_a8285d73 succeeded after 3 attempts (0.2s) (message_bus_mixin.py:106)
+13:49:20.905 INFO     Connection probe for worker_a8808dd3 succeeded after 3 attempts (0.2s) (message_bus_mixin.py:106)
+13:49:20.905 INFO     Connection probe for worker_b782fb92 succeeded after 3 attempts (0.2s) (message_bus_mixin.py:106)
+13:49:20.905 INFO     Connection probe for worker_f2766b24 succeeded after 3 attempts (0.2s) (message_bus_mixin.py:106)
+13:49:20.905 INFO     Connection probe for worker_fcceffdc succeeded after 3 attempts (0.2s) (message_bus_mixin.py:106)
+13:49:20.905 INFO     Connection probe for worker_af5de00f succeeded after 3 attempts (0.2s) (message_bus_mixin.py:106)
+13:49:20.905 INFO     Connection probe for timing_manager succeeded after 3 attempts (0.2s) (message_bus_mixin.py:106)
+13:49:20.905 INFO     Connection probe for worker_0eda17d2 succeeded after 3 attempts (0.2s) (message_bus_mixin.py:106)
+13:49:20.906 INFO     Connection probe for worker_00485bd2 succeeded after 4 attempts (0.3s) (message_bus_mixin.py:106)
+13:49:20.906 INFO     Registered Worker (id: 'worker_52512ff7') (system_controller_dispatch.py:146)
+13:49:20.911 INFO     Registered: Record_Processor ('record_processor_e9a0186f') [0/0] (service_registry.py:196)
+13:49:20.912 INFO     Registered Record Processor (id: 'record_processor_e9a0186f') (system_controller_dispatch.py:146)
+13:49:20.913 INFO     Registered: Worker ('worker_a8285d73') [0/0] (service_registry.py:196)
+13:49:20.913 INFO     Registered Worker (id: 'worker_a8285d73') (system_controller_dispatch.py:146)
+13:49:20.914 INFO     Registered: Worker ('worker_f2766b24') [0/0] (service_registry.py:196)
+13:49:20.914 INFO     Registered Worker (id: 'worker_f2766b24') (system_controller_dispatch.py:146)
+13:49:20.915 INFO     Registered: Worker ('worker_c2aff8e7') [0/0] (service_registry.py:196)
+13:49:20.915 INFO     Registered Worker (id: 'worker_c2aff8e7') (system_controller_dispatch.py:146)
+13:49:20.916 INFO     Registered: Worker ('worker_fcceffdc') [0/0] (service_registry.py:196)
+13:49:20.916 INFO     Registered Worker (id: 'worker_fcceffdc') (system_controller_dispatch.py:146)
+13:49:20.917 INFO     Registered Worker (id: 'worker_d00ed336') (system_controller_dispatch.py:146)
+13:49:20.917 INFO     Registered Worker (id: 'worker_9f2d883a') (system_controller_dispatch.py:146)
+13:49:20.917 INFO     Connection probe for record_processor_2bbca290 succeeded after 3 attempts (0.2s) (message_bus_mixin.py:106)
+13:49:20.918 INFO     Registered Worker (id: 'worker_a8808dd3') (system_controller_dispatch.py:146)
+13:49:20.919 INFO     Registered Worker (id: 'worker_b782fb92') (system_controller_dispatch.py:146)
+13:49:20.919 INFO     Registered Worker (id: 'worker_af5de00f') (system_controller_dispatch.py:146)
+13:49:20.920 INFO     Registered Timing Manager (id: 'timing_manager') (system_controller_dispatch.py:146)
+13:49:20.920 INFO     Registered Worker (id: 'worker_0eda17d2') (system_controller_dispatch.py:146)
+13:49:20.921 INFO     Registered Worker (id: 'worker_00485bd2') (system_controller_dispatch.py:146)
+13:49:20.922 INFO     Registered Record Processor (id: 'record_processor_e9a0186f') (system_controller_dispatch.py:146)
+13:49:20.922 INFO     Connection probe for record_processor_397d69d8 succeeded after 3 attempts (0.2s) (message_bus_mixin.py:106)
+13:49:20.923 INFO     Registered Worker (id: 'worker_a8285d73') (system_controller_dispatch.py:146)
+13:49:20.924 INFO     Registered Worker (id: 'worker_f2766b24') (system_controller_dispatch.py:146)
+13:49:20.924 INFO     Registered Worker (id: 'worker_c2aff8e7') (system_controller_dispatch.py:146)
+13:49:20.925 INFO     Registered Worker (id: 'worker_fcceffdc') (system_controller_dispatch.py:146)
+13:49:20.925 INFO     Connection probe for worker_e46099f7 succeeded after 3 attempts (0.2s) (message_bus_mixin.py:106)
+13:49:20.928 INFO     Registered: Worker ('worker_5bb74071') [0/0] (service_registry.py:196)
+13:49:20.928 INFO     Registered Worker (id: 'worker_5bb74071') (system_controller_dispatch.py:146)
+13:49:20.929 INFO     Connection probe for worker_9aed25dc succeeded after 3 attempts (0.2s) (message_bus_mixin.py:106)
+13:49:20.929 INFO     Registered: Worker ('worker_a5898f94') [0/0] (service_registry.py:196)
+13:49:20.929 INFO     Registered Worker (id: 'worker_a5898f94') (system_controller_dispatch.py:146)
+13:49:20.930 INFO     Connection probe for record_processor_382ee671 succeeded after 3 attempts (0.2s) (message_bus_mixin.py:106)
+13:49:20.930 INFO     Registered: Worker ('worker_64b03696') [0/0] (service_registry.py:196)
+13:49:20.931 INFO     Registered Worker (id: 'worker_64b03696') (system_controller_dispatch.py:146)
+13:49:20.931 INFO     Registered: Record_Processor ('record_processor_d86eb902') [0/0] (service_registry.py:196)
+13:49:20.932 INFO     Registered Record Processor (id: 'record_processor_d86eb902') (system_controller_dispatch.py:146)
+13:49:20.932 INFO     Registered: Worker ('worker_8f56643e') [0/0] (service_registry.py:196)
+13:49:20.933 INFO     Registered Worker (id: 'worker_8f56643e') (system_controller_dispatch.py:146)
+13:49:20.933 INFO     Connection probe for worker_2304408a succeeded after 3 attempts (0.2s) (message_bus_mixin.py:106)
+13:49:20.934 INFO     Registered: Record_Processor ('record_processor_6d80e093') [0/0] (service_registry.py:196)
+13:49:20.934 INFO     Registered Record Processor (id: 'record_processor_6d80e093') (system_controller_dispatch.py:146)
+13:49:20.935 INFO     Registered: Worker ('worker_2f3001ee') [0/0] (service_registry.py:196)
+13:49:20.935 INFO     Registered Worker (id: 'worker_2f3001ee') (system_controller_dispatch.py:146)
+13:49:20.936 INFO     Registered: Record_Processor ('record_processor_d317955c') [0/0] (service_registry.py:196)
+13:49:20.937 INFO     Registered Record Processor (id: 'record_processor_d317955c') (system_controller_dispatch.py:146)
+13:49:20.937 INFO     Registered: Worker ('worker_9dc37cdb') [0/0] (service_registry.py:196)
+13:49:20.938 INFO     Registered Worker (id: 'worker_9dc37cdb') (system_controller_dispatch.py:146)
+13:49:20.938 INFO     Registered: Record_Processor ('record_processor_7ef451d8') [0/0] (service_registry.py:196)
+13:49:20.939 INFO     Registered Record Processor (id: 'record_processor_7ef451d8') (system_controller_dispatch.py:146)
+13:49:20.939 INFO     Registered: Record_Processor ('record_processor_2bbca290') [0/0] (service_registry.py:196)
+13:49:20.940 INFO     Registered Record Processor (id: 'record_processor_2bbca290') (system_controller_dispatch.py:146)
+13:49:20.940 INFO     Registered: Record_Processor ('record_processor_397d69d8') [0/0] (service_registry.py:196)
+13:49:20.941 INFO     Registered Record Processor (id: 'record_processor_397d69d8') (system_controller_dispatch.py:146)
+13:49:20.942 INFO     Registered: Worker ('worker_e46099f7') [0/0] (service_registry.py:196)
+13:49:20.942 INFO     Registered Worker (id: 'worker_e46099f7') (system_controller_dispatch.py:146)
+13:49:20.943 INFO     Registered: Worker ('worker_9aed25dc') [0/0] (service_registry.py:196)
+13:49:20.943 INFO     Registered Worker (id: 'worker_9aed25dc') (system_controller_dispatch.py:146)
+13:49:20.945 INFO     Registered: Record_Processor ('record_processor_382ee671') [0/0] (service_registry.py:196)
+13:49:20.945 INFO     Registered Record Processor (id: 'record_processor_382ee671') (system_controller_dispatch.py:146)
+13:49:20.947 INFO     Registered: Worker ('worker_f72b1b0b') [0/0] (service_registry.py:196)
+13:49:20.948 INFO     Registered Worker (id: 'worker_f72b1b0b') (system_controller_dispatch.py:146)
+13:49:20.948 INFO     Registered: Worker ('worker_bc392061') [0/0] (service_registry.py:196)
+13:49:20.949 INFO     Registered Worker (id: 'worker_bc392061') (system_controller_dispatch.py:146)
+13:49:20.950 INFO     Registered: Worker ('worker_cc34840e') [0/0] (service_registry.py:196)
+13:49:20.950 INFO     Registered Worker (id: 'worker_cc34840e') (system_controller_dispatch.py:146)
+13:49:20.951 INFO     Registered: Worker ('worker_1fd3a640') [0/0] (service_registry.py:196)
+13:49:20.951 INFO     Registered Worker (id: 'worker_1fd3a640') (system_controller_dispatch.py:146)
+13:49:20.952 INFO     Connection probe for worker_1fd3a640 succeeded after 3 attempts (0.2s) (message_bus_mixin.py:106)
+13:49:20.952 INFO     Connection probe for worker_31301fbc succeeded after 3 attempts (0.2s) (message_bus_mixin.py:106)
+13:49:20.953 INFO     Registered: Worker ('worker_31301fbc') [0/0] (service_registry.py:196)
+13:49:20.954 INFO     Registered Worker (id: 'worker_31301fbc') (system_controller_dispatch.py:146)
+13:49:20.955 INFO     Registered: Worker ('worker_2304408a') [0/0] (service_registry.py:196)
+13:49:20.956 INFO     Registered Worker (id: 'worker_2304408a') (system_controller_dispatch.py:146)
+13:49:20.957 INFO     Registered Record Processor (id: 'record_processor_382ee671') (system_controller_dispatch.py:146)
+13:49:20.958 INFO     Registered Worker (id: 'worker_9aed25dc') (system_controller_dispatch.py:146)
+13:49:20.958 INFO     Registered: Worker ('worker_745d0ca6') [0/0] (service_registry.py:196)
+13:49:20.959 INFO     Registered Worker (id: 'worker_745d0ca6') (system_controller_dispatch.py:146)
+13:49:20.960 INFO     Registered Worker (id: 'worker_1fd3a640') (system_controller_dispatch.py:146)
+13:49:20.961 INFO     Registered Worker (id: 'worker_31301fbc') (system_controller_dispatch.py:146)
+13:49:20.962 INFO     Registered Worker (id: 'worker_2304408a') (system_controller_dispatch.py:146)
+13:49:20.963 INFO     Registered: Worker ('worker_94c0d40f') [0/0] (service_registry.py:196)
+13:49:20.964 INFO     Registered Worker (id: 'worker_94c0d40f') (system_controller_dispatch.py:146)
+13:49:20.965 INFO     Registered: Worker ('worker_25b83476') [0/0] (service_registry.py:196)
+13:49:20.965 INFO     Registered Worker (id: 'worker_25b83476') (system_controller_dispatch.py:146)
+13:49:20.966 INFO     Registered: Worker ('worker_675f70e0') [0/0] (service_registry.py:196)
+13:49:20.967 INFO     Registered Worker (id: 'worker_675f70e0') (system_controller_dispatch.py:146)
+13:49:20.987 INFO     Connection probe for worker_baccdc3e succeeded after 4 attempts (0.3s) (message_bus_mixin.py:106)
+13:49:20.987 INFO     Connection probe for worker_52512ff7 succeeded after 4 attempts (0.3s) (message_bus_mixin.py:106)
+13:49:20.988 INFO     Registered Worker (id: 'worker_baccdc3e') (system_controller_dispatch.py:146)
+13:49:20.989 INFO     Registered Worker (id: 'worker_52512ff7') (system_controller_dispatch.py:146)
+13:49:20.991 INFO     Connection probe for worker_a5898f94 succeeded after 4 attempts (0.3s) (message_bus_mixin.py:106)
+13:49:20.992 INFO     Registered Worker (id: 'worker_a5898f94') (system_controller_dispatch.py:146)
+13:49:20.996 INFO     Connection probe for worker_5bb74071 succeeded after 4 attempts (0.3s) (message_bus_mixin.py:106)
+13:49:20.997 INFO     Registered Worker (id: 'worker_5bb74071') (system_controller_dispatch.py:146)
+13:49:21.000 INFO     Connection probe for record_processor_d86eb902 succeeded after 4 attempts (0.3s) (message_bus_mixin.py:106)
+13:49:21.001 INFO     Connection probe for record_processor_6d80e093 succeeded after 4 attempts (0.3s) (message_bus_mixin.py:106)
+13:49:21.002 INFO     Registered Record Processor (id: 'record_processor_d86eb902') (system_controller_dispatch.py:146)
+13:49:21.003 INFO     Registered Record Processor (id: 'record_processor_6d80e093') (system_controller_dispatch.py:146)
+13:49:21.004 INFO     Registered Worker (id: 'worker_64b03696') (system_controller_dispatch.py:146)
+13:49:21.005 INFO     Registered Worker (id: 'worker_8f56643e') (system_controller_dispatch.py:146)
+13:49:21.005 INFO     Registered Worker (id: 'worker_f72b1b0b') (system_controller_dispatch.py:146)
+13:49:21.006 INFO     Registered Worker (id: 'worker_bc392061') (system_controller_dispatch.py:146)
+13:49:21.008 INFO     Registered Worker (id: 'worker_cc34840e') (system_controller_dispatch.py:146)
+13:49:21.008 INFO     Registered Worker (id: 'worker_2f3001ee') (system_controller_dispatch.py:146)
+13:49:21.009 INFO     Connection probe for record_processor_d317955c succeeded after 4 attempts (0.3s) (message_bus_mixin.py:106)
+13:49:21.010 INFO     Connection probe for worker_9dc37cdb succeeded after 4 attempts (0.3s) (message_bus_mixin.py:106)
+13:49:21.010 INFO     Registered Record Processor (id: 'record_processor_d317955c') (system_controller_dispatch.py:146)
+13:49:21.010 INFO     Connection probe for record_processor_7ef451d8 succeeded after 4 attempts (0.3s) (message_bus_mixin.py:106)
+13:49:21.011 INFO     Registered Worker (id: 'worker_9dc37cdb') (system_controller_dispatch.py:146)
+13:49:21.012 INFO     Registered Record Processor (id: 'record_processor_7ef451d8') (system_controller_dispatch.py:146)
+13:49:21.060 INFO     Registered Worker (id: 'worker_675f70e0') (system_controller_dispatch.py:146)
+13:49:21.197 INFO     System state: initializing -> configuring (system_controller.py:700)
+13:49:21.200 INFO     AIPerf System is CONFIGURING (system_controller.py:536)
+13:49:21.201 INFO     Configuring all services to start profiling (system_controller.py:713)
+13:49:21.204 INFO     Waiting for dataset to be configured before configuring timing (manager.py:149)
+13:49:21.204 INFO     Configuring tokenizers for inference result parser (resolve_alias: True) (inference_result_parser.py:91)
+13:49:21.204 INFO     Configuring tokenizers for inference result parser (resolve_alias: True) (inference_result_parser.py:91)
+13:49:21.205 INFO     Configuring tokenizers for inference result parser (resolve_alias: True) (inference_result_parser.py:91)
+13:49:21.205 INFO     Configuring tokenizers for inference result parser (resolve_alias: True) (inference_result_parser.py:91)
+13:49:21.205 INFO     Configuring tokenizers for inference result parser (resolve_alias: True) (inference_result_parser.py:91)
+13:49:21.205 INFO     Configuring tokenizers for inference result parser (resolve_alias: True) (inference_result_parser.py:91)
+13:49:21.205 INFO     Configuring tokenizers for inference result parser (resolve_alias: True) (inference_result_parser.py:91)
+13:49:21.205 INFO     Configuring tokenizers for inference result parser (resolve_alias: True) (inference_result_parser.py:91)
+13:49:21.205 INFO     Configuring tokenizer(s) for dataset manager (dataset_manager.py:271)
+13:49:21.252 WARNING  GPU Telemetry: http://localhost:9400/metrics is not reachable (manager.py:256)
+13:49:21.255 WARNING  GPU Telemetry: http://localhost:9401/metrics is not reachable (manager.py:256)
+13:49:21.257 INFO     DCGM telemetry skipped: no telemetry sources reachable (system_controller.py:1020)
+13:49:28.657 INFO     Initialized tokenizers: {'llama-3.2-1b': {'class': 'TokenizersBackend', 'name_or_path': '/root/models/llama32-1b'}} in 7.45 seconds (inference_result_parser.py:117)
+13:49:28.759 INFO     Initialized tokenizers: {'llama-3.2-1b': {'class': 'TokenizersBackend', 'name_or_path': '/root/models/llama32-1b'}} in 7.55 seconds (inference_result_parser.py:117)
+13:49:28.782 INFO     Initialized tokenizers: {'llama-3.2-1b': {'class': 'TokenizersBackend', 'name_or_path': '/root/models/llama32-1b'}} in 7.58 seconds (inference_result_parser.py:117)
+13:49:28.798 INFO     Tokenizer(s) configured in 7.59 seconds (dataset_manager.py:275)
+13:49:28.800 INFO     Configuring dataset for dataset_manager (dataset_manager.py:281)
+13:49:28.814 INFO     Initialized tokenizers: {'llama-3.2-1b': {'class': 'TokenizersBackend', 'name_or_path': '/root/models/llama32-1b'}} in 7.61 seconds (inference_result_parser.py:117)
+13:49:28.839 INFO     Initialized tokenizers: {'llama-3.2-1b': {'class': 'TokenizersBackend', 'name_or_path': '/root/models/llama32-1b'}} in 7.63 seconds (inference_result_parser.py:117)
+13:49:28.926 INFO     Initialized tokenizers: {'llama-3.2-1b': {'class': 'TokenizersBackend', 'name_or_path': '/root/models/llama32-1b'}} in 7.72 seconds (inference_result_parser.py:117)
+13:49:28.990 INFO     Initialized tokenizers: {'llama-3.2-1b': {'class': 'TokenizersBackend', 'name_or_path': '/root/models/llama32-1b'}} in 7.78 seconds (inference_result_parser.py:117)
+13:49:29.166 INFO     Initialized tokenizers: {'llama-3.2-1b': {'class': 'TokenizersBackend', 'name_or_path': '/root/models/llama32-1b'}} in 7.96 seconds (inference_result_parser.py:117)
+13:49:30.429 INFO     Memory-mapped backing store initialized (streaming to /tmp/aiperf_mmap_03a4ee84111e/dataset.dat) (memory_map_utils.py:160)
+13:49:30.528 INFO     Data file finalized: 768 conversations, 1.47 MB (memory_map_utils.py:288)
+13:49:30.531 INFO     Index file created: /tmp/aiperf_mmap_03a4ee84111e/index.dat (memory_map_utils.py:295)
+13:49:30.531 INFO     Backing store finalized: client_type=DatasetClientStoreType.MEMORY_MAP format=MemoryMapFormat.CONVERSATION data_file_path=PosixPath('/tmp/aiperf_mmap_03a4ee84111e/dataset.dat') index_file_path=PosixPath('/tmp/aiperf_mmap_03a4ee84111e/index.dat') conversation_count=768 total_size_bytes=1543513 compressed=False compressed_data_file_path=None compressed_index_file_path=None compressed_size_bytes=0 (dataset_manager.py:1009)
+13:49:30.545 INFO     sampling strategy: sequential, unique conversations: 768, unique turn count: 768 (dataset_manager.py:1027)
+13:49:30.559 INFO     Generating inputs.json file at /workspace/reports/g3/aiperf/stride_c128_r0/inputs.json (dataset_manager.py:526)
+13:49:30.577 INFO     Initialized 1 phase(s): ['Profiling'] (phase_orchestrator.py:341)
+13:49:30.617 INFO     inputs.json file generated in 0.06 seconds (dataset_manager.py:545)
+13:49:31.210 INFO     Dataset client initialized and freed 768 conversations from memory (dataset_manager.py:364)
+13:49:31.211 INFO     Dataset configured in 2.41 seconds (dataset_manager.py:294)
+13:49:31.213 INFO     All services configured in 10.01 seconds (system_controller.py:722)
+13:49:31.214 INFO     System state: configuring -> ready (system_controller.py:700)
+13:49:31.215 INFO     AIPerf System is CONFIGURED (system_controller.py:539)
+13:49:31.222 INFO     All services started profiling successfully (system_controller.py:742)
+13:49:31.223 INFO     System state: ready -> profiling (system_controller.py:700)
+13:49:31.224 INFO     AIPerf System is PROFILING (system_controller.py:548)
+13:49:31.224 INFO     Waiting for result domains: profile (system_controller.py:1635)
+13:49:31.226 INFO     Creating interval generator: pattern=concurrency_burst, rate=None, smoothness=None (request_rate.py:116)
+13:49:31.227 NOTICE   Phase profiling (profiling) started | phase_index=0 | profiling_index=0 | target: 768 requests (runner.py:660)
+13:49:31.229 INFO     Credit phase start: profiling (records_manager.py:1406)
+13:49:31.229 INFO     Rate loop pacing via timerfd (kernel hrtimer) (request_rate.py:146)
+13:49:34.003 WARNING  Token usage is reported but no prompt-cache read tokens were seen (usage.prompt_tokens_details.cached_tokens absent). If your server uses prefix/KV caching, enable cache reporting so AIPerf can populate the prompt-cache metrics: vLLM --enable-prompt-tokens-details, SGLang --enable-cache-report (TRT-LLM reports it by default). (records_manager.py:1011)
+13:49:34.005 WARNING  Token usage is reported but no prompt-cache read tokens were seen (usage.prompt_tokens_details.cached_tokens absent). If your server uses prefix/KV caching, enable cache reporting so AIPerf can populate the prompt-cache metrics: vLLM --enable-prompt-tokens-details, SGLang --enable-cache-report (TRT-LLM reports it by default). (accumulator.py:244)
+13:49:37.437 WARNING  OSL mismatch: got 235 tokens (requested 256, diff -8.2%) (osl_mismatch_metrics.py:193)
+13:49:45.938 WARNING  OSL mismatch: got 229 tokens (requested 256, diff -10.5%) (osl_mismatch_metrics.py:193)
+13:49:45.993 NOTICE   Phase profiling (profiling) sending complete | sent=768, completed=640, in_flight=128 | sessions: sent=768, completed=640 (runner.py:1103)
+13:49:45.996 INFO     Sent 768 requests. Waiting for all to complete... (records_manager.py:1422)
+13:49:47.845 NOTICE   Phase profiling (profiling) complete | completed=768, cancelled=0, errors=0 | sessions: completed=768, cancelled=0 | elapsed=16.62s (runner.py:1226)
+13:49:47.847 NOTICE   All credits completed (phase_orchestrator.py:358)
+13:49:47.848 INFO     Received credits complete from 'timing_manager' (system_controller.py:829)
+13:49:47.849 INFO     System state: profiling -> processing (system_controller.py:700)
+13:49:47.853 INFO     Received CREDIT_PHASE_COMPLETE message, Phase complete: PhaseRecordsStats(phase=CreditPhase.PROFILING, phase_index=0, profiling_index=0, phase_name='profiling', phase_kind='profiling', start_ns=1793972971227180002, sent_end_ns=1793972985993126760, requests_end_ns=1793972987845152165, baseline_start_ns=1793972971227153272, baseline_end_ns=1793972987845195587, total_expected_requests=768, expected_duration_sec=None, expected_num_sessions=None, expected_grace_period_sec=None, final_requests_sent=None, final_requests_completed=768, final_requests_cancelled=0, final_request_errors=0, final_sent_sessions=None, final_completed_sessions=None, final_cancelled_sessions=None, timeout_triggered=False, grace_period_timeout_triggered=False, was_cancelled=False, records_end_ns=None, success_records=700, error_records=0) (records_manager.py:1449)
+13:49:47.854 NOTICE   All requests have completed, please wait for the results to be processed (currently 700 of 768 records processed)... (records_manager.py:1460)
+13:49:47.861 INFO     All credits complete, please wait for the results to be processed... (records_manager.py:1505)
+13:49:47.904 INFO     Processed 768 valid requests and 0 errors (768 total). (records_manager.py:1207)
+13:49:47.904 INFO     Received all records, processing now... (records_manager.py:1213)
+13:49:47.909 INFO     Processing records results... (records_manager.py:2368)
+13:49:48.207 INFO     _finalize_and_process_results completed (records_manager.py:1359)
+13:49:48.208 INFO     System state: processing -> stopping (system_controller.py:700)
+13:49:48.209 INFO     All results received, initiating shutdown (system_controller.py:1630)
+13:49:48.210 INFO     System state: stopping -> shutdown (system_controller.py:700)
+13:49:48.830 INFO     Exporting all records (exporter_manager.py:97)
+13:49:48.941 INFO     Exporting console data (exporter_manager.py:527)
+
+
+                                             NVIDIA AIPerf | LLM Metrics: Effective                                             
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┓
+┃                                    Metric ┃       avg ┃      min ┃       max ┃       p99 ┃       p90 ┃       p50 ┃       std ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━┩
+│          Effective Concurrency (requests) │    127.17 │     0.00 │    128.00 │    128.00 │    128.00 │    128.00 │      6.85 │
+│  Effective Decode Throughput (tokens/sec) │ 11,766.90 │     0.00 │ 37,709.73 │ 20,569.70 │ 19,670.48 │ 17,372.20 │  8,273.21 │
+│ Effective Prefill Throughput (tokens/sec) │ 11,829.24 │     0.00 │ 79,981.55 │ 62,474.82 │ 31,870.53 │      0.00 │ 15,900.01 │
+│   Effective Decode Concurrency (requests) │    115.01 │     0.00 │    128.00 │    128.00 │    128.00 │    128.00 │     22.14 │
+│  Effective Prefill Concurrency (requests) │     12.16 │     0.00 │    128.00 │    119.00 │     27.00 │      0.00 │     21.07 │
+│   Effective Total Throughput (tokens/sec) │ 23,596.14 │     0.00 │ 79,981.55 │ 63,355.86 │ 42,241.12 │ 14,522.61 │ 14,077.43 │
+│      Effective Decode Throughput Per User │     94.20 │     0.00 │    727.82 │    161.33 │    153.79 │    135.94 │     63.14 │
+│                         (tokens/sec/user) │           │          │           │           │           │           │           │
+│     Effective Prefill Throughput Per User │    485.79 │     0.00 │  7,044.32 │  1,992.37 │  1,399.09 │      0.00 │    665.05 │
+│                         (tokens/sec/user) │           │          │           │           │           │           │           │
+│                 Tokens In Flight (tokens) │ 46,889.37 │     0.00 │ 64,534.33 │ 63,741.04 │ 59,900.27 │ 46,948.27 │  9,618.70 │
+│         Effective Latency (CO-aware) (ms) │  2,755.18 │ 1,849.99 │  3,666.41 │  3,599.72 │  2,988.66 │  2,764.99 │    278.83 │
+└───────────────────────────────────────────┴───────────┴──────────┴───────────┴───────────┴───────────┴───────────┴───────────┘
+                                            NVIDIA AIPerf | LLM Metrics: Active                                            
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┓
+┃                                 Metric ┃       avg ┃    min ┃       max ┃       p99 ┃       p90 ┃       p50 ┃       std ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━┩
+│  Active Decode Throughput (tokens/sec) │ 11,829.36 │  17.27 │ 37,709.73 │ 20,569.70 │ 19,674.36 │ 17,394.07 │  8,250.48 │
+│ Active Prefill Throughput (tokens/sec) │ 29,197.34 │ 254.35 │ 79,981.55 │ 76,803.72 │ 35,161.43 │ 30,099.68 │ 10,811.69 │
+│      Active Decode Throughput Per User │     94.70 │  16.16 │    727.82 │    161.33 │    153.83 │    136.03 │     62.94 │
+│                      (tokens/sec/user) │           │        │           │           │           │           │           │
+│     Active Prefill Throughput Per User │  1,199.05 │ 233.91 │  7,044.32 │  2,472.97 │  1,616.37 │  1,254.35 │    486.24 │
+│                      (tokens/sec/user) │           │        │           │           │           │           │           │
+│   Active Total Throughput (tokens/sec) │ 23,606.68 │ 147.64 │ 79,981.55 │ 63,355.86 │ 42,241.12 │ 14,522.61 │ 14,071.73 │
+└────────────────────────────────────────┴───────────┴────────┴───────────┴───────────┴───────────┴───────────┴───────────┘
+                                     NVIDIA AIPerf | LLM Metrics: Usage                                     
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━┳━━━━━━━━┳━━━━━━━━┳━━━━━━━━┳━━━━━━━┓
+┃                                 Metric ┃        avg ┃    min ┃    max ┃    p99 ┃    p90 ┃    p50 ┃   std ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━╇━━━━━━━━╇━━━━━━━━╇━━━━━━━━╇━━━━━━━┩
+│           Usage Prompt Tokens (tokens) │     291.10 │ 181.00 │ 395.00 │ 366.33 │ 333.00 │ 291.00 │ 32.69 │
+│       Usage Completion Tokens (tokens) │     256.00 │ 256.00 │ 256.00 │ 256.00 │ 256.00 │ 256.00 │  0.00 │
+│            Usage Total Tokens (tokens) │     547.10 │ 437.00 │ 651.00 │ 622.33 │ 589.00 │ 547.00 │ 32.69 │
+│     Total Usage Prompt Tokens (tokens) │ 223,566.00 │    N/A │    N/A │    N/A │    N/A │    N/A │   N/A │
+│ Total Usage Completion Tokens (tokens) │ 196,608.00 │    N/A │    N/A │    N/A │    N/A │    N/A │   N/A │
+│      Total Usage Total Tokens (tokens) │ 420,174.00 │    N/A │    N/A │    N/A │    N/A │    N/A │   N/A │
+└────────────────────────────────────────┴────────────┴────────┴────────┴────────┴────────┴────────┴───────┘
+                                                 NVIDIA AIPerf | LLM Metrics                                                 
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━┓
+┃                                        Metric ┃       avg ┃      min ┃      max ┃      p99 ┃      p90 ┃      p50 ┃    std ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━┩
+│                      Time to First Token (ms) │    263.17 │    31.09 │ 1,086.74 │ 1,063.25 │   475.65 │   222.63 │ 198.40 │
+│                     Time to Second Token (ms) │     53.39 │     5.67 │    72.20 │    64.20 │    62.12 │    57.42 │  13.39 │
+│               Time to First Output Token (ms) │    263.17 │    31.09 │ 1,086.74 │ 1,063.25 │   475.65 │   222.63 │ 198.40 │
+│                          Request Latency (ms) │  2,751.64 │ 1,836.28 │ 3,665.12 │ 3,598.25 │ 2,985.91 │ 2,759.27 │ 279.01 │
+│                          Decode Duration (ms) │  2,488.48 │ 1,719.97 │ 2,729.69 │ 2,672.34 │ 2,582.94 │ 2,547.80 │ 186.78 │
+│                      Inter Token Latency (ms) │      9.77 │     6.74 │    11.26 │    10.50 │    10.18 │     9.99 │   0.74 │
+│              Output Token Throughput Per User │    103.06 │    88.82 │   148.26 │   146.98 │   111.59 │   100.06 │   9.96 │
+│                             (tokens/sec/user) │           │          │          │          │          │          │        │
+│ E2E Output Token Throughput (tokens/sec/user) │     93.92 │    68.46 │   139.41 │   134.22 │   102.87 │    92.66 │  10.45 │
+│               Output Sequence Length (tokens) │    255.61 │   229.00 │   265.00 │   256.00 │   256.00 │   256.00 │   1.68 │
+│                Input Sequence Length (tokens) │    255.96 │   146.00 │   360.00 │   331.33 │   298.00 │   256.00 │  32.66 │
+│          Output Token Throughput (tokens/sec) │ 11,813.11 │      N/A │      N/A │      N/A │      N/A │      N/A │    N/A │
+│           Input Token Throughput (tokens/sec) │ 11,829.24 │      N/A │      N/A │      N/A │      N/A │      N/A │    N/A │
+│             Request Throughput (requests/sec) │     46.22 │      N/A │      N/A │      N/A │      N/A │      N/A │    N/A │
+│          Completed Requests (Success + Error) │    768.00 │      N/A │      N/A │      N/A │      N/A │      N/A │    N/A │
+│                                    (requests) │           │          │          │          │          │          │        │
+│                        Request Error Rate (%) │      0.00 │      N/A │      N/A │      N/A │      N/A │      N/A │    N/A │
+│                      Request Count (requests) │    768.00 │      N/A │      N/A │      N/A │      N/A │      N/A │    N/A │
+└───────────────────────────────────────────────┴───────────┴──────────┴──────────┴──────────┴──────────┴──────────┴────────┘
+
+Token usage is reported but no prompt-cache read tokens were seen (usage.prompt_tokens_details.cached_tokens absent). If your server uses 
+prefix/KV caching, enable cache reporting so AIPerf can populate the prompt-cache metrics: vLLM --enable-prompt-tokens-details, SGLang 
+--enable-cache-report (TRT-LLM reports it by default).
+
+
+╭──────────────────────────────────────────── GPU Telemetry Platform ─────────────────────────────────────────────╮
+│  Platform: unknown                                                                                              │
+│  Metric semantics are platform-specific; cross-platform comparisons require workload and collector validation.  │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+
+No GPU telemetry data collected during the benchmarking run.
+
+╭──────────────────────────────────── Token Count Discrepancy Warning ─────────────────────────────────────╮
+│  767 of 768 requests (99.9%) show a difference exceeding 10% between:                                    │
+│    - API-reported usage tokens (from 'usage' field)                                                      │
+│    - Client-computed token counts (from tokenization)                                                    │
+│                                                                                                          │
+│  Possible Causes:                                                                                        │
+│    - Different tokenization methods (API vs client)                                                      │
+│    - API special tokens or preprocessing                                                                 │
+│                                                                                                          │
+│  Investigation Steps:                                                                                    │
+│    1. Review profile_export.jsonl for per-request usage_*_diff_pct values                                │
+│    2. Verify client tokenizer matches the model's tokenizer                                              │
+│    3. Use server token counts: --use-server-token-count (disables client tokenization and diff metrics)  │
+│    4. Adjust threshold: AIPERF_METRICS_USAGE_PCT_DIFF_THRESHOLD=10                                       │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+╭───────────────────────────── Output Sequence Length Mismatch Warning ──────────────────────────────╮
+│  2 of 768 requests (0.3%) have output length differing from requested by more than the threshold.  │
+│  Threshold (tokens): min(requested x 5%, 50)                                                       │
+│  Average mismatch: -0.2%                                                                           │
+│                                                                                                    │
+│  Why: Server hit EOS token before reaching requested output length.                                │
+│                                                                                                    │
+│  Fix Options:                                                                                      │
+│    - --extra-inputs ignore_eos:true - Generate until max_tokens (vLLM, TensorRT-LLM)               │
+│    - --extra-inputs min_tokens:<N> - Set minimum output length (vLLM, TensorRT-LLM, SGLang)        │
+│    - --use-server-token-count - Use server-reported token counts if tokenizer mismatch suspected   │
+│                                                                                                    │
+│  Diagnostics:                                                                                      │
+│    - Review profile_export.jsonl -> osl_mismatch_diff_pct for per-request values                   │
+│    - Adjust: AIPERF_METRICS_OSL_MISMATCH_PCT_THRESHOLD=5                                           │
+│    - Adjust: AIPERF_METRICS_OSL_MISMATCH_MAX_TOKEN_THRESHOLD=50                                    │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+CLI Command: aiperf profile --model 'llama-3.2-1b' --url 'http://127.0.0.1:8127' --endpoint-type 
+'chat' --streaming --tokenizer '/root/models/llama32-1b' --concurrency 128 --request-count 768 
+--prompt-input-tokens-mean 256 --prompt-input-tokens-stddev 32 --prompt-output-tokens-mean 256 
+--prompt-output-tokens-stddev 0 --extra-inputs 'ignore_eos:true' --extra-inputs 'temperature:0.0' 
+--random-seed 1000 --artifact-dir '/workspace/reports/g3/aiperf/stride_c128_r0' --ui None 
+--no-server-metrics --no-auto-plot
+Benchmark Duration: 16.61 sec
+CSV Export: /workspace/reports/g3/aiperf/stride_c128_r0/profile_export_aiperf.csv
+JSON Export: /workspace/reports/g3/aiperf/stride_c128_r0/profile_export_aiperf.json
+Log File: /workspace/reports/g3/aiperf/stride_c128_r0/logs/aiperf.log
+

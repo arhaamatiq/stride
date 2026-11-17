@@ -13,24 +13,11 @@
 // The same layout is what makes the reads fast. tools/bench_memread.cu measured
 // 489 GB/s when each thread sweeps its own row and 913 GB/s when a block owns a row
 // and its threads interleave, because every warp load then covers contiguous memory.
-#include "kernels.h"
-
-#include "numerics.h"
-
-#if !defined(__CUDACC__)
-#include "cpu_pool.h"
-#endif
+#include "kernel_common.h"
 
 namespace stride {
 
 namespace kimpl {
-
-STRIDE_DEVICE float* kv_ptr(const KvRef& kv, int layer, int which, int group, int slot, int pos) {
-  const int block = kv.table[slot * kv.max_blocks + (pos >> kKvBlockShift)];
-  const int token = pos & (kKvBlockTokens - 1);
-  return kv.arena + block * kv.block_floats + layer * kv.layer_floats + which * kv.which_floats +
-         group * kv.group_floats + token * kv.head_dim;
-}
 
 STRIDE_DEVICE void unpack_weights(const uint4& v, float* w) {
   w[0] = bf16_lo(v.x);
@@ -279,14 +266,14 @@ struct Qkv {
         b1 = rb1;
       }
       if (kind == 0) {
-        const int64_t base = static_cast<int64_t>(head) * D;
-        p.q_out[(base + d0) * p.l.stride + j] = a0;
-        p.q_out[(base + d0 + 1) * p.l.stride + j] = a1;
-        p.q_out[(base + d0 + half) * p.l.stride + j] = b0;
-        p.q_out[(base + d0 + half + 1) * p.l.stride + j] = b1;
+        float* q = p.q_out + static_cast<int64_t>(j) * p.q_stride + static_cast<int64_t>(head) * D;
+        q[d0] = a0;
+        q[d0 + 1] = a1;
+        q[d0 + half] = b0;
+        q[d0 + half + 1] = b1;
       } else {
         const int which = STRIDE_BUG(p.l, 113) ? 2 - kind : kind - 1;
-        float* dst = kv_ptr(p.kv, p.layer, which, head, slot, pos);
+        float* dst = kv_ptr<float>(p.kv, p.layer, which, head, slot, pos);
         dst[d0] = a0;
         dst[d0 + 1] = a1;
         dst[d0 + half] = b0;
@@ -296,132 +283,10 @@ struct Qkv {
   }
 };
 
-// One block per (sequence, KV group). The query heads that share a KV group read
-// each K and V row once, so KV memory traffic is divided by the repeat factor.
-// PT is dims per thread in the value mix (head_dim / 32, at least 1).
-template <int PT>
-struct Attention {
-  using Params = AttentionParams;
-  static constexpr int kPhases = 6;
-  // Position loop unroll: this many V rows are in flight per thread.
-  static constexpr int kInFlight = 8;
-  struct Shared {
-    float q[4][kMaxHeadDim];
-    float s[4][kMaxCtx];
-    float m[kBlockThreads][4];
-    float mm[4];
-    float denom[4];
-  };
-  static int blocks(const Params& p) { return p.l.rows * p.n_kv; }
-  template <int P>
-  STRIDE_DEVICE static void phase(const Params& p, int block, int t, Shared& s) {
-    const int j = block / p.n_kv;
-    const int g = block % p.n_kv;
-    const int slot = p.row_slot[j];
-    const int visible = (STRIDE_BUG(p.l, 121) ? p.row_pos[j] : p.row_pos[j] + 1);
-    const int D = p.head_dim;
-    if constexpr (P == 0) {
-      for (int q = 0; q < p.n_q; ++q) {
-        for (int d = t; d < D; d += kBlockThreads) {
-          s.q[q][d] = p.q[(static_cast<int64_t>(g * p.n_q + q) * D + d) * p.l.stride + j];
-        }
-      }
-    } else if constexpr (P == 1) {
-      float local[4];
-      for (int q = 0; q < p.n_q; ++q) local[q] = as_f32(0xFF800000u);
-      for (int pos = t; pos < visible; pos += kBlockThreads) {
-        const float4* key = reinterpret_cast<const float4*>(kv_ptr(p.kv, p.layer, 0, g, slot, pos));
-        float acc[4];
-        for (int q = 0; q < p.n_q; ++q) acc[q] = 0.0f;
-        for (int d = 0; d < D; d += 16) {
-          const float4 k0 = key[d / 4], k1 = key[d / 4 + 1], k2 = key[d / 4 + 2], k3 = key[d / 4 + 3];
-          for (int q = 0; q < p.n_q; ++q) {
-            acc[q] = fmaf(s.q[q][d + 0], k0.x, acc[q]);
-            acc[q] = fmaf(s.q[q][d + 1], k0.y, acc[q]);
-            acc[q] = fmaf(s.q[q][d + 2], k0.z, acc[q]);
-            acc[q] = fmaf(s.q[q][d + 3], k0.w, acc[q]);
-            acc[q] = fmaf(s.q[q][d + 4], k1.x, acc[q]);
-            acc[q] = fmaf(s.q[q][d + 5], k1.y, acc[q]);
-            acc[q] = fmaf(s.q[q][d + 6], k1.z, acc[q]);
-            acc[q] = fmaf(s.q[q][d + 7], k1.w, acc[q]);
-            acc[q] = fmaf(s.q[q][d + 8], k2.x, acc[q]);
-            acc[q] = fmaf(s.q[q][d + 9], k2.y, acc[q]);
-            acc[q] = fmaf(s.q[q][d + 10], k2.z, acc[q]);
-            acc[q] = fmaf(s.q[q][d + 11], k2.w, acc[q]);
-            acc[q] = fmaf(s.q[q][d + 12], k3.x, acc[q]);
-            acc[q] = fmaf(s.q[q][d + 13], k3.y, acc[q]);
-            acc[q] = fmaf(s.q[q][d + 14], k3.z, acc[q]);
-            acc[q] = fmaf(s.q[q][d + 15], k3.w, acc[q]);
-          }
-        }
-        for (int q = 0; q < p.n_q; ++q) {
-          const float score = acc[q] * (STRIDE_BUG(p.l, 122) ? 1.0f : p.scale);
-          s.s[q][pos] = score;
-          if (score > local[q]) local[q] = score;
-        }
-      }
-      for (int q = 0; q < p.n_q; ++q) s.m[t][q] = local[q];
-    } else if constexpr (P == 2) {
-      if (t < p.n_q) {
-        float mm = s.m[0][t];
-        for (int i = 1; i < kBlockThreads; ++i)
-          if (s.m[i][t] > mm) mm = s.m[i][t];
-        s.mm[t] = mm;
-      }
-    } else if constexpr (P == 3) {
-      for (int pos = t; pos < visible; pos += kBlockThreads) {
-        for (int q = 0; q < p.n_q; ++q) s.s[q][pos] = det_exp(s.s[q][pos] - s.mm[q]);
-      }
-    } else if constexpr (P == 4) {
-      if (t < p.n_q) {
-        float denom = 0.0f;
-        if (STRIDE_BUG(p.l, 123)) {
-          for (int pos = visible - 1; pos >= 0; --pos) denom = denom + s.s[t][pos];
-        } else {
-          for (int pos = 0; pos < visible; ++pos) denom = denom + s.s[t][pos];
-        }
-        s.denom[t] = denom;
-      }
-    } else {
-      const int d0 = t * PT;
-      if (d0 >= D) return;
-      float acc[4][PT];
-      for (int q = 0; q < p.n_q; ++q)
-        for (int dd = 0; dd < PT; ++dd) acc[q][dd] = 0.0f;
-      int pos = 0;
-      while (pos < visible) {
-        const int which = STRIDE_BUG(p.l, 124) ? 0 : 1;
-        const int page_pos = (STRIDE_BUG(p.l, 125) && pos >= kKvBlockTokens) ? pos - kKvBlockTokens : pos;
-        const float* value = kv_ptr(p.kv, p.layer, which, g, slot, page_pos) + d0;
-        int run = kKvBlockTokens - (pos & (kKvBlockTokens - 1));
-        if (run > visible - pos) run = visible - pos;
-        int i = 0;
-        for (; i + kInFlight <= run; i += kInFlight) {
-          float v[kInFlight][PT];
-          for (int n = 0; n < kInFlight; ++n)
-            for (int dd = 0; dd < PT; ++dd) v[n][dd] = value[(i + n) * D + dd];
-          for (int n = 0; n < kInFlight; ++n) {
-            for (int q = 0; q < p.n_q; ++q) {
-              const float w = s.s[q][pos + i + n];
-              for (int dd = 0; dd < PT; ++dd) acc[q][dd] = fmaf(w, v[n][dd], acc[q][dd]);
-            }
-          }
-        }
-        for (; i < run; ++i) {
-          for (int q = 0; q < p.n_q; ++q) {
-            const float w = s.s[q][pos + i];
-            for (int dd = 0; dd < PT; ++dd) acc[q][dd] = fmaf(w, value[i * D + dd], acc[q][dd]);
-          }
-        }
-        pos += run;
-      }
-      for (int q = 0; q < p.n_q; ++q) {
-        const int head = STRIDE_BUG(p.l, 126) ? (g * p.n_q + (p.n_q - 1 - q)) : (g * p.n_q + q);
-        for (int dd = 0; dd < PT; ++dd) {
-          p.out[(static_cast<int64_t>(head) * D + d0 + dd) * p.l.stride + j] = acc[q][dd] / s.denom[q];
-        }
-      }
-    }
+// FP32 dim-major attention output for the exact path.
+struct LaneWriter {
+  STRIDE_DEVICE static void write(const AttentionParams& p, int j, int idx, float value) {
+    static_cast<float*>(p.out)[static_cast<int64_t>(idx) * p.l.stride + j] = value;
   }
 };
 
@@ -514,32 +379,6 @@ struct Compact {
   }
 };
 
-STRIDE_DEVICE bool better_than(float v, int32_t i, float cv, int32_t ci) {
-  return v > cv || (v == cv && i < ci);
-}
-
-// Keeps the lexicographic maximum of (value, -index). The result is independent
-// of update order, so the racing blocks still produce one deterministic answer.
-STRIDE_DEVICE void best_update(BestEntry* slot, float value, int32_t index) {
-  auto* word = reinterpret_cast<unsigned long long*>(slot);
-  const unsigned long long want =
-      (static_cast<unsigned long long>(static_cast<uint32_t>(index)) << 32) | as_u32(value);
-  unsigned long long seen = *reinterpret_cast<volatile unsigned long long*>(word);
-  for (;;) {
-    const float cv = as_f32(static_cast<uint32_t>(seen));
-    const int32_t ci = static_cast<int32_t>(seen >> 32);
-    if (!better_than(value, index, cv, ci)) return;
-#if defined(__CUDACC__)
-    const unsigned long long prev = atomicCAS(word, seen, want);
-#else
-    unsigned long long prev = seen;
-    __atomic_compare_exchange_n(word, &prev, want, false, __ATOMIC_RELAXED, __ATOMIC_RELAXED);
-#endif
-    if (prev == seen) return;
-    seen = prev;
-  }
-}
-
 // Output projection fused with argmax: logits are never materialized.
 template <int J>
 struct LmGreedy {
@@ -612,69 +451,14 @@ struct LmFull {
   }
 };
 
-#if defined(__CUDACC__)
-template <class K>
-__global__ void kernel_entry(typename K::Params p) {
-  __shared__ typename K::Shared s;
-  const int b = blockIdx.x;
-  const int t = threadIdx.x;
-  K::template phase<0>(p, b, t, s);
-  if constexpr (K::kPhases > 1) {
-    __syncthreads();
-    K::template phase<1>(p, b, t, s);
-  }
-  if constexpr (K::kPhases > 2) {
-    __syncthreads();
-    K::template phase<2>(p, b, t, s);
-  }
-  if constexpr (K::kPhases > 3) {
-    __syncthreads();
-    K::template phase<3>(p, b, t, s);
-    __syncthreads();
-    K::template phase<4>(p, b, t, s);
-    __syncthreads();
-    K::template phase<5>(p, b, t, s);
-  }
-}
-
 }  // namespace kimpl
 
+#if defined(__CUDACC__)
 cudaStream_t& kernel_stream() {
   static cudaStream_t stream = nullptr;
   return stream;
 }
-
-namespace kimpl {
-
-template <class K>
-void launch(const typename K::Params& p) {
-  const int blocks = K::blocks(p);
-  if (blocks <= 0) return;
-  kernel_entry<K><<<blocks, kBlockThreads, 0, kernel_stream()>>>(p);
-}
-#else
-template <class K>
-void launch(const typename K::Params& p) {
-  const int blocks = K::blocks(p);
-  if (blocks <= 0) return;
-  cpu_parallel_for(blocks, [&p](int b) {
-    auto shared = new typename K::Shared;
-    for (int t = 0; t < kBlockThreads; ++t) K::template phase<0>(p, b, t, *shared);
-    if constexpr (K::kPhases > 1)
-      for (int t = 0; t < kBlockThreads; ++t) K::template phase<1>(p, b, t, *shared);
-    if constexpr (K::kPhases > 2)
-      for (int t = 0; t < kBlockThreads; ++t) K::template phase<2>(p, b, t, *shared);
-    if constexpr (K::kPhases > 3) {
-      for (int t = 0; t < kBlockThreads; ++t) K::template phase<3>(p, b, t, *shared);
-      for (int t = 0; t < kBlockThreads; ++t) K::template phase<4>(p, b, t, *shared);
-      for (int t = 0; t < kBlockThreads; ++t) K::template phase<5>(p, b, t, *shared);
-    }
-    delete shared;
-  });
-}
 #endif
-
-}  // namespace kimpl
 
 using namespace kimpl;
 
@@ -688,9 +472,16 @@ void k_qkv(const QkvParams& p, int J) {
   else launch<Qkv<4>>(p);
 }
 void k_attention(const AttentionParams& p) {
-  if (p.head_dim <= kBlockThreads) launch<Attention<1>>(p);
-  else if (p.head_dim <= 2 * kBlockThreads) launch<Attention<2>>(p);
-  else launch<Attention<4>>(p);
+  if (p.head_dim <= kBlockThreads) {
+    launch<AttentionPage<float, 1>>(p);
+    launch<AttentionCombine<LaneWriter, 1>>(p);
+  } else if (p.head_dim <= 2 * kBlockThreads) {
+    launch<AttentionPage<float, 2>>(p);
+    launch<AttentionCombine<LaneWriter, 2>>(p);
+  } else {
+    launch<AttentionPage<float, 4>>(p);
+    launch<AttentionCombine<LaneWriter, 4>>(p);
+  }
 }
 void k_gemm_residual(const GemmResidualParams& p, int J) {
   if (J == 1) launch<GemmResidual<1>>(p);

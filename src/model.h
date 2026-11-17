@@ -36,9 +36,12 @@ struct LayerWeights {
   const float* norm_mlp;
 };
 
+// Which kernel family a Weights instance is packed for.
+enum class KernelPath { kExact, kTensorCore };
+
 class Weights {
  public:
-  Weights(const std::string& model_dir, const ModelConfig& cfg);
+  Weights(const std::string& model_dir, const ModelConfig& cfg, KernelPath path);
   ~Weights();
   Weights(const Weights&) = delete;
   Weights& operator=(const Weights&) = delete;

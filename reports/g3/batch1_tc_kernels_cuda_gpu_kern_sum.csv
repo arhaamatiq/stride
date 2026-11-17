@@ -1,0 +1,10 @@
+Time (%),Total Time (ns),Instances,Avg (ns),Med (ns),Min (ns),Max (ns),StdDev (ns),Name
+38.3,304038794,4096,74228.2,74177.0,72992,79425,403.5,"void stride::kimpl::kernel_entry<stride::kimpl::TcMlp13<(int)1, (int)1, (int)1>>(T1::Params)"
+24.8,196515383,8192,23988.7,24368.0,10336,47264,13363.2,"void stride::kimpl::kernel_entry<stride::kimpl::TcGemmResidual<(int)8, (int)1, (int)1>>(T1::Params)"
+17.9,142289959,256,555820.2,555620.0,554276,560133,945.1,"void stride::kimpl::kernel_entry<stride::kimpl::TcLmGreedy<(int)1, (int)1>>(T1::Params)"
+8.0,63239673,4096,15439.4,15424.0,15072,18144,187.7,void stride::kimpl::kernel_entry<stride::kimpl::TcQkv<(int)8>>(T1::Params)
+4.7,36887461,4096,9005.7,8961.0,6592,10305,252.7,"void stride::kimpl::kernel_entry<stride::kimpl::AttentionPage<unsigned short, (int)2>>(T1::Params)"
+4.5,35723796,8448,4228.7,4192.0,3296,4768,104.6,void stride::kimpl::kernel_entry<stride::kimpl::TcNormLane>(T1::Params)
+1.6,12838284,4096,3134.3,3200.0,2304,3713,373.2,"void stride::kimpl::kernel_entry<stride::kimpl::AttentionCombine<stride::kimpl::TileWriter, (int)2>>(T1::Params)"
+0.2,1536749,256,6002.9,5984.0,5856,6592,129.9,void stride::kimpl::kernel_entry<stride::kimpl::TcEmbed>(T1::Params)
+0.0,2048,1,2048.0,2048.0,2048,2048,0.0,void stride::kimpl::kernel_entry<stride::kimpl::TcCompact>(T1::Params)

@@ -1,0 +1,18 @@
+{"block_bytes":2097152,"device":"NVIDIA GeForce RTX 4090","generated":256,"load_seconds":2.956959015,"peak_blocks":5,"peak_seqs":1,"preemptions":0,"rows":303,"run_seconds":0.834146836,"steps":256,"total_blocks":1024,"weight_bytes_on_device":2472288512,"weight_bytes_per_pass":2471493632}
+Collecting data...
+Generating '/tmp/nsys-report-f206.qdstrm'
+[1/1] [0%                          ] batch1_tc.nsys-rep[1/1] [0%                          ] batch1_tc.nsys-rep[1/1] [==18%                       ] batch1_tc.nsys-rep[1/1] [=17%                        ] batch1_tc.nsys-rep[1/1] [======35%                   ] batch1_tc.nsys-rep[1/1] [===========53%              ] batch1_tc.nsys-rep[1/1] [================71%         ] batch1_tc.nsys-rep[1/1] [==================75%       ] batch1_tc.nsys-rep[1/1] [========================100%] batch1_tc.nsys-rep[1/1] [========================100%] batch1_tc.nsys-rep
+Generated:
+    /workspace/reports/g3/batch1_tc.nsys-rep
+Generating SQLite file /workspace/reports/g3/batch1_tc.sqlite from /workspace/reports/g3/batch1_tc.nsys-rep
+Processing [/workspace/reports/g3/batch1_tc.sqlite] with [/opt/nvidia/nsight-systems/2024.6.2/host-linux-x64/reports/cuda_gpu_kern_sum.py] to [/workspace/reports/g3/batch1_tc_kernels_cuda_gpu_kern_sum.csv]... PROCESSED
+
+{"block_bytes":4194304,"device":"NVIDIA GeForce RTX 4090","generated":256,"load_seconds":3.478803278,"peak_blocks":5,"peak_seqs":1,"preemptions":0,"rows":303,"run_seconds":0.906476335,"steps":256,"total_blocks":512,"weight_bytes_on_device":2472288512,"weight_bytes_per_pass":2471493632}
+Collecting data...
+Generating '/tmp/nsys-report-5c0e.qdstrm'
+[1/1] [0%                          ] batch1_exact.nsys-rep[1/1] [0%                          ] batch1_exact.nsys-rep[1/1] [====25%                     ] batch1_exact.nsys-rep[1/1] [==18%                       ] batch1_exact.nsys-rep[1/1] [=17%                        ] batch1_exact.nsys-rep[1/1] [======35%                   ] batch1_exact.nsys-rep[1/1] [===========53%              ] batch1_exact.nsys-rep[1/1] [================71%         ] batch1_exact.nsys-rep[1/1] [==================75%       ] batch1_exact.nsys-rep[1/1] [========================100%] batch1_exact.nsys-rep[1/1] [========================100%] batch1_exact.nsys-rep
+Generated:
+    /workspace/reports/g3/batch1_exact.nsys-rep
+Generating SQLite file /workspace/reports/g3/batch1_exact.sqlite from /workspace/reports/g3/batch1_exact.nsys-rep
+Processing [/workspace/reports/g3/batch1_exact.sqlite] with [/opt/nvidia/nsight-systems/2024.6.2/host-linux-x64/reports/cuda_gpu_kern_sum.py] to [/workspace/reports/g3/batch1_exact_kernels_cuda_gpu_kern_sum.csv]... PROCESSED
+

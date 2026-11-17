@@ -16,7 +16,7 @@ class KvCache {
  public:
   // shuffle_seed != 0 randomizes block placement; the harness uses it to prove
   // that results do not depend on where a sequence's pages live.
-  KvCache(const ModelConfig& cfg, int64_t arena_bytes, int max_slots, uint32_t shuffle_seed = 0);
+  KvCache(const ModelConfig& cfg, int64_t arena_bytes, int max_slots, int elem_bytes, uint32_t shuffle_seed = 0);
   ~KvCache();
   KvCache(const KvCache&) = delete;
   KvCache& operator=(const KvCache&) = delete;
@@ -31,15 +31,17 @@ class KvCache {
   int free_blocks() const { return static_cast<int>(free_.size()); }
   int total_blocks() const { return total_blocks_; }
   int free_slots() const { return static_cast<int>(free_slots_.size()); }
-  int64_t block_bytes() const { return block_floats_ * 4; }
+  int64_t block_bytes() const { return block_elems_ * elem_bytes_; }
 
   // Pushes changed table entries to the device.
   void sync();
   KvRef ref() const { return ref_; }
+  void set_bug(int bug) { bug_ = bug; }
 
  private:
   KvRef ref_{};
-  int64_t block_floats_ = 0;
+  int64_t block_elems_ = 0;
+  int elem_bytes_ = 4;
   int total_blocks_ = 0;
   int max_slots_ = 0;
   int max_blocks_ = 0;
@@ -49,10 +51,11 @@ class KvCache {
   std::vector<std::vector<int32_t>> owned_;
   std::vector<int> dirty_slots_;
   std::vector<bool> slot_dirty_;
-  float* arena_ = nullptr;
+  void* arena_ = nullptr;
   int32_t* device_table_ = nullptr;
   std::mt19937 rng_;
   bool shuffle_ = false;
+  int bug_ = 0;
 };
 
 }  // namespace stride

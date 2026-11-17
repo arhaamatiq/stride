@@ -50,7 +50,7 @@ def main() -> None:
     args = parser.parse_args()
 
     dtype = {"float32": torch.float32, "float64": torch.float64, "bfloat16": torch.bfloat16}[args.dtype]
-    model = AutoModelForCausalLM.from_pretrained(args.model, torch_dtype=dtype, attn_implementation="eager")
+    model = AutoModelForCausalLM.from_pretrained(args.model, torch_dtype=dtype, attn_implementation="eager", local_files_only=True)
     model.to(args.device).eval()
 
     dump = open(args.dump_logits, "wb") if args.dump_logits else None

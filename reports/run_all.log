@@ -1,0 +1,35 @@
+unsloth/Llama-3.2-1B-Instruct@5a8abab4a5d6f164389b1079fb721cfab8d7126c snapshot_sha256=d52e42c7a850509573324484c1960b9affb5882dd3b63262a57bd55a6158c76a dir=/root/models/llama32-1b
+[13:24:17] start build
+[13:24:32] done  build
+[13:24:32] start g1
+[13:29:30] done  g1
+[13:29:30] start roofline
+[13:30:17] done  roofline
+[13:30:17] start nsys_b1
+[13:30:36] done  nsys_b1
+[13:30:36] start nsys_server
+[13:31:12] done  nsys_server
+[13:31:12] start det_stride
+[13:34:45] done  det_stride
+[13:34:45] start det_vllm
+[13:39:03] done  det_vllm
+[13:39:03] start sweep_stride
+[13:51:05] done  sweep_stride
+[13:51:05] start sweep_vllm
+[14:03:16] done  sweep_vllm
+[14:03:17] start ab_micro_off
+[14:08:18] done  ab_micro_off
+[14:08:18] start ab_micro_on
+[14:12:46] done  ab_micro_on
+[14:12:46] start ab_norm_tile
+[14:17:30] done  ab_norm_tile
+[14:17:30] start ab_bits
+[14:17:40] done  ab_bits
+[14:17:40] start mut_ref
+[14:18:01] done  mut_ref
+[14:18:01] start mut_exact
+[14:29:32] done  mut_exact
+[14:29:32] start mut_tc
+[14:38:54] done  mut_tc
+[14:38:54] all stages finished
+16

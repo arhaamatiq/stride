@@ -26,8 +26,15 @@ struct EngineOptions {
   int max_full_rows = 32;
   int max_slots = 256;
   int64_t kv_bytes = int64_t{16} << 30;
+  int kv_blocks = 0;  // overrides kv_bytes when set
   uint32_t kv_shuffle_seed = 0;
   int bug = 0;
+  KernelPath path = KernelPath::kExact;
+  bool tc_norm_per_lane = true;  // false restores the per-tile norm for A/B runs
+  // Register blocking of the tile GEMMs: row tiles and lane tiles per warp. 0 picks
+  // automatically from the batch. Results are bit-identical for every choice.
+  int tc_micro_r = 0;
+  int tc_micro_lt = 0;
 };
 
 class Engine {
@@ -48,6 +55,9 @@ class Engine {
 
  private:
   void* alloc_scratch(size_t bytes);
+  void build_attention_items(int rows);
+  void step_exact(const std::vector<StepRow>& rows, std::vector<BestEntry>& greedy, std::vector<float>& full);
+  void step_tensor_core(const std::vector<StepRow>& rows, std::vector<BestEntry>& greedy, std::vector<float>& full);
 
   ModelConfig cfg_;
   EngineOptions opts_;
@@ -66,11 +76,16 @@ class Engine {
   int32_t* row_slot_ = nullptr;
   int32_t* row_pos_ = nullptr;
   int32_t* lm_rows_ = nullptr;
+  int32_t* attn_items_ = nullptr;
+  float* attn_scratch_ = nullptr;
+  int rec_floats_ = 0;
+  int max_pages_ = 0;
   std::vector<void*> scratch_;
 
   std::vector<int32_t> host_tokens_;
   std::vector<int32_t> host_slots_;
   std::vector<int32_t> host_pos_;
+  std::vector<int32_t> host_items_;
   std::vector<int32_t> greedy_rows_;
   std::vector<int32_t> full_rows_;
   std::vector<BestEntry> best_init_;

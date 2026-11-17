@@ -1,0 +1,44 @@
+unsloth/Llama-3.2-1B-Instruct@5a8abab4a5d6f164389b1079fb721cfab8d7126c snapshot_sha256=d52e42c7a850509573324484c1960b9affb5882dd3b63262a57bd55a6158c76a dir=/root/models/llama32-1b
+[15:23:54] start build
+[15:24:11] done  build
+[15:24:11] start ncu_probe
+[15:24:14] done  ncu_probe
+[15:24:14] start memread
+[15:24:16] done  memread
+[15:24:16] start tc_probe
+[15:24:18] done  tc_probe
+[15:24:18] start cublas_probe
+[15:24:22] done  cublas_probe
+[skip] g1
+[15:24:22] start cross_device
+[15:24:56] done  cross_device
+[15:24:56] start roofline
+[15:25:44] done  roofline
+[skip] nsys_b1
+[skip] nsys_server
+[15:25:44] start det_stride
+[15:29:17] done  det_stride
+[15:29:17] start det_vllm
+[15:33:34] done  det_vllm
+[15:33:34] start det_preempt
+[15:36:56] done  det_preempt
+[skip] sweep_stride
+[skip] sweep_vllm
+[15:36:56] start offline
+[15:39:07] done  offline
+[skip] ab_micro_off
+[skip] ab_micro_on
+[skip] ab_norm_tile
+[skip] ab_bits
+[skip] mut_ref
+[15:39:07] start mut_exact
+[15:50:35] done  mut_exact
+[15:50:35] start mut_tc
+[16:00:02] done  mut_tc
+[16:00:02] start mut_cpu
+[16:10:37] done  mut_cpu
+/workspace/reports/g3/batch1_exact.nsys-rep: 1 value(s) masked
+/workspace/reports/g3/batch1_tc.nsys-rep: 1 value(s) masked
+/workspace/reports/g3/server_c64/server_trace.nsys-rep: 1 value(s) masked
+no secrets found
+[16:10:46] all stages finished

@@ -1,0 +1,7519 @@
+{
+ "engine": "stride",
+ "server_command": [
+  "/root/stride/build/stride_server",
+  "--model",
+  "/root/models/llama32-1b",
+  "--host",
+  "127.0.0.1",
+  "--port",
+  "8125",
+  "--path",
+  "tc",
+  "--kv-gb",
+  "16",
+  "--max-seqs",
+  "256",
+  "--max-rows",
+  "2048",
+  "--prefill-chunk",
+  "256"
+ ],
+ "pinned_weights": "unsloth/Llama-3.2-1B-Instruct@5a8abab4a5d6f164389b1079fb721cfab8d7126c snapshot_sha256=d52e42c7a850509573324484c1960b9affb5882dd3b63262a57bd55a6158c76a dir=/root/models/llama32-1b",
+ "prompts": 100,
+ "max_tokens": 256,
+ "temperature": 0.0,
+ "sequential_repeat_differs": 0,
+ "baseline": [
+  {
+   "sha": "ad56f50ae588a8129aa2af0e",
+   "fingerprint": "stride-b72701e71ddccbaf",
+   "completion_tokens": 256,
+   "prompt_tokens": 48
+  },
+  {
+   "sha": "c27fa25a4a5630849753897a",
+   "fingerprint": "stride-5737658689a1b700",
+   "completion_tokens": 256,
+   "prompt_tokens": 47
+  },
+  {
+   "sha": "eae335e297e5d01a0ed833a8",
+   "fingerprint": "stride-473cd5081bd62fe4",
+   "completion_tokens": 256,
+   "prompt_tokens": 51
+  },
+  {
+   "sha": "53d394edf5dcfa5e17d336d8",
+   "fingerprint": "stride-5662f5f3e4d4998f",
+   "completion_tokens": 256,
+   "prompt_tokens": 48
+  },
+  {
+   "sha": "1b73e08c4d1f7055eb3ae2e3",
+   "fingerprint": "stride-526f13e4e0df1f49",
+   "completion_tokens": 256,
+   "prompt_tokens": 45
+  },
+  {
+   "sha": "0503f9370a39de8582f5124b",
+   "fingerprint": "stride-61637d03dadfb69e",
+   "completion_tokens": 256,
+   "prompt_tokens": 44
+  },
+  {
+   "sha": "7f74c1702abf333c3fa7d9ee",
+   "fingerprint": "stride-5be85beb0666e34b",
+   "completion_tokens": 256,
+   "prompt_tokens": 48
+  },
+  {
+   "sha": "1cfdb89371060b50455847f9",
+   "fingerprint": "stride-da1641c54e10eb14",
+   "completion_tokens": 256,
+   "prompt_tokens": 45
+  },
+  {
+   "sha": "11cdf7288247d29aef229e33",
+   "fingerprint": "stride-d117b715cf2d8afa",
+   "completion_tokens": 256,
+   "prompt_tokens": 44
+  },
+  {
+   "sha": "5633831dad834f4952c776d9",
+   "fingerprint": "stride-09763d105f0abea9",
+   "completion_tokens": 256,
+   "prompt_tokens": 43
+  },
+  {
+   "sha": "764fb42ed51607c405390e0a",
+   "fingerprint": "stride-6d2e2b87542ba4a2",
+   "completion_tokens": 256,
+   "prompt_tokens": 47
+  },
+  {
+   "sha": "95a4a99df389b76b41f9267f",
+   "fingerprint": "stride-fbce91ebf5b06215",
+   "completion_tokens": 256,
+   "prompt_tokens": 44
+  },
+  {
+   "sha": "df56127a9bc236f8562385f3",
+   "fingerprint": "stride-1faf12abce833620",
+   "completion_tokens": 256,
+   "prompt_tokens": 45
+  },
+  {
+   "sha": "86970285119951f2b64a42fa",
+   "fingerprint": "stride-dbdb69c675312681",
+   "completion_tokens": 256,
+   "prompt_tokens": 44
+  },
+  {
+   "sha": "87855cd29774cf32fe093882",
+   "fingerprint": "stride-63140b5a84375759",
+   "completion_tokens": 256,
+   "prompt_tokens": 48
+  },
+  {
+   "sha": "04fdcd8b01aea7856fbc2e26",
+   "fingerprint": "stride-e4418aaafc494a33",
+   "completion_tokens": 256,
+   "prompt_tokens": 45
+  },
+  {
+   "sha": "10039b121457c2f653a76604",
+   "fingerprint": "stride-7625c84a0b15dbcc",
+   "completion_tokens": 256,
+   "prompt_tokens": 46
+  },
+  {
+   "sha": "8524d50e7c3eda05e5b81709",
+   "fingerprint": "stride-71a0761b2fa016ec",
+   "completion_tokens": 256,
+   "prompt_tokens": 45
+  },
+  {
+   "sha": "13e63ecb14bd32b7989d5eb6",
+   "fingerprint": "stride-0b20b801824312f0",
+   "completion_tokens": 256,
+   "prompt_tokens": 49
+  },
+  {
+   "sha": "2fb00a8711ba327fc84615fc",
+   "fingerprint": "stride-3cad0b0e5e3b5cbc",
+   "completion_tokens": 256,
+   "prompt_tokens": 46
+  },
+  {
+   "sha": "201b09de2b9bc39b8bfddc0a",
+   "fingerprint": "stride-9ff1c6796bc7f54e",
+   "completion_tokens": 256,
+   "prompt_tokens": 48
+  },
+  {
+   "sha": "79871435e1063f86bac1dc4e",
+   "fingerprint": "stride-9351cb83ce42c559",
+   "completion_tokens": 256,
+   "prompt_tokens": 47
+  },
+  {
+   "sha": "be4be4f4a2841ee24348ed11",
+   "fingerprint": "stride-236da6c28964027d",
+   "completion_tokens": 256,
+   "prompt_tokens": 51
+  },
+  {
+   "sha": "e7a07949d4fc891f57163669",
+   "fingerprint": "stride-124a8b00ed8a125a",
+   "completion_tokens": 256,
+   "prompt_tokens": 48
+  },
+  {
+   "sha": "7a6849d6d5b04bc00960b132",
+   "fingerprint": "stride-28dfa33fe58b77bb",
+   "completion_tokens": 256,
+   "prompt_tokens": 47
+  },
+  {
+   "sha": "b610405d43428adb575ed91a",
+   "fingerprint": "stride-b54cf9755181d0bb",
+   "completion_tokens": 256,
+   "prompt_tokens": 46
+  },
+  {
+   "sha": "25c84b31a5eb19a7712ed388",
+   "fingerprint": "stride-7dbe037bcd8eb97d",
+   "completion_tokens": 256,
+   "prompt_tokens": 50
+  },
+  {
+   "sha": "986592cb87afc1b7a04f3a02",
+   "fingerprint": "stride-4f8f136ba21cf876",
+   "completion_tokens": 256,
+   "prompt_tokens": 47
+  },
+  {
+   "sha": "7b334ab0c802c67b6c7be478",
+   "fingerprint": "stride-8bb9117ffc4f5d53",
+   "completion_tokens": 256,
+   "prompt_tokens": 47
+  },
+  {
+   "sha": "bcdc0cb8f8c0e278a5b02834",
+   "fingerprint": "stride-16cd873b18ca0a8c",
+   "completion_tokens": 256,
+   "prompt_tokens": 46
+  },
+  {
+   "sha": "a8dfd8407121834939ca73a7",
+   "fingerprint": "stride-3470b8b63845c9fe",
+   "completion_tokens": 256,
+   "prompt_tokens": 50
+  },
+  {
+   "sha": "276280e2fb16600c4687df63",
+   "fingerprint": "stride-c6472d51ba50b013",
+   "completion_tokens": 256,
+   "prompt_tokens": 47
+  },
+  {
+   "sha": "3d125d8118cf462dca9330a5",
+   "fingerprint": "stride-e2fd82f61dd40257",
+   "completion_tokens": 256,
+   "prompt_tokens": 45
+  },
+  {
+   "sha": "f014c0e2f30c39c181e1ef49",
+   "fingerprint": "stride-8c2507c673695cb1",
+   "completion_tokens": 256,
+   "prompt_tokens": 44
+  },
+  {
+   "sha": "f8c5a9cb5030f6e1160af740",
+   "fingerprint": "stride-8ec20e0173ad8768",
+   "completion_tokens": 256,
+   "prompt_tokens": 48
+  },
+  {
+   "sha": "31340dfcc7116b0f5f6cab5e",
+   "fingerprint": "stride-f13a9546d6e590ba",
+   "completion_tokens": 256,
+   "prompt_tokens": 45
+  },
+  {
+   "sha": "f74c3cb26ea73df1784c1f32",
+   "fingerprint": "stride-bacab6708780242b",
+   "completion_tokens": 256,
+   "prompt_tokens": 48
+  },
+  {
+   "sha": "87b171594a0805e920fcf94d",
+   "fingerprint": "stride-d8180645ad309fb9",
+   "completion_tokens": 256,
+   "prompt_tokens": 47
+  },
+  {
+   "sha": "27b5ea045502767315367a47",
+   "fingerprint": "stride-ffee0611b49f4914",
+   "completion_tokens": 256,
+   "prompt_tokens": 51
+  },
+  {
+   "sha": "44f25760bb52c84f71fcea50",
+   "fingerprint": "stride-7565e208449b39fa",
+   "completion_tokens": 256,
+   "prompt_tokens": 48
+  },
+  {
+   "sha": "6ca58c92f6cb08b9ce7a420c",
+   "fingerprint": "stride-f9a2b27c0c98fad3",
+   "completion_tokens": 256,
+   "prompt_tokens": 44
+  },
+  {
+   "sha": "52adca34cc01c30d0a03c976",
+   "fingerprint": "stride-d0c5ce205354059a",
+   "completion_tokens": 256,
+   "prompt_tokens": 43
+  },
+  {
+   "sha": "1aa2ec26f317e658ef4a9093",
+   "fingerprint": "stride-2b8399b614a2e06d",
+   "completion_tokens": 256,
+   "prompt_tokens": 47
+  },
+  {
+   "sha": "5f870c195e97b20f8dbbac90",
+   "fingerprint": "stride-97cd9985c3ec686a",
+   "completion_tokens": 256,
+   "prompt_tokens": 44
+  },
+  {
+   "sha": "45968e3db85b945661baf636",
+   "fingerprint": "stride-b77e3801d7697f43",
+   "completion_tokens": 256,
+   "prompt_tokens": 47
+  },
+  {
+   "sha": "556139f962c9278fc3c8f918",
+   "fingerprint": "stride-aa8e93f859b5aadf",
+   "completion_tokens": 256,
+   "prompt_tokens": 46
+  },
+  {
+   "sha": "a1d823f0eff97bfe1fe22092",
+   "fingerprint": "stride-c78220579a456f31",
+   "completion_tokens": 256,
+   "prompt_tokens": 50
+  },
+  {
+   "sha": "095266509e5177bd4b1b4b4c",
+   "fingerprint": "stride-88cec861c7ff071c",
+   "completion_tokens": 256,
+   "prompt_tokens": 47
+  },
+  {
+   "sha": "af155ae277c6e7f5d4f4e556",
+   "fingerprint": "stride-2323f411de8dcf4f",
+   "completion_tokens": 256,
+   "prompt_tokens": 45
+  },
+  {
+   "sha": "3f5d83ead17fb412c7c41ab8",
+   "fingerprint": "stride-89ea0083651eecb3",
+   "completion_tokens": 256,
+   "prompt_tokens": 44
+  },
+  {
+   "sha": "88573c99a7ff8985a8fe7453",
+   "fingerprint": "stride-a56068f1f0364573",
+   "completion_tokens": 256,
+   "prompt_tokens": 48
+  },
+  {
+   "sha": "28710a0a541f274cb4b08126",
+   "fingerprint": "stride-ebcccc583ddcfa45",
+   "completion_tokens": 256,
+   "prompt_tokens": 45
+  },
+  {
+   "sha": "03ec0c0e02e05bfedd002741",
+   "fingerprint": "stride-61fe08fd01245d62",
+   "completion_tokens": 256,
+   "prompt_tokens": 45
+  },
+  {
+   "sha": "b393169a3b1d82175c24527f",
+   "fingerprint": "stride-2bc46ab5088ff3d9",
+   "completion_tokens": 256,
+   "prompt_tokens": 44
+  },
+  {
+   "sha": "466dee66a132d488a8dab66b",
+   "fingerprint": "stride-46ac6056b43ad677",
+   "completion_tokens": 256,
+   "prompt_tokens": 48
+  },
+  {
+   "sha": "23713de20f54b6c231392616",
+   "fingerprint": "stride-22c6509160a9aaf7",
+   "completion_tokens": 256,
+   "prompt_tokens": 45
+  },
+  {
+   "sha": "7c9612a32f17b4d9f348543e",
+   "fingerprint": "stride-93b9b4da0ce6cc00",
+   "completion_tokens": 256,
+   "prompt_tokens": 45
+  },
+  {
+   "sha": "480bf091e3a974314bd2a930",
+   "fingerprint": "stride-844a826ac47998d1",
+   "completion_tokens": 256,
+   "prompt_tokens": 44
+  },
+  {
+   "sha": "6b248e65df02e631c9e62f17",
+   "fingerprint": "stride-f805843e3d1ef323",
+   "completion_tokens": 256,
+   "prompt_tokens": 48
+  },
+  {
+   "sha": "f9c53524822436f31b795153",
+   "fingerprint": "stride-2db238f952acba01",
+   "completion_tokens": 256,
+   "prompt_tokens": 45
+  },
+  {
+   "sha": "ca1c8e110b85128f1be71aa2",
+   "fingerprint": "stride-54b88075a2d78b5d",
+   "completion_tokens": 256,
+   "prompt_tokens": 46
+  },
+  {
+   "sha": "5af1a7205086a7187e753fe2",
+   "fingerprint": "stride-2fcb69f41609f9f6",
+   "completion_tokens": 256,
+   "prompt_tokens": 45
+  },
+  {
+   "sha": "ba4b1b69867542228b28b5a2",
+   "fingerprint": "stride-868652f450333355",
+   "completion_tokens": 256,
+   "prompt_tokens": 49
+  },
+  {
+   "sha": "6553a9386aa6d59587a9b191",
+   "fingerprint": "stride-ae50d3c829703d7b",
+   "completion_tokens": 256,
+   "prompt_tokens": 46
+  },
+  {
+   "sha": "045729cc158976644678fe5e",
+   "fingerprint": "stride-4bf8f7df2b419941",
+   "completion_tokens": 256,
+   "prompt_tokens": 46
+  },
+  {
+   "sha": "698e4178740b784798d1b5d5",
+   "fingerprint": "stride-ec07c4abecf79759",
+   "completion_tokens": 256,
+   "prompt_tokens": 45
+  },
+  {
+   "sha": "6c33524b96e2c175125940c2",
+   "fingerprint": "stride-b51c281368943de3",
+   "completion_tokens": 256,
+   "prompt_tokens": 49
+  },
+  {
+   "sha": "7ce3dfb86d98442804159cae",
+   "fingerprint": "stride-70c8300dd726c6be",
+   "completion_tokens": 256,
+   "prompt_tokens": 46
+  },
+  {
+   "sha": "e15a7775caf1e38517c7c84d",
+   "fingerprint": "stride-119814251b4076ab",
+   "completion_tokens": 256,
+   "prompt_tokens": 45
+  },
+  {
+   "sha": "f8699ccf1e362a55ed9f968f",
+   "fingerprint": "stride-84fa40a179f81045",
+   "completion_tokens": 256,
+   "prompt_tokens": 44
+  },
+  {
+   "sha": "0b5ba3ac9eda80b7a2dc1378",
+   "fingerprint": "stride-519058604d63c4a1",
+   "completion_tokens": 256,
+   "prompt_tokens": 48
+  },
+  {
+   "sha": "72aa829ed734396539830190",
+   "fingerprint": "stride-de3a81f119d0bfc4",
+   "completion_tokens": 256,
+   "prompt_tokens": 45
+  },
+  {
+   "sha": "c5cadb61e1fdb7dd52d11c9b",
+   "fingerprint": "stride-32da358ebbefeffa",
+   "completion_tokens": 256,
+   "prompt_tokens": 47
+  },
+  {
+   "sha": "c9349692b4f4d5290c96e445",
+   "fingerprint": "stride-6f2a63e0f627ec5b",
+   "completion_tokens": 256,
+   "prompt_tokens": 46
+  },
+  {
+   "sha": "c36444f5c24b36ec539511ba",
+   "fingerprint": "stride-e29b6bb82d94ea75",
+   "completion_tokens": 256,
+   "prompt_tokens": 50
+  },
+  {
+   "sha": "f334ceb8fdf6d7e1881b163f",
+   "fingerprint": "stride-9d3c791c95c20c4e",
+   "completion_tokens": 256,
+   "prompt_tokens": 47
+  },
+  {
+   "sha": "df57887064f69aacde60b039",
+   "fingerprint": "stride-45545f2b1b4c0a59",
+   "completion_tokens": 256,
+   "prompt_tokens": 44
+  },
+  {
+   "sha": "a2bbee76c79f4208d59540c1",
+   "fingerprint": "stride-f4496f2b37235c97",
+   "completion_tokens": 256,
+   "prompt_tokens": 43
+  },
+  {
+   "sha": "fccdbe70b75e50d76387a644",
+   "fingerprint": "stride-4f953ea9fb90a4b5",
+   "completion_tokens": 256,
+   "prompt_tokens": 47
+  },
+  {
+   "sha": "d640c5920785d893e3f9ace1",
+   "fingerprint": "stride-8723de288c931338",
+   "completion_tokens": 256,
+   "prompt_tokens": 44
+  },
+  {
+   "sha": "43eb0e96780495b9fa19ad84",
+   "fingerprint": "stride-f08a01525f550148",
+   "completion_tokens": 256,
+   "prompt_tokens": 46
+  },
+  {
+   "sha": "4f6b65dc99f18a6a6df76422",
+   "fingerprint": "stride-aa39fd3e7a2da10e",
+   "completion_tokens": 256,
+   "prompt_tokens": 45
+  },
+  {
+   "sha": "02fe9d83b105648f1697a6ae",
+   "fingerprint": "stride-3ba6d48bfcd47194",
+   "completion_tokens": 256,
+   "prompt_tokens": 49
+  },
+  {
+   "sha": "0622fdfc5677e1514a8545ee",
+   "fingerprint": "stride-08471b3bf9ecffa3",
+   "completion_tokens": 256,
+   "prompt_tokens": 46
+  },
+  {
+   "sha": "9ec84f9308aa2ae97a816dc3",
+   "fingerprint": "stride-ae435b21c14b93c3",
+   "completion_tokens": 256,
+   "prompt_tokens": 46
+  },
+  {
+   "sha": "c5008fb4792cb8540ca4fce0",
+   "fingerprint": "stride-64945f13c0962723",
+   "completion_tokens": 256,
+   "prompt_tokens": 45
+  },
+  {
+   "sha": "5edc42d09d1a01f55aa896a0",
+   "fingerprint": "stride-6feef7d55cc9a0e2",
+   "completion_tokens": 256,
+   "prompt_tokens": 49
+  },
+  {
+   "sha": "020a469f7352de67e2d9caff",
+   "fingerprint": "stride-580e9d2c5cb46e99",
+   "completion_tokens": 256,
+   "prompt_tokens": 46
+  },
+  {
+   "sha": "cf3b4855fb6ca72a88ea7e3c",
+   "fingerprint": "stride-684b31c9bcd2c371",
+   "completion_tokens": 256,
+   "prompt_tokens": 45
+  },
+  {
+   "sha": "a8dc76a228b009db277b1a76",
+   "fingerprint": "stride-4c882f7a27b94eee",
+   "completion_tokens": 256,
+   "prompt_tokens": 44
+  },
+  {
+   "sha": "b337a6330492d868054f570e",
+   "fingerprint": "stride-753ee73f708fb9c8",
+   "completion_tokens": 256,
+   "prompt_tokens": 48
+  },
+  {
+   "sha": "99c1d728e5b81c007e314c7c",
+   "fingerprint": "stride-36492d32087de8fe",
+   "completion_tokens": 256,
+   "prompt_tokens": 45
+  },
+  {
+   "sha": "7d778b628f09ba08b46c812b",
+   "fingerprint": "stride-ce97b170352718fb",
+   "completion_tokens": 256,
+   "prompt_tokens": 45
+  },
+  {
+   "sha": "cab68a1a075eb016323e8851",
+   "fingerprint": "stride-cdfa018eb30f087d",
+   "completion_tokens": 256,
+   "prompt_tokens": 44
+  },
+  {
+   "sha": "028f45b4147fa3c481c41ed4",
+   "fingerprint": "stride-d81942842ff7ac5d",
+   "completion_tokens": 256,
+   "prompt_tokens": 48
+  },
+  {
+   "sha": "8efae735e3a7c68022d17119",
+   "fingerprint": "stride-69d3e6a2f972777f",
+   "completion_tokens": 256,
+   "prompt_tokens": 45
+  },
+  {
+   "sha": "ec213fbd747e917fb0589aca",
+   "fingerprint": "stride-f06b5bb11f82517f",
+   "completion_tokens": 256,
+   "prompt_tokens": 46
+  },
+  {
+   "sha": "f5063f9be4579b863018942f",
+   "fingerprint": "stride-b42578dcdc25e7c3",
+   "completion_tokens": 256,
+   "prompt_tokens": 45
+  },
+  {
+   "sha": "6274d52c6455ef845befccaa",
+   "fingerprint": "stride-5c5e7874f1300542",
+   "completion_tokens": 256,
+   "prompt_tokens": 49
+  },
+  {
+   "sha": "d7e64bc1920872b4a68b1e52",
+   "fingerprint": "stride-f1bcceb45f8a9090",
+   "completion_tokens": 256,
+   "prompt_tokens": 46
+  }
+ ],
+ "levels": [
+  {
+   "concurrency": 4,
+   "requests": 100,
+   "requests_differing": 0,
+   "requests_differing_pct": 0.0,
+   "prompts_changed": 0,
+   "prompts_changed_pct": 0.0,
+   "responses": [
+    {
+     "prompt": 0,
+     "sha": "ad56f50ae588a8129aa2af0e",
+     "fingerprint": "stride-b72701e71ddccbaf",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 1,
+     "sha": "c27fa25a4a5630849753897a",
+     "fingerprint": "stride-5737658689a1b700",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 2,
+     "sha": "eae335e297e5d01a0ed833a8",
+     "fingerprint": "stride-473cd5081bd62fe4",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 3,
+     "sha": "53d394edf5dcfa5e17d336d8",
+     "fingerprint": "stride-5662f5f3e4d4998f",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 4,
+     "sha": "1b73e08c4d1f7055eb3ae2e3",
+     "fingerprint": "stride-526f13e4e0df1f49",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 5,
+     "sha": "0503f9370a39de8582f5124b",
+     "fingerprint": "stride-61637d03dadfb69e",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 6,
+     "sha": "7f74c1702abf333c3fa7d9ee",
+     "fingerprint": "stride-5be85beb0666e34b",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 7,
+     "sha": "1cfdb89371060b50455847f9",
+     "fingerprint": "stride-da1641c54e10eb14",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 8,
+     "sha": "11cdf7288247d29aef229e33",
+     "fingerprint": "stride-d117b715cf2d8afa",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 9,
+     "sha": "5633831dad834f4952c776d9",
+     "fingerprint": "stride-09763d105f0abea9",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 10,
+     "sha": "764fb42ed51607c405390e0a",
+     "fingerprint": "stride-6d2e2b87542ba4a2",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 11,
+     "sha": "95a4a99df389b76b41f9267f",
+     "fingerprint": "stride-fbce91ebf5b06215",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 12,
+     "sha": "df56127a9bc236f8562385f3",
+     "fingerprint": "stride-1faf12abce833620",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 13,
+     "sha": "86970285119951f2b64a42fa",
+     "fingerprint": "stride-dbdb69c675312681",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 14,
+     "sha": "87855cd29774cf32fe093882",
+     "fingerprint": "stride-63140b5a84375759",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 15,
+     "sha": "04fdcd8b01aea7856fbc2e26",
+     "fingerprint": "stride-e4418aaafc494a33",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 16,
+     "sha": "10039b121457c2f653a76604",
+     "fingerprint": "stride-7625c84a0b15dbcc",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 17,
+     "sha": "8524d50e7c3eda05e5b81709",
+     "fingerprint": "stride-71a0761b2fa016ec",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 18,
+     "sha": "13e63ecb14bd32b7989d5eb6",
+     "fingerprint": "stride-0b20b801824312f0",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 19,
+     "sha": "2fb00a8711ba327fc84615fc",
+     "fingerprint": "stride-3cad0b0e5e3b5cbc",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 20,
+     "sha": "201b09de2b9bc39b8bfddc0a",
+     "fingerprint": "stride-9ff1c6796bc7f54e",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 21,
+     "sha": "79871435e1063f86bac1dc4e",
+     "fingerprint": "stride-9351cb83ce42c559",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 22,
+     "sha": "be4be4f4a2841ee24348ed11",
+     "fingerprint": "stride-236da6c28964027d",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 23,
+     "sha": "e7a07949d4fc891f57163669",
+     "fingerprint": "stride-124a8b00ed8a125a",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 24,
+     "sha": "7a6849d6d5b04bc00960b132",
+     "fingerprint": "stride-28dfa33fe58b77bb",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 25,
+     "sha": "b610405d43428adb575ed91a",
+     "fingerprint": "stride-b54cf9755181d0bb",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 26,
+     "sha": "25c84b31a5eb19a7712ed388",
+     "fingerprint": "stride-7dbe037bcd8eb97d",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 27,
+     "sha": "986592cb87afc1b7a04f3a02",
+     "fingerprint": "stride-4f8f136ba21cf876",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 28,
+     "sha": "7b334ab0c802c67b6c7be478",
+     "fingerprint": "stride-8bb9117ffc4f5d53",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 29,
+     "sha": "bcdc0cb8f8c0e278a5b02834",
+     "fingerprint": "stride-16cd873b18ca0a8c",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 30,
+     "sha": "a8dfd8407121834939ca73a7",
+     "fingerprint": "stride-3470b8b63845c9fe",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 31,
+     "sha": "276280e2fb16600c4687df63",
+     "fingerprint": "stride-c6472d51ba50b013",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 32,
+     "sha": "3d125d8118cf462dca9330a5",
+     "fingerprint": "stride-e2fd82f61dd40257",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 33,
+     "sha": "f014c0e2f30c39c181e1ef49",
+     "fingerprint": "stride-8c2507c673695cb1",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 34,
+     "sha": "f8c5a9cb5030f6e1160af740",
+     "fingerprint": "stride-8ec20e0173ad8768",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 35,
+     "sha": "31340dfcc7116b0f5f6cab5e",
+     "fingerprint": "stride-f13a9546d6e590ba",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 36,
+     "sha": "f74c3cb26ea73df1784c1f32",
+     "fingerprint": "stride-bacab6708780242b",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 37,
+     "sha": "87b171594a0805e920fcf94d",
+     "fingerprint": "stride-d8180645ad309fb9",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 38,
+     "sha": "27b5ea045502767315367a47",
+     "fingerprint": "stride-ffee0611b49f4914",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 39,
+     "sha": "44f25760bb52c84f71fcea50",
+     "fingerprint": "stride-7565e208449b39fa",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 40,
+     "sha": "6ca58c92f6cb08b9ce7a420c",
+     "fingerprint": "stride-f9a2b27c0c98fad3",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 41,
+     "sha": "52adca34cc01c30d0a03c976",
+     "fingerprint": "stride-d0c5ce205354059a",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 42,
+     "sha": "1aa2ec26f317e658ef4a9093",
+     "fingerprint": "stride-2b8399b614a2e06d",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 43,
+     "sha": "5f870c195e97b20f8dbbac90",
+     "fingerprint": "stride-97cd9985c3ec686a",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 44,
+     "sha": "45968e3db85b945661baf636",
+     "fingerprint": "stride-b77e3801d7697f43",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 45,
+     "sha": "556139f962c9278fc3c8f918",
+     "fingerprint": "stride-aa8e93f859b5aadf",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 46,
+     "sha": "a1d823f0eff97bfe1fe22092",
+     "fingerprint": "stride-c78220579a456f31",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 47,
+     "sha": "095266509e5177bd4b1b4b4c",
+     "fingerprint": "stride-88cec861c7ff071c",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 48,
+     "sha": "af155ae277c6e7f5d4f4e556",
+     "fingerprint": "stride-2323f411de8dcf4f",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 49,
+     "sha": "3f5d83ead17fb412c7c41ab8",
+     "fingerprint": "stride-89ea0083651eecb3",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 50,
+     "sha": "88573c99a7ff8985a8fe7453",
+     "fingerprint": "stride-a56068f1f0364573",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 51,
+     "sha": "28710a0a541f274cb4b08126",
+     "fingerprint": "stride-ebcccc583ddcfa45",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 52,
+     "sha": "03ec0c0e02e05bfedd002741",
+     "fingerprint": "stride-61fe08fd01245d62",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 53,
+     "sha": "b393169a3b1d82175c24527f",
+     "fingerprint": "stride-2bc46ab5088ff3d9",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 54,
+     "sha": "466dee66a132d488a8dab66b",
+     "fingerprint": "stride-46ac6056b43ad677",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 55,
+     "sha": "23713de20f54b6c231392616",
+     "fingerprint": "stride-22c6509160a9aaf7",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 56,
+     "sha": "7c9612a32f17b4d9f348543e",
+     "fingerprint": "stride-93b9b4da0ce6cc00",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 57,
+     "sha": "480bf091e3a974314bd2a930",
+     "fingerprint": "stride-844a826ac47998d1",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 58,
+     "sha": "6b248e65df02e631c9e62f17",
+     "fingerprint": "stride-f805843e3d1ef323",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 59,
+     "sha": "f9c53524822436f31b795153",
+     "fingerprint": "stride-2db238f952acba01",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 60,
+     "sha": "ca1c8e110b85128f1be71aa2",
+     "fingerprint": "stride-54b88075a2d78b5d",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 61,
+     "sha": "5af1a7205086a7187e753fe2",
+     "fingerprint": "stride-2fcb69f41609f9f6",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 62,
+     "sha": "ba4b1b69867542228b28b5a2",
+     "fingerprint": "stride-868652f450333355",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 63,
+     "sha": "6553a9386aa6d59587a9b191",
+     "fingerprint": "stride-ae50d3c829703d7b",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 64,
+     "sha": "045729cc158976644678fe5e",
+     "fingerprint": "stride-4bf8f7df2b419941",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 65,
+     "sha": "698e4178740b784798d1b5d5",
+     "fingerprint": "stride-ec07c4abecf79759",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 66,
+     "sha": "6c33524b96e2c175125940c2",
+     "fingerprint": "stride-b51c281368943de3",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 67,
+     "sha": "7ce3dfb86d98442804159cae",
+     "fingerprint": "stride-70c8300dd726c6be",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 68,
+     "sha": "e15a7775caf1e38517c7c84d",
+     "fingerprint": "stride-119814251b4076ab",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 69,
+     "sha": "f8699ccf1e362a55ed9f968f",
+     "fingerprint": "stride-84fa40a179f81045",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 70,
+     "sha": "0b5ba3ac9eda80b7a2dc1378",
+     "fingerprint": "stride-519058604d63c4a1",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 71,
+     "sha": "72aa829ed734396539830190",
+     "fingerprint": "stride-de3a81f119d0bfc4",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 72,
+     "sha": "c5cadb61e1fdb7dd52d11c9b",
+     "fingerprint": "stride-32da358ebbefeffa",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 73,
+     "sha": "c9349692b4f4d5290c96e445",
+     "fingerprint": "stride-6f2a63e0f627ec5b",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 74,
+     "sha": "c36444f5c24b36ec539511ba",
+     "fingerprint": "stride-e29b6bb82d94ea75",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 75,
+     "sha": "f334ceb8fdf6d7e1881b163f",
+     "fingerprint": "stride-9d3c791c95c20c4e",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 76,
+     "sha": "df57887064f69aacde60b039",
+     "fingerprint": "stride-45545f2b1b4c0a59",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 77,
+     "sha": "a2bbee76c79f4208d59540c1",
+     "fingerprint": "stride-f4496f2b37235c97",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 78,
+     "sha": "fccdbe70b75e50d76387a644",
+     "fingerprint": "stride-4f953ea9fb90a4b5",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 79,
+     "sha": "d640c5920785d893e3f9ace1",
+     "fingerprint": "stride-8723de288c931338",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 80,
+     "sha": "43eb0e96780495b9fa19ad84",
+     "fingerprint": "stride-f08a01525f550148",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 81,
+     "sha": "4f6b65dc99f18a6a6df76422",
+     "fingerprint": "stride-aa39fd3e7a2da10e",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 82,
+     "sha": "02fe9d83b105648f1697a6ae",
+     "fingerprint": "stride-3ba6d48bfcd47194",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 83,
+     "sha": "0622fdfc5677e1514a8545ee",
+     "fingerprint": "stride-08471b3bf9ecffa3",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 84,
+     "sha": "9ec84f9308aa2ae97a816dc3",
+     "fingerprint": "stride-ae435b21c14b93c3",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 85,
+     "sha": "c5008fb4792cb8540ca4fce0",
+     "fingerprint": "stride-64945f13c0962723",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 86,
+     "sha": "5edc42d09d1a01f55aa896a0",
+     "fingerprint": "stride-6feef7d55cc9a0e2",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 87,
+     "sha": "020a469f7352de67e2d9caff",
+     "fingerprint": "stride-580e9d2c5cb46e99",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 88,
+     "sha": "cf3b4855fb6ca72a88ea7e3c",
+     "fingerprint": "stride-684b31c9bcd2c371",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 89,
+     "sha": "a8dc76a228b009db277b1a76",
+     "fingerprint": "stride-4c882f7a27b94eee",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 90,
+     "sha": "b337a6330492d868054f570e",
+     "fingerprint": "stride-753ee73f708fb9c8",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 91,
+     "sha": "99c1d728e5b81c007e314c7c",
+     "fingerprint": "stride-36492d32087de8fe",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 92,
+     "sha": "7d778b628f09ba08b46c812b",
+     "fingerprint": "stride-ce97b170352718fb",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 93,
+     "sha": "cab68a1a075eb016323e8851",
+     "fingerprint": "stride-cdfa018eb30f087d",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 94,
+     "sha": "028f45b4147fa3c481c41ed4",
+     "fingerprint": "stride-d81942842ff7ac5d",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 95,
+     "sha": "8efae735e3a7c68022d17119",
+     "fingerprint": "stride-69d3e6a2f972777f",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 96,
+     "sha": "ec213fbd747e917fb0589aca",
+     "fingerprint": "stride-f06b5bb11f82517f",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 97,
+     "sha": "f5063f9be4579b863018942f",
+     "fingerprint": "stride-b42578dcdc25e7c3",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 98,
+     "sha": "6274d52c6455ef845befccaa",
+     "fingerprint": "stride-5c5e7874f1300542",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 99,
+     "sha": "d7e64bc1920872b4a68b1e52",
+     "fingerprint": "stride-f1bcceb45f8a9090",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    }
+   ],
+   "fingerprints_differing": 0,
+   "stats_after": {
+    "active": 0,
+    "cancelled": 0,
+    "completion_tokens": 76800,
+    "generated": 76800,
+    "kv_free_blocks": 8192,
+    "kv_total_blocks": 8192,
+    "max_context": 2048,
+    "peak_blocks": 20,
+    "peak_seqs": 4,
+    "preemptions": 0,
+    "prompt_tokens": 13890,
+    "replayed_rows": 0,
+    "requests": 300,
+    "rows": 90390,
+    "steps": 57626
+   }
+  },
+  {
+   "concurrency": 16,
+   "requests": 100,
+   "requests_differing": 0,
+   "requests_differing_pct": 0.0,
+   "prompts_changed": 0,
+   "prompts_changed_pct": 0.0,
+   "responses": [
+    {
+     "prompt": 0,
+     "sha": "ad56f50ae588a8129aa2af0e",
+     "fingerprint": "stride-b72701e71ddccbaf",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 1,
+     "sha": "c27fa25a4a5630849753897a",
+     "fingerprint": "stride-5737658689a1b700",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 2,
+     "sha": "eae335e297e5d01a0ed833a8",
+     "fingerprint": "stride-473cd5081bd62fe4",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 3,
+     "sha": "53d394edf5dcfa5e17d336d8",
+     "fingerprint": "stride-5662f5f3e4d4998f",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 4,
+     "sha": "1b73e08c4d1f7055eb3ae2e3",
+     "fingerprint": "stride-526f13e4e0df1f49",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 5,
+     "sha": "0503f9370a39de8582f5124b",
+     "fingerprint": "stride-61637d03dadfb69e",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 6,
+     "sha": "7f74c1702abf333c3fa7d9ee",
+     "fingerprint": "stride-5be85beb0666e34b",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 7,
+     "sha": "1cfdb89371060b50455847f9",
+     "fingerprint": "stride-da1641c54e10eb14",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 8,
+     "sha": "11cdf7288247d29aef229e33",
+     "fingerprint": "stride-d117b715cf2d8afa",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 9,
+     "sha": "5633831dad834f4952c776d9",
+     "fingerprint": "stride-09763d105f0abea9",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 10,
+     "sha": "764fb42ed51607c405390e0a",
+     "fingerprint": "stride-6d2e2b87542ba4a2",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 11,
+     "sha": "95a4a99df389b76b41f9267f",
+     "fingerprint": "stride-fbce91ebf5b06215",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 12,
+     "sha": "df56127a9bc236f8562385f3",
+     "fingerprint": "stride-1faf12abce833620",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 13,
+     "sha": "86970285119951f2b64a42fa",
+     "fingerprint": "stride-dbdb69c675312681",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 14,
+     "sha": "87855cd29774cf32fe093882",
+     "fingerprint": "stride-63140b5a84375759",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 15,
+     "sha": "04fdcd8b01aea7856fbc2e26",
+     "fingerprint": "stride-e4418aaafc494a33",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 16,
+     "sha": "10039b121457c2f653a76604",
+     "fingerprint": "stride-7625c84a0b15dbcc",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 17,
+     "sha": "8524d50e7c3eda05e5b81709",
+     "fingerprint": "stride-71a0761b2fa016ec",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 18,
+     "sha": "13e63ecb14bd32b7989d5eb6",
+     "fingerprint": "stride-0b20b801824312f0",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 19,
+     "sha": "2fb00a8711ba327fc84615fc",
+     "fingerprint": "stride-3cad0b0e5e3b5cbc",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 20,
+     "sha": "201b09de2b9bc39b8bfddc0a",
+     "fingerprint": "stride-9ff1c6796bc7f54e",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 21,
+     "sha": "79871435e1063f86bac1dc4e",
+     "fingerprint": "stride-9351cb83ce42c559",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 22,
+     "sha": "be4be4f4a2841ee24348ed11",
+     "fingerprint": "stride-236da6c28964027d",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 23,
+     "sha": "e7a07949d4fc891f57163669",
+     "fingerprint": "stride-124a8b00ed8a125a",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 24,
+     "sha": "7a6849d6d5b04bc00960b132",
+     "fingerprint": "stride-28dfa33fe58b77bb",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 25,
+     "sha": "b610405d43428adb575ed91a",
+     "fingerprint": "stride-b54cf9755181d0bb",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 26,
+     "sha": "25c84b31a5eb19a7712ed388",
+     "fingerprint": "stride-7dbe037bcd8eb97d",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 27,
+     "sha": "986592cb87afc1b7a04f3a02",
+     "fingerprint": "stride-4f8f136ba21cf876",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 28,
+     "sha": "7b334ab0c802c67b6c7be478",
+     "fingerprint": "stride-8bb9117ffc4f5d53",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 29,
+     "sha": "bcdc0cb8f8c0e278a5b02834",
+     "fingerprint": "stride-16cd873b18ca0a8c",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 30,
+     "sha": "a8dfd8407121834939ca73a7",
+     "fingerprint": "stride-3470b8b63845c9fe",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 31,
+     "sha": "276280e2fb16600c4687df63",
+     "fingerprint": "stride-c6472d51ba50b013",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 32,
+     "sha": "3d125d8118cf462dca9330a5",
+     "fingerprint": "stride-e2fd82f61dd40257",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 33,
+     "sha": "f014c0e2f30c39c181e1ef49",
+     "fingerprint": "stride-8c2507c673695cb1",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 34,
+     "sha": "f8c5a9cb5030f6e1160af740",
+     "fingerprint": "stride-8ec20e0173ad8768",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 35,
+     "sha": "31340dfcc7116b0f5f6cab5e",
+     "fingerprint": "stride-f13a9546d6e590ba",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 36,
+     "sha": "f74c3cb26ea73df1784c1f32",
+     "fingerprint": "stride-bacab6708780242b",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 37,
+     "sha": "87b171594a0805e920fcf94d",
+     "fingerprint": "stride-d8180645ad309fb9",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 38,
+     "sha": "27b5ea045502767315367a47",
+     "fingerprint": "stride-ffee0611b49f4914",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 39,
+     "sha": "44f25760bb52c84f71fcea50",
+     "fingerprint": "stride-7565e208449b39fa",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 40,
+     "sha": "6ca58c92f6cb08b9ce7a420c",
+     "fingerprint": "stride-f9a2b27c0c98fad3",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 41,
+     "sha": "52adca34cc01c30d0a03c976",
+     "fingerprint": "stride-d0c5ce205354059a",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 42,
+     "sha": "1aa2ec26f317e658ef4a9093",
+     "fingerprint": "stride-2b8399b614a2e06d",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 43,
+     "sha": "5f870c195e97b20f8dbbac90",
+     "fingerprint": "stride-97cd9985c3ec686a",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 44,
+     "sha": "45968e3db85b945661baf636",
+     "fingerprint": "stride-b77e3801d7697f43",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 45,
+     "sha": "556139f962c9278fc3c8f918",
+     "fingerprint": "stride-aa8e93f859b5aadf",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 46,
+     "sha": "a1d823f0eff97bfe1fe22092",
+     "fingerprint": "stride-c78220579a456f31",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 47,
+     "sha": "095266509e5177bd4b1b4b4c",
+     "fingerprint": "stride-88cec861c7ff071c",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 48,
+     "sha": "af155ae277c6e7f5d4f4e556",
+     "fingerprint": "stride-2323f411de8dcf4f",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 49,
+     "sha": "3f5d83ead17fb412c7c41ab8",
+     "fingerprint": "stride-89ea0083651eecb3",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 50,
+     "sha": "88573c99a7ff8985a8fe7453",
+     "fingerprint": "stride-a56068f1f0364573",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 51,
+     "sha": "28710a0a541f274cb4b08126",
+     "fingerprint": "stride-ebcccc583ddcfa45",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 52,
+     "sha": "03ec0c0e02e05bfedd002741",
+     "fingerprint": "stride-61fe08fd01245d62",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 53,
+     "sha": "b393169a3b1d82175c24527f",
+     "fingerprint": "stride-2bc46ab5088ff3d9",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 54,
+     "sha": "466dee66a132d488a8dab66b",
+     "fingerprint": "stride-46ac6056b43ad677",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 55,
+     "sha": "23713de20f54b6c231392616",
+     "fingerprint": "stride-22c6509160a9aaf7",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 56,
+     "sha": "7c9612a32f17b4d9f348543e",
+     "fingerprint": "stride-93b9b4da0ce6cc00",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 57,
+     "sha": "480bf091e3a974314bd2a930",
+     "fingerprint": "stride-844a826ac47998d1",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 58,
+     "sha": "6b248e65df02e631c9e62f17",
+     "fingerprint": "stride-f805843e3d1ef323",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 59,
+     "sha": "f9c53524822436f31b795153",
+     "fingerprint": "stride-2db238f952acba01",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 60,
+     "sha": "ca1c8e110b85128f1be71aa2",
+     "fingerprint": "stride-54b88075a2d78b5d",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 61,
+     "sha": "5af1a7205086a7187e753fe2",
+     "fingerprint": "stride-2fcb69f41609f9f6",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 62,
+     "sha": "ba4b1b69867542228b28b5a2",
+     "fingerprint": "stride-868652f450333355",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 63,
+     "sha": "6553a9386aa6d59587a9b191",
+     "fingerprint": "stride-ae50d3c829703d7b",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 64,
+     "sha": "045729cc158976644678fe5e",
+     "fingerprint": "stride-4bf8f7df2b419941",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 65,
+     "sha": "698e4178740b784798d1b5d5",
+     "fingerprint": "stride-ec07c4abecf79759",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 66,
+     "sha": "6c33524b96e2c175125940c2",
+     "fingerprint": "stride-b51c281368943de3",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 67,
+     "sha": "7ce3dfb86d98442804159cae",
+     "fingerprint": "stride-70c8300dd726c6be",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 68,
+     "sha": "e15a7775caf1e38517c7c84d",
+     "fingerprint": "stride-119814251b4076ab",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 69,
+     "sha": "f8699ccf1e362a55ed9f968f",
+     "fingerprint": "stride-84fa40a179f81045",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 70,
+     "sha": "0b5ba3ac9eda80b7a2dc1378",
+     "fingerprint": "stride-519058604d63c4a1",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 71,
+     "sha": "72aa829ed734396539830190",
+     "fingerprint": "stride-de3a81f119d0bfc4",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 72,
+     "sha": "c5cadb61e1fdb7dd52d11c9b",
+     "fingerprint": "stride-32da358ebbefeffa",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 73,
+     "sha": "c9349692b4f4d5290c96e445",
+     "fingerprint": "stride-6f2a63e0f627ec5b",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 74,
+     "sha": "c36444f5c24b36ec539511ba",
+     "fingerprint": "stride-e29b6bb82d94ea75",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 75,
+     "sha": "f334ceb8fdf6d7e1881b163f",
+     "fingerprint": "stride-9d3c791c95c20c4e",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 76,
+     "sha": "df57887064f69aacde60b039",
+     "fingerprint": "stride-45545f2b1b4c0a59",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 77,
+     "sha": "a2bbee76c79f4208d59540c1",
+     "fingerprint": "stride-f4496f2b37235c97",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 78,
+     "sha": "fccdbe70b75e50d76387a644",
+     "fingerprint": "stride-4f953ea9fb90a4b5",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 79,
+     "sha": "d640c5920785d893e3f9ace1",
+     "fingerprint": "stride-8723de288c931338",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 80,
+     "sha": "43eb0e96780495b9fa19ad84",
+     "fingerprint": "stride-f08a01525f550148",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 81,
+     "sha": "4f6b65dc99f18a6a6df76422",
+     "fingerprint": "stride-aa39fd3e7a2da10e",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 82,
+     "sha": "02fe9d83b105648f1697a6ae",
+     "fingerprint": "stride-3ba6d48bfcd47194",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 83,
+     "sha": "0622fdfc5677e1514a8545ee",
+     "fingerprint": "stride-08471b3bf9ecffa3",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 84,
+     "sha": "9ec84f9308aa2ae97a816dc3",
+     "fingerprint": "stride-ae435b21c14b93c3",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 85,
+     "sha": "c5008fb4792cb8540ca4fce0",
+     "fingerprint": "stride-64945f13c0962723",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 86,
+     "sha": "5edc42d09d1a01f55aa896a0",
+     "fingerprint": "stride-6feef7d55cc9a0e2",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 87,
+     "sha": "020a469f7352de67e2d9caff",
+     "fingerprint": "stride-580e9d2c5cb46e99",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 88,
+     "sha": "cf3b4855fb6ca72a88ea7e3c",
+     "fingerprint": "stride-684b31c9bcd2c371",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 89,
+     "sha": "a8dc76a228b009db277b1a76",
+     "fingerprint": "stride-4c882f7a27b94eee",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 90,
+     "sha": "b337a6330492d868054f570e",
+     "fingerprint": "stride-753ee73f708fb9c8",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 91,
+     "sha": "99c1d728e5b81c007e314c7c",
+     "fingerprint": "stride-36492d32087de8fe",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 92,
+     "sha": "7d778b628f09ba08b46c812b",
+     "fingerprint": "stride-ce97b170352718fb",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 93,
+     "sha": "cab68a1a075eb016323e8851",
+     "fingerprint": "stride-cdfa018eb30f087d",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 94,
+     "sha": "028f45b4147fa3c481c41ed4",
+     "fingerprint": "stride-d81942842ff7ac5d",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 95,
+     "sha": "8efae735e3a7c68022d17119",
+     "fingerprint": "stride-69d3e6a2f972777f",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 96,
+     "sha": "ec213fbd747e917fb0589aca",
+     "fingerprint": "stride-f06b5bb11f82517f",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 97,
+     "sha": "f5063f9be4579b863018942f",
+     "fingerprint": "stride-b42578dcdc25e7c3",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 98,
+     "sha": "6274d52c6455ef845befccaa",
+     "fingerprint": "stride-5c5e7874f1300542",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 99,
+     "sha": "d7e64bc1920872b4a68b1e52",
+     "fingerprint": "stride-f1bcceb45f8a9090",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    }
+   ],
+   "fingerprints_differing": 0,
+   "stats_after": {
+    "active": 0,
+    "cancelled": 0,
+    "completion_tokens": 102400,
+    "generated": 102400,
+    "kv_free_blocks": 8192,
+    "kv_total_blocks": 8192,
+    "max_context": 2048,
+    "peak_blocks": 80,
+    "peak_seqs": 16,
+    "preemptions": 0,
+    "prompt_tokens": 18520,
+    "replayed_rows": 0,
+    "requests": 400,
+    "rows": 120520,
+    "steps": 59427
+   }
+  },
+  {
+   "concurrency": 64,
+   "requests": 256,
+   "requests_differing": 0,
+   "requests_differing_pct": 0.0,
+   "prompts_changed": 0,
+   "prompts_changed_pct": 0.0,
+   "responses": [
+    {
+     "prompt": 0,
+     "sha": "ad56f50ae588a8129aa2af0e",
+     "fingerprint": "stride-b72701e71ddccbaf",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 1,
+     "sha": "c27fa25a4a5630849753897a",
+     "fingerprint": "stride-5737658689a1b700",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 2,
+     "sha": "eae335e297e5d01a0ed833a8",
+     "fingerprint": "stride-473cd5081bd62fe4",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 3,
+     "sha": "53d394edf5dcfa5e17d336d8",
+     "fingerprint": "stride-5662f5f3e4d4998f",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 4,
+     "sha": "1b73e08c4d1f7055eb3ae2e3",
+     "fingerprint": "stride-526f13e4e0df1f49",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 5,
+     "sha": "0503f9370a39de8582f5124b",
+     "fingerprint": "stride-61637d03dadfb69e",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 6,
+     "sha": "7f74c1702abf333c3fa7d9ee",
+     "fingerprint": "stride-5be85beb0666e34b",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 7,
+     "sha": "1cfdb89371060b50455847f9",
+     "fingerprint": "stride-da1641c54e10eb14",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 8,
+     "sha": "11cdf7288247d29aef229e33",
+     "fingerprint": "stride-d117b715cf2d8afa",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 9,
+     "sha": "5633831dad834f4952c776d9",
+     "fingerprint": "stride-09763d105f0abea9",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 10,
+     "sha": "764fb42ed51607c405390e0a",
+     "fingerprint": "stride-6d2e2b87542ba4a2",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 11,
+     "sha": "95a4a99df389b76b41f9267f",
+     "fingerprint": "stride-fbce91ebf5b06215",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 12,
+     "sha": "df56127a9bc236f8562385f3",
+     "fingerprint": "stride-1faf12abce833620",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 13,
+     "sha": "86970285119951f2b64a42fa",
+     "fingerprint": "stride-dbdb69c675312681",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 14,
+     "sha": "87855cd29774cf32fe093882",
+     "fingerprint": "stride-63140b5a84375759",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 15,
+     "sha": "04fdcd8b01aea7856fbc2e26",
+     "fingerprint": "stride-e4418aaafc494a33",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 16,
+     "sha": "10039b121457c2f653a76604",
+     "fingerprint": "stride-7625c84a0b15dbcc",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 17,
+     "sha": "8524d50e7c3eda05e5b81709",
+     "fingerprint": "stride-71a0761b2fa016ec",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 18,
+     "sha": "13e63ecb14bd32b7989d5eb6",
+     "fingerprint": "stride-0b20b801824312f0",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 19,
+     "sha": "2fb00a8711ba327fc84615fc",
+     "fingerprint": "stride-3cad0b0e5e3b5cbc",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 20,
+     "sha": "201b09de2b9bc39b8bfddc0a",
+     "fingerprint": "stride-9ff1c6796bc7f54e",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 21,
+     "sha": "79871435e1063f86bac1dc4e",
+     "fingerprint": "stride-9351cb83ce42c559",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 22,
+     "sha": "be4be4f4a2841ee24348ed11",
+     "fingerprint": "stride-236da6c28964027d",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 23,
+     "sha": "e7a07949d4fc891f57163669",
+     "fingerprint": "stride-124a8b00ed8a125a",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 24,
+     "sha": "7a6849d6d5b04bc00960b132",
+     "fingerprint": "stride-28dfa33fe58b77bb",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 25,
+     "sha": "b610405d43428adb575ed91a",
+     "fingerprint": "stride-b54cf9755181d0bb",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 26,
+     "sha": "25c84b31a5eb19a7712ed388",
+     "fingerprint": "stride-7dbe037bcd8eb97d",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 27,
+     "sha": "986592cb87afc1b7a04f3a02",
+     "fingerprint": "stride-4f8f136ba21cf876",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 28,
+     "sha": "7b334ab0c802c67b6c7be478",
+     "fingerprint": "stride-8bb9117ffc4f5d53",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 29,
+     "sha": "bcdc0cb8f8c0e278a5b02834",
+     "fingerprint": "stride-16cd873b18ca0a8c",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 30,
+     "sha": "a8dfd8407121834939ca73a7",
+     "fingerprint": "stride-3470b8b63845c9fe",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 31,
+     "sha": "276280e2fb16600c4687df63",
+     "fingerprint": "stride-c6472d51ba50b013",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 32,
+     "sha": "3d125d8118cf462dca9330a5",
+     "fingerprint": "stride-e2fd82f61dd40257",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 33,
+     "sha": "f014c0e2f30c39c181e1ef49",
+     "fingerprint": "stride-8c2507c673695cb1",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 34,
+     "sha": "f8c5a9cb5030f6e1160af740",
+     "fingerprint": "stride-8ec20e0173ad8768",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 35,
+     "sha": "31340dfcc7116b0f5f6cab5e",
+     "fingerprint": "stride-f13a9546d6e590ba",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 36,
+     "sha": "f74c3cb26ea73df1784c1f32",
+     "fingerprint": "stride-bacab6708780242b",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 37,
+     "sha": "87b171594a0805e920fcf94d",
+     "fingerprint": "stride-d8180645ad309fb9",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 38,
+     "sha": "27b5ea045502767315367a47",
+     "fingerprint": "stride-ffee0611b49f4914",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 39,
+     "sha": "44f25760bb52c84f71fcea50",
+     "fingerprint": "stride-7565e208449b39fa",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 40,
+     "sha": "6ca58c92f6cb08b9ce7a420c",
+     "fingerprint": "stride-f9a2b27c0c98fad3",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 41,
+     "sha": "52adca34cc01c30d0a03c976",
+     "fingerprint": "stride-d0c5ce205354059a",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 42,
+     "sha": "1aa2ec26f317e658ef4a9093",
+     "fingerprint": "stride-2b8399b614a2e06d",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 43,
+     "sha": "5f870c195e97b20f8dbbac90",
+     "fingerprint": "stride-97cd9985c3ec686a",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 44,
+     "sha": "45968e3db85b945661baf636",
+     "fingerprint": "stride-b77e3801d7697f43",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 45,
+     "sha": "556139f962c9278fc3c8f918",
+     "fingerprint": "stride-aa8e93f859b5aadf",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 46,
+     "sha": "a1d823f0eff97bfe1fe22092",
+     "fingerprint": "stride-c78220579a456f31",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 47,
+     "sha": "095266509e5177bd4b1b4b4c",
+     "fingerprint": "stride-88cec861c7ff071c",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 48,
+     "sha": "af155ae277c6e7f5d4f4e556",
+     "fingerprint": "stride-2323f411de8dcf4f",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 49,
+     "sha": "3f5d83ead17fb412c7c41ab8",
+     "fingerprint": "stride-89ea0083651eecb3",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 50,
+     "sha": "88573c99a7ff8985a8fe7453",
+     "fingerprint": "stride-a56068f1f0364573",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 51,
+     "sha": "28710a0a541f274cb4b08126",
+     "fingerprint": "stride-ebcccc583ddcfa45",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 52,
+     "sha": "03ec0c0e02e05bfedd002741",
+     "fingerprint": "stride-61fe08fd01245d62",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 53,
+     "sha": "b393169a3b1d82175c24527f",
+     "fingerprint": "stride-2bc46ab5088ff3d9",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 54,
+     "sha": "466dee66a132d488a8dab66b",
+     "fingerprint": "stride-46ac6056b43ad677",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 55,
+     "sha": "23713de20f54b6c231392616",
+     "fingerprint": "stride-22c6509160a9aaf7",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 56,
+     "sha": "7c9612a32f17b4d9f348543e",
+     "fingerprint": "stride-93b9b4da0ce6cc00",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 57,
+     "sha": "480bf091e3a974314bd2a930",
+     "fingerprint": "stride-844a826ac47998d1",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 58,
+     "sha": "6b248e65df02e631c9e62f17",
+     "fingerprint": "stride-f805843e3d1ef323",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 59,
+     "sha": "f9c53524822436f31b795153",
+     "fingerprint": "stride-2db238f952acba01",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 60,
+     "sha": "ca1c8e110b85128f1be71aa2",
+     "fingerprint": "stride-54b88075a2d78b5d",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 61,
+     "sha": "5af1a7205086a7187e753fe2",
+     "fingerprint": "stride-2fcb69f41609f9f6",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 62,
+     "sha": "ba4b1b69867542228b28b5a2",
+     "fingerprint": "stride-868652f450333355",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 63,
+     "sha": "6553a9386aa6d59587a9b191",
+     "fingerprint": "stride-ae50d3c829703d7b",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 64,
+     "sha": "045729cc158976644678fe5e",
+     "fingerprint": "stride-4bf8f7df2b419941",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 65,
+     "sha": "698e4178740b784798d1b5d5",
+     "fingerprint": "stride-ec07c4abecf79759",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 66,
+     "sha": "6c33524b96e2c175125940c2",
+     "fingerprint": "stride-b51c281368943de3",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 67,
+     "sha": "7ce3dfb86d98442804159cae",
+     "fingerprint": "stride-70c8300dd726c6be",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 68,
+     "sha": "e15a7775caf1e38517c7c84d",
+     "fingerprint": "stride-119814251b4076ab",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 69,
+     "sha": "f8699ccf1e362a55ed9f968f",
+     "fingerprint": "stride-84fa40a179f81045",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 70,
+     "sha": "0b5ba3ac9eda80b7a2dc1378",
+     "fingerprint": "stride-519058604d63c4a1",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 71,
+     "sha": "72aa829ed734396539830190",
+     "fingerprint": "stride-de3a81f119d0bfc4",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 72,
+     "sha": "c5cadb61e1fdb7dd52d11c9b",
+     "fingerprint": "stride-32da358ebbefeffa",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 73,
+     "sha": "c9349692b4f4d5290c96e445",
+     "fingerprint": "stride-6f2a63e0f627ec5b",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 74,
+     "sha": "c36444f5c24b36ec539511ba",
+     "fingerprint": "stride-e29b6bb82d94ea75",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 75,
+     "sha": "f334ceb8fdf6d7e1881b163f",
+     "fingerprint": "stride-9d3c791c95c20c4e",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 76,
+     "sha": "df57887064f69aacde60b039",
+     "fingerprint": "stride-45545f2b1b4c0a59",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 77,
+     "sha": "a2bbee76c79f4208d59540c1",
+     "fingerprint": "stride-f4496f2b37235c97",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 78,
+     "sha": "fccdbe70b75e50d76387a644",
+     "fingerprint": "stride-4f953ea9fb90a4b5",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 79,
+     "sha": "d640c5920785d893e3f9ace1",
+     "fingerprint": "stride-8723de288c931338",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 80,
+     "sha": "43eb0e96780495b9fa19ad84",
+     "fingerprint": "stride-f08a01525f550148",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 81,
+     "sha": "4f6b65dc99f18a6a6df76422",
+     "fingerprint": "stride-aa39fd3e7a2da10e",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 82,
+     "sha": "02fe9d83b105648f1697a6ae",
+     "fingerprint": "stride-3ba6d48bfcd47194",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 83,
+     "sha": "0622fdfc5677e1514a8545ee",
+     "fingerprint": "stride-08471b3bf9ecffa3",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 84,
+     "sha": "9ec84f9308aa2ae97a816dc3",
+     "fingerprint": "stride-ae435b21c14b93c3",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 85,
+     "sha": "c5008fb4792cb8540ca4fce0",
+     "fingerprint": "stride-64945f13c0962723",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 86,
+     "sha": "5edc42d09d1a01f55aa896a0",
+     "fingerprint": "stride-6feef7d55cc9a0e2",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 87,
+     "sha": "020a469f7352de67e2d9caff",
+     "fingerprint": "stride-580e9d2c5cb46e99",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 88,
+     "sha": "cf3b4855fb6ca72a88ea7e3c",
+     "fingerprint": "stride-684b31c9bcd2c371",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 89,
+     "sha": "a8dc76a228b009db277b1a76",
+     "fingerprint": "stride-4c882f7a27b94eee",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 90,
+     "sha": "b337a6330492d868054f570e",
+     "fingerprint": "stride-753ee73f708fb9c8",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 91,
+     "sha": "99c1d728e5b81c007e314c7c",
+     "fingerprint": "stride-36492d32087de8fe",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 92,
+     "sha": "7d778b628f09ba08b46c812b",
+     "fingerprint": "stride-ce97b170352718fb",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 93,
+     "sha": "cab68a1a075eb016323e8851",
+     "fingerprint": "stride-cdfa018eb30f087d",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 94,
+     "sha": "028f45b4147fa3c481c41ed4",
+     "fingerprint": "stride-d81942842ff7ac5d",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 95,
+     "sha": "8efae735e3a7c68022d17119",
+     "fingerprint": "stride-69d3e6a2f972777f",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 96,
+     "sha": "ec213fbd747e917fb0589aca",
+     "fingerprint": "stride-f06b5bb11f82517f",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 97,
+     "sha": "f5063f9be4579b863018942f",
+     "fingerprint": "stride-b42578dcdc25e7c3",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 98,
+     "sha": "6274d52c6455ef845befccaa",
+     "fingerprint": "stride-5c5e7874f1300542",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 99,
+     "sha": "d7e64bc1920872b4a68b1e52",
+     "fingerprint": "stride-f1bcceb45f8a9090",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 0,
+     "sha": "ad56f50ae588a8129aa2af0e",
+     "fingerprint": "stride-b72701e71ddccbaf",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 1,
+     "sha": "c27fa25a4a5630849753897a",
+     "fingerprint": "stride-5737658689a1b700",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 2,
+     "sha": "eae335e297e5d01a0ed833a8",
+     "fingerprint": "stride-473cd5081bd62fe4",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 3,
+     "sha": "53d394edf5dcfa5e17d336d8",
+     "fingerprint": "stride-5662f5f3e4d4998f",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 4,
+     "sha": "1b73e08c4d1f7055eb3ae2e3",
+     "fingerprint": "stride-526f13e4e0df1f49",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 5,
+     "sha": "0503f9370a39de8582f5124b",
+     "fingerprint": "stride-61637d03dadfb69e",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 6,
+     "sha": "7f74c1702abf333c3fa7d9ee",
+     "fingerprint": "stride-5be85beb0666e34b",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 7,
+     "sha": "1cfdb89371060b50455847f9",
+     "fingerprint": "stride-da1641c54e10eb14",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 8,
+     "sha": "11cdf7288247d29aef229e33",
+     "fingerprint": "stride-d117b715cf2d8afa",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 9,
+     "sha": "5633831dad834f4952c776d9",
+     "fingerprint": "stride-09763d105f0abea9",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 10,
+     "sha": "764fb42ed51607c405390e0a",
+     "fingerprint": "stride-6d2e2b87542ba4a2",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 11,
+     "sha": "95a4a99df389b76b41f9267f",
+     "fingerprint": "stride-fbce91ebf5b06215",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 12,
+     "sha": "df56127a9bc236f8562385f3",
+     "fingerprint": "stride-1faf12abce833620",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 13,
+     "sha": "86970285119951f2b64a42fa",
+     "fingerprint": "stride-dbdb69c675312681",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 14,
+     "sha": "87855cd29774cf32fe093882",
+     "fingerprint": "stride-63140b5a84375759",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 15,
+     "sha": "04fdcd8b01aea7856fbc2e26",
+     "fingerprint": "stride-e4418aaafc494a33",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 16,
+     "sha": "10039b121457c2f653a76604",
+     "fingerprint": "stride-7625c84a0b15dbcc",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 17,
+     "sha": "8524d50e7c3eda05e5b81709",
+     "fingerprint": "stride-71a0761b2fa016ec",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 18,
+     "sha": "13e63ecb14bd32b7989d5eb6",
+     "fingerprint": "stride-0b20b801824312f0",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 19,
+     "sha": "2fb00a8711ba327fc84615fc",
+     "fingerprint": "stride-3cad0b0e5e3b5cbc",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 20,
+     "sha": "201b09de2b9bc39b8bfddc0a",
+     "fingerprint": "stride-9ff1c6796bc7f54e",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 21,
+     "sha": "79871435e1063f86bac1dc4e",
+     "fingerprint": "stride-9351cb83ce42c559",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 22,
+     "sha": "be4be4f4a2841ee24348ed11",
+     "fingerprint": "stride-236da6c28964027d",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 23,
+     "sha": "e7a07949d4fc891f57163669",
+     "fingerprint": "stride-124a8b00ed8a125a",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 24,
+     "sha": "7a6849d6d5b04bc00960b132",
+     "fingerprint": "stride-28dfa33fe58b77bb",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 25,
+     "sha": "b610405d43428adb575ed91a",
+     "fingerprint": "stride-b54cf9755181d0bb",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 26,
+     "sha": "25c84b31a5eb19a7712ed388",
+     "fingerprint": "stride-7dbe037bcd8eb97d",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 27,
+     "sha": "986592cb87afc1b7a04f3a02",
+     "fingerprint": "stride-4f8f136ba21cf876",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 28,
+     "sha": "7b334ab0c802c67b6c7be478",
+     "fingerprint": "stride-8bb9117ffc4f5d53",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 29,
+     "sha": "bcdc0cb8f8c0e278a5b02834",
+     "fingerprint": "stride-16cd873b18ca0a8c",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 30,
+     "sha": "a8dfd8407121834939ca73a7",
+     "fingerprint": "stride-3470b8b63845c9fe",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 31,
+     "sha": "276280e2fb16600c4687df63",
+     "fingerprint": "stride-c6472d51ba50b013",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 32,
+     "sha": "3d125d8118cf462dca9330a5",
+     "fingerprint": "stride-e2fd82f61dd40257",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 33,
+     "sha": "f014c0e2f30c39c181e1ef49",
+     "fingerprint": "stride-8c2507c673695cb1",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 34,
+     "sha": "f8c5a9cb5030f6e1160af740",
+     "fingerprint": "stride-8ec20e0173ad8768",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 35,
+     "sha": "31340dfcc7116b0f5f6cab5e",
+     "fingerprint": "stride-f13a9546d6e590ba",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 36,
+     "sha": "f74c3cb26ea73df1784c1f32",
+     "fingerprint": "stride-bacab6708780242b",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 37,
+     "sha": "87b171594a0805e920fcf94d",
+     "fingerprint": "stride-d8180645ad309fb9",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 38,
+     "sha": "27b5ea045502767315367a47",
+     "fingerprint": "stride-ffee0611b49f4914",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 39,
+     "sha": "44f25760bb52c84f71fcea50",
+     "fingerprint": "stride-7565e208449b39fa",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 40,
+     "sha": "6ca58c92f6cb08b9ce7a420c",
+     "fingerprint": "stride-f9a2b27c0c98fad3",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 41,
+     "sha": "52adca34cc01c30d0a03c976",
+     "fingerprint": "stride-d0c5ce205354059a",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 42,
+     "sha": "1aa2ec26f317e658ef4a9093",
+     "fingerprint": "stride-2b8399b614a2e06d",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 43,
+     "sha": "5f870c195e97b20f8dbbac90",
+     "fingerprint": "stride-97cd9985c3ec686a",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 44,
+     "sha": "45968e3db85b945661baf636",
+     "fingerprint": "stride-b77e3801d7697f43",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 45,
+     "sha": "556139f962c9278fc3c8f918",
+     "fingerprint": "stride-aa8e93f859b5aadf",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 46,
+     "sha": "a1d823f0eff97bfe1fe22092",
+     "fingerprint": "stride-c78220579a456f31",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 47,
+     "sha": "095266509e5177bd4b1b4b4c",
+     "fingerprint": "stride-88cec861c7ff071c",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 48,
+     "sha": "af155ae277c6e7f5d4f4e556",
+     "fingerprint": "stride-2323f411de8dcf4f",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 49,
+     "sha": "3f5d83ead17fb412c7c41ab8",
+     "fingerprint": "stride-89ea0083651eecb3",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 50,
+     "sha": "88573c99a7ff8985a8fe7453",
+     "fingerprint": "stride-a56068f1f0364573",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 51,
+     "sha": "28710a0a541f274cb4b08126",
+     "fingerprint": "stride-ebcccc583ddcfa45",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 52,
+     "sha": "03ec0c0e02e05bfedd002741",
+     "fingerprint": "stride-61fe08fd01245d62",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 53,
+     "sha": "b393169a3b1d82175c24527f",
+     "fingerprint": "stride-2bc46ab5088ff3d9",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 54,
+     "sha": "466dee66a132d488a8dab66b",
+     "fingerprint": "stride-46ac6056b43ad677",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 55,
+     "sha": "23713de20f54b6c231392616",
+     "fingerprint": "stride-22c6509160a9aaf7",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 56,
+     "sha": "7c9612a32f17b4d9f348543e",
+     "fingerprint": "stride-93b9b4da0ce6cc00",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 57,
+     "sha": "480bf091e3a974314bd2a930",
+     "fingerprint": "stride-844a826ac47998d1",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 58,
+     "sha": "6b248e65df02e631c9e62f17",
+     "fingerprint": "stride-f805843e3d1ef323",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 59,
+     "sha": "f9c53524822436f31b795153",
+     "fingerprint": "stride-2db238f952acba01",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 60,
+     "sha": "ca1c8e110b85128f1be71aa2",
+     "fingerprint": "stride-54b88075a2d78b5d",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 61,
+     "sha": "5af1a7205086a7187e753fe2",
+     "fingerprint": "stride-2fcb69f41609f9f6",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 62,
+     "sha": "ba4b1b69867542228b28b5a2",
+     "fingerprint": "stride-868652f450333355",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 63,
+     "sha": "6553a9386aa6d59587a9b191",
+     "fingerprint": "stride-ae50d3c829703d7b",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 64,
+     "sha": "045729cc158976644678fe5e",
+     "fingerprint": "stride-4bf8f7df2b419941",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 65,
+     "sha": "698e4178740b784798d1b5d5",
+     "fingerprint": "stride-ec07c4abecf79759",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 66,
+     "sha": "6c33524b96e2c175125940c2",
+     "fingerprint": "stride-b51c281368943de3",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 67,
+     "sha": "7ce3dfb86d98442804159cae",
+     "fingerprint": "stride-70c8300dd726c6be",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 68,
+     "sha": "e15a7775caf1e38517c7c84d",
+     "fingerprint": "stride-119814251b4076ab",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 69,
+     "sha": "f8699ccf1e362a55ed9f968f",
+     "fingerprint": "stride-84fa40a179f81045",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 70,
+     "sha": "0b5ba3ac9eda80b7a2dc1378",
+     "fingerprint": "stride-519058604d63c4a1",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 71,
+     "sha": "72aa829ed734396539830190",
+     "fingerprint": "stride-de3a81f119d0bfc4",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 72,
+     "sha": "c5cadb61e1fdb7dd52d11c9b",
+     "fingerprint": "stride-32da358ebbefeffa",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 73,
+     "sha": "c9349692b4f4d5290c96e445",
+     "fingerprint": "stride-6f2a63e0f627ec5b",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 74,
+     "sha": "c36444f5c24b36ec539511ba",
+     "fingerprint": "stride-e29b6bb82d94ea75",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 75,
+     "sha": "f334ceb8fdf6d7e1881b163f",
+     "fingerprint": "stride-9d3c791c95c20c4e",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 76,
+     "sha": "df57887064f69aacde60b039",
+     "fingerprint": "stride-45545f2b1b4c0a59",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 77,
+     "sha": "a2bbee76c79f4208d59540c1",
+     "fingerprint": "stride-f4496f2b37235c97",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 78,
+     "sha": "fccdbe70b75e50d76387a644",
+     "fingerprint": "stride-4f953ea9fb90a4b5",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 79,
+     "sha": "d640c5920785d893e3f9ace1",
+     "fingerprint": "stride-8723de288c931338",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 80,
+     "sha": "43eb0e96780495b9fa19ad84",
+     "fingerprint": "stride-f08a01525f550148",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 81,
+     "sha": "4f6b65dc99f18a6a6df76422",
+     "fingerprint": "stride-aa39fd3e7a2da10e",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 82,
+     "sha": "02fe9d83b105648f1697a6ae",
+     "fingerprint": "stride-3ba6d48bfcd47194",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 83,
+     "sha": "0622fdfc5677e1514a8545ee",
+     "fingerprint": "stride-08471b3bf9ecffa3",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 84,
+     "sha": "9ec84f9308aa2ae97a816dc3",
+     "fingerprint": "stride-ae435b21c14b93c3",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 85,
+     "sha": "c5008fb4792cb8540ca4fce0",
+     "fingerprint": "stride-64945f13c0962723",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 86,
+     "sha": "5edc42d09d1a01f55aa896a0",
+     "fingerprint": "stride-6feef7d55cc9a0e2",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 87,
+     "sha": "020a469f7352de67e2d9caff",
+     "fingerprint": "stride-580e9d2c5cb46e99",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 88,
+     "sha": "cf3b4855fb6ca72a88ea7e3c",
+     "fingerprint": "stride-684b31c9bcd2c371",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 89,
+     "sha": "a8dc76a228b009db277b1a76",
+     "fingerprint": "stride-4c882f7a27b94eee",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 90,
+     "sha": "b337a6330492d868054f570e",
+     "fingerprint": "stride-753ee73f708fb9c8",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 91,
+     "sha": "99c1d728e5b81c007e314c7c",
+     "fingerprint": "stride-36492d32087de8fe",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 92,
+     "sha": "7d778b628f09ba08b46c812b",
+     "fingerprint": "stride-ce97b170352718fb",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 93,
+     "sha": "cab68a1a075eb016323e8851",
+     "fingerprint": "stride-cdfa018eb30f087d",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 94,
+     "sha": "028f45b4147fa3c481c41ed4",
+     "fingerprint": "stride-d81942842ff7ac5d",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 95,
+     "sha": "8efae735e3a7c68022d17119",
+     "fingerprint": "stride-69d3e6a2f972777f",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 96,
+     "sha": "ec213fbd747e917fb0589aca",
+     "fingerprint": "stride-f06b5bb11f82517f",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 97,
+     "sha": "f5063f9be4579b863018942f",
+     "fingerprint": "stride-b42578dcdc25e7c3",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 98,
+     "sha": "6274d52c6455ef845befccaa",
+     "fingerprint": "stride-5c5e7874f1300542",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 99,
+     "sha": "d7e64bc1920872b4a68b1e52",
+     "fingerprint": "stride-f1bcceb45f8a9090",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 0,
+     "sha": "ad56f50ae588a8129aa2af0e",
+     "fingerprint": "stride-b72701e71ddccbaf",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 1,
+     "sha": "c27fa25a4a5630849753897a",
+     "fingerprint": "stride-5737658689a1b700",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 2,
+     "sha": "eae335e297e5d01a0ed833a8",
+     "fingerprint": "stride-473cd5081bd62fe4",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 3,
+     "sha": "53d394edf5dcfa5e17d336d8",
+     "fingerprint": "stride-5662f5f3e4d4998f",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 4,
+     "sha": "1b73e08c4d1f7055eb3ae2e3",
+     "fingerprint": "stride-526f13e4e0df1f49",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 5,
+     "sha": "0503f9370a39de8582f5124b",
+     "fingerprint": "stride-61637d03dadfb69e",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 6,
+     "sha": "7f74c1702abf333c3fa7d9ee",
+     "fingerprint": "stride-5be85beb0666e34b",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 7,
+     "sha": "1cfdb89371060b50455847f9",
+     "fingerprint": "stride-da1641c54e10eb14",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 8,
+     "sha": "11cdf7288247d29aef229e33",
+     "fingerprint": "stride-d117b715cf2d8afa",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 9,
+     "sha": "5633831dad834f4952c776d9",
+     "fingerprint": "stride-09763d105f0abea9",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 10,
+     "sha": "764fb42ed51607c405390e0a",
+     "fingerprint": "stride-6d2e2b87542ba4a2",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 11,
+     "sha": "95a4a99df389b76b41f9267f",
+     "fingerprint": "stride-fbce91ebf5b06215",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 12,
+     "sha": "df56127a9bc236f8562385f3",
+     "fingerprint": "stride-1faf12abce833620",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 13,
+     "sha": "86970285119951f2b64a42fa",
+     "fingerprint": "stride-dbdb69c675312681",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 14,
+     "sha": "87855cd29774cf32fe093882",
+     "fingerprint": "stride-63140b5a84375759",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 15,
+     "sha": "04fdcd8b01aea7856fbc2e26",
+     "fingerprint": "stride-e4418aaafc494a33",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 16,
+     "sha": "10039b121457c2f653a76604",
+     "fingerprint": "stride-7625c84a0b15dbcc",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 17,
+     "sha": "8524d50e7c3eda05e5b81709",
+     "fingerprint": "stride-71a0761b2fa016ec",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 18,
+     "sha": "13e63ecb14bd32b7989d5eb6",
+     "fingerprint": "stride-0b20b801824312f0",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 19,
+     "sha": "2fb00a8711ba327fc84615fc",
+     "fingerprint": "stride-3cad0b0e5e3b5cbc",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 20,
+     "sha": "201b09de2b9bc39b8bfddc0a",
+     "fingerprint": "stride-9ff1c6796bc7f54e",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 21,
+     "sha": "79871435e1063f86bac1dc4e",
+     "fingerprint": "stride-9351cb83ce42c559",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 22,
+     "sha": "be4be4f4a2841ee24348ed11",
+     "fingerprint": "stride-236da6c28964027d",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 23,
+     "sha": "e7a07949d4fc891f57163669",
+     "fingerprint": "stride-124a8b00ed8a125a",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 24,
+     "sha": "7a6849d6d5b04bc00960b132",
+     "fingerprint": "stride-28dfa33fe58b77bb",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 25,
+     "sha": "b610405d43428adb575ed91a",
+     "fingerprint": "stride-b54cf9755181d0bb",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 26,
+     "sha": "25c84b31a5eb19a7712ed388",
+     "fingerprint": "stride-7dbe037bcd8eb97d",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 27,
+     "sha": "986592cb87afc1b7a04f3a02",
+     "fingerprint": "stride-4f8f136ba21cf876",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 28,
+     "sha": "7b334ab0c802c67b6c7be478",
+     "fingerprint": "stride-8bb9117ffc4f5d53",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 29,
+     "sha": "bcdc0cb8f8c0e278a5b02834",
+     "fingerprint": "stride-16cd873b18ca0a8c",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 30,
+     "sha": "a8dfd8407121834939ca73a7",
+     "fingerprint": "stride-3470b8b63845c9fe",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 31,
+     "sha": "276280e2fb16600c4687df63",
+     "fingerprint": "stride-c6472d51ba50b013",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 32,
+     "sha": "3d125d8118cf462dca9330a5",
+     "fingerprint": "stride-e2fd82f61dd40257",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 33,
+     "sha": "f014c0e2f30c39c181e1ef49",
+     "fingerprint": "stride-8c2507c673695cb1",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 34,
+     "sha": "f8c5a9cb5030f6e1160af740",
+     "fingerprint": "stride-8ec20e0173ad8768",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 35,
+     "sha": "31340dfcc7116b0f5f6cab5e",
+     "fingerprint": "stride-f13a9546d6e590ba",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 36,
+     "sha": "f74c3cb26ea73df1784c1f32",
+     "fingerprint": "stride-bacab6708780242b",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 37,
+     "sha": "87b171594a0805e920fcf94d",
+     "fingerprint": "stride-d8180645ad309fb9",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 38,
+     "sha": "27b5ea045502767315367a47",
+     "fingerprint": "stride-ffee0611b49f4914",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 39,
+     "sha": "44f25760bb52c84f71fcea50",
+     "fingerprint": "stride-7565e208449b39fa",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 40,
+     "sha": "6ca58c92f6cb08b9ce7a420c",
+     "fingerprint": "stride-f9a2b27c0c98fad3",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 41,
+     "sha": "52adca34cc01c30d0a03c976",
+     "fingerprint": "stride-d0c5ce205354059a",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 42,
+     "sha": "1aa2ec26f317e658ef4a9093",
+     "fingerprint": "stride-2b8399b614a2e06d",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 43,
+     "sha": "5f870c195e97b20f8dbbac90",
+     "fingerprint": "stride-97cd9985c3ec686a",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 44,
+     "sha": "45968e3db85b945661baf636",
+     "fingerprint": "stride-b77e3801d7697f43",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 45,
+     "sha": "556139f962c9278fc3c8f918",
+     "fingerprint": "stride-aa8e93f859b5aadf",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 46,
+     "sha": "a1d823f0eff97bfe1fe22092",
+     "fingerprint": "stride-c78220579a456f31",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 47,
+     "sha": "095266509e5177bd4b1b4b4c",
+     "fingerprint": "stride-88cec861c7ff071c",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 48,
+     "sha": "af155ae277c6e7f5d4f4e556",
+     "fingerprint": "stride-2323f411de8dcf4f",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 49,
+     "sha": "3f5d83ead17fb412c7c41ab8",
+     "fingerprint": "stride-89ea0083651eecb3",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 50,
+     "sha": "88573c99a7ff8985a8fe7453",
+     "fingerprint": "stride-a56068f1f0364573",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 51,
+     "sha": "28710a0a541f274cb4b08126",
+     "fingerprint": "stride-ebcccc583ddcfa45",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 52,
+     "sha": "03ec0c0e02e05bfedd002741",
+     "fingerprint": "stride-61fe08fd01245d62",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 53,
+     "sha": "b393169a3b1d82175c24527f",
+     "fingerprint": "stride-2bc46ab5088ff3d9",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 54,
+     "sha": "466dee66a132d488a8dab66b",
+     "fingerprint": "stride-46ac6056b43ad677",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 55,
+     "sha": "23713de20f54b6c231392616",
+     "fingerprint": "stride-22c6509160a9aaf7",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    }
+   ],
+   "fingerprints_differing": 0,
+   "stats_after": {
+    "active": 0,
+    "cancelled": 0,
+    "completion_tokens": 167936,
+    "generated": 167936,
+    "kv_free_blocks": 8192,
+    "kv_total_blocks": 8192,
+    "max_context": 2048,
+    "peak_blocks": 320,
+    "peak_seqs": 64,
+    "preemptions": 0,
+    "prompt_tokens": 30384,
+    "replayed_rows": 0,
+    "requests": 656,
+    "rows": 197664,
+    "steps": 60478
+   }
+  },
+  {
+   "concurrency": 128,
+   "requests": 512,
+   "requests_differing": 0,
+   "requests_differing_pct": 0.0,
+   "prompts_changed": 0,
+   "prompts_changed_pct": 0.0,
+   "responses": [
+    {
+     "prompt": 0,
+     "sha": "ad56f50ae588a8129aa2af0e",
+     "fingerprint": "stride-b72701e71ddccbaf",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 1,
+     "sha": "c27fa25a4a5630849753897a",
+     "fingerprint": "stride-5737658689a1b700",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 2,
+     "sha": "eae335e297e5d01a0ed833a8",
+     "fingerprint": "stride-473cd5081bd62fe4",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 3,
+     "sha": "53d394edf5dcfa5e17d336d8",
+     "fingerprint": "stride-5662f5f3e4d4998f",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 4,
+     "sha": "1b73e08c4d1f7055eb3ae2e3",
+     "fingerprint": "stride-526f13e4e0df1f49",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 5,
+     "sha": "0503f9370a39de8582f5124b",
+     "fingerprint": "stride-61637d03dadfb69e",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 6,
+     "sha": "7f74c1702abf333c3fa7d9ee",
+     "fingerprint": "stride-5be85beb0666e34b",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 7,
+     "sha": "1cfdb89371060b50455847f9",
+     "fingerprint": "stride-da1641c54e10eb14",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 8,
+     "sha": "11cdf7288247d29aef229e33",
+     "fingerprint": "stride-d117b715cf2d8afa",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 9,
+     "sha": "5633831dad834f4952c776d9",
+     "fingerprint": "stride-09763d105f0abea9",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 10,
+     "sha": "764fb42ed51607c405390e0a",
+     "fingerprint": "stride-6d2e2b87542ba4a2",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 11,
+     "sha": "95a4a99df389b76b41f9267f",
+     "fingerprint": "stride-fbce91ebf5b06215",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 12,
+     "sha": "df56127a9bc236f8562385f3",
+     "fingerprint": "stride-1faf12abce833620",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 13,
+     "sha": "86970285119951f2b64a42fa",
+     "fingerprint": "stride-dbdb69c675312681",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 14,
+     "sha": "87855cd29774cf32fe093882",
+     "fingerprint": "stride-63140b5a84375759",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 15,
+     "sha": "04fdcd8b01aea7856fbc2e26",
+     "fingerprint": "stride-e4418aaafc494a33",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 16,
+     "sha": "10039b121457c2f653a76604",
+     "fingerprint": "stride-7625c84a0b15dbcc",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 17,
+     "sha": "8524d50e7c3eda05e5b81709",
+     "fingerprint": "stride-71a0761b2fa016ec",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 18,
+     "sha": "13e63ecb14bd32b7989d5eb6",
+     "fingerprint": "stride-0b20b801824312f0",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 19,
+     "sha": "2fb00a8711ba327fc84615fc",
+     "fingerprint": "stride-3cad0b0e5e3b5cbc",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 20,
+     "sha": "201b09de2b9bc39b8bfddc0a",
+     "fingerprint": "stride-9ff1c6796bc7f54e",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 21,
+     "sha": "79871435e1063f86bac1dc4e",
+     "fingerprint": "stride-9351cb83ce42c559",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 22,
+     "sha": "be4be4f4a2841ee24348ed11",
+     "fingerprint": "stride-236da6c28964027d",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 23,
+     "sha": "e7a07949d4fc891f57163669",
+     "fingerprint": "stride-124a8b00ed8a125a",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 24,
+     "sha": "7a6849d6d5b04bc00960b132",
+     "fingerprint": "stride-28dfa33fe58b77bb",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 25,
+     "sha": "b610405d43428adb575ed91a",
+     "fingerprint": "stride-b54cf9755181d0bb",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 26,
+     "sha": "25c84b31a5eb19a7712ed388",
+     "fingerprint": "stride-7dbe037bcd8eb97d",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 27,
+     "sha": "986592cb87afc1b7a04f3a02",
+     "fingerprint": "stride-4f8f136ba21cf876",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 28,
+     "sha": "7b334ab0c802c67b6c7be478",
+     "fingerprint": "stride-8bb9117ffc4f5d53",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 29,
+     "sha": "bcdc0cb8f8c0e278a5b02834",
+     "fingerprint": "stride-16cd873b18ca0a8c",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 30,
+     "sha": "a8dfd8407121834939ca73a7",
+     "fingerprint": "stride-3470b8b63845c9fe",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 31,
+     "sha": "276280e2fb16600c4687df63",
+     "fingerprint": "stride-c6472d51ba50b013",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 32,
+     "sha": "3d125d8118cf462dca9330a5",
+     "fingerprint": "stride-e2fd82f61dd40257",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 33,
+     "sha": "f014c0e2f30c39c181e1ef49",
+     "fingerprint": "stride-8c2507c673695cb1",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 34,
+     "sha": "f8c5a9cb5030f6e1160af740",
+     "fingerprint": "stride-8ec20e0173ad8768",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 35,
+     "sha": "31340dfcc7116b0f5f6cab5e",
+     "fingerprint": "stride-f13a9546d6e590ba",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 36,
+     "sha": "f74c3cb26ea73df1784c1f32",
+     "fingerprint": "stride-bacab6708780242b",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 37,
+     "sha": "87b171594a0805e920fcf94d",
+     "fingerprint": "stride-d8180645ad309fb9",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 38,
+     "sha": "27b5ea045502767315367a47",
+     "fingerprint": "stride-ffee0611b49f4914",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 39,
+     "sha": "44f25760bb52c84f71fcea50",
+     "fingerprint": "stride-7565e208449b39fa",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 40,
+     "sha": "6ca58c92f6cb08b9ce7a420c",
+     "fingerprint": "stride-f9a2b27c0c98fad3",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 41,
+     "sha": "52adca34cc01c30d0a03c976",
+     "fingerprint": "stride-d0c5ce205354059a",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 42,
+     "sha": "1aa2ec26f317e658ef4a9093",
+     "fingerprint": "stride-2b8399b614a2e06d",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 43,
+     "sha": "5f870c195e97b20f8dbbac90",
+     "fingerprint": "stride-97cd9985c3ec686a",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 44,
+     "sha": "45968e3db85b945661baf636",
+     "fingerprint": "stride-b77e3801d7697f43",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 45,
+     "sha": "556139f962c9278fc3c8f918",
+     "fingerprint": "stride-aa8e93f859b5aadf",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 46,
+     "sha": "a1d823f0eff97bfe1fe22092",
+     "fingerprint": "stride-c78220579a456f31",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 47,
+     "sha": "095266509e5177bd4b1b4b4c",
+     "fingerprint": "stride-88cec861c7ff071c",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 48,
+     "sha": "af155ae277c6e7f5d4f4e556",
+     "fingerprint": "stride-2323f411de8dcf4f",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 49,
+     "sha": "3f5d83ead17fb412c7c41ab8",
+     "fingerprint": "stride-89ea0083651eecb3",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 50,
+     "sha": "88573c99a7ff8985a8fe7453",
+     "fingerprint": "stride-a56068f1f0364573",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 51,
+     "sha": "28710a0a541f274cb4b08126",
+     "fingerprint": "stride-ebcccc583ddcfa45",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 52,
+     "sha": "03ec0c0e02e05bfedd002741",
+     "fingerprint": "stride-61fe08fd01245d62",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 53,
+     "sha": "b393169a3b1d82175c24527f",
+     "fingerprint": "stride-2bc46ab5088ff3d9",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 54,
+     "sha": "466dee66a132d488a8dab66b",
+     "fingerprint": "stride-46ac6056b43ad677",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 55,
+     "sha": "23713de20f54b6c231392616",
+     "fingerprint": "stride-22c6509160a9aaf7",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 56,
+     "sha": "7c9612a32f17b4d9f348543e",
+     "fingerprint": "stride-93b9b4da0ce6cc00",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 57,
+     "sha": "480bf091e3a974314bd2a930",
+     "fingerprint": "stride-844a826ac47998d1",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 58,
+     "sha": "6b248e65df02e631c9e62f17",
+     "fingerprint": "stride-f805843e3d1ef323",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 59,
+     "sha": "f9c53524822436f31b795153",
+     "fingerprint": "stride-2db238f952acba01",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 60,
+     "sha": "ca1c8e110b85128f1be71aa2",
+     "fingerprint": "stride-54b88075a2d78b5d",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 61,
+     "sha": "5af1a7205086a7187e753fe2",
+     "fingerprint": "stride-2fcb69f41609f9f6",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 62,
+     "sha": "ba4b1b69867542228b28b5a2",
+     "fingerprint": "stride-868652f450333355",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 63,
+     "sha": "6553a9386aa6d59587a9b191",
+     "fingerprint": "stride-ae50d3c829703d7b",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 64,
+     "sha": "045729cc158976644678fe5e",
+     "fingerprint": "stride-4bf8f7df2b419941",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 65,
+     "sha": "698e4178740b784798d1b5d5",
+     "fingerprint": "stride-ec07c4abecf79759",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 66,
+     "sha": "6c33524b96e2c175125940c2",
+     "fingerprint": "stride-b51c281368943de3",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 67,
+     "sha": "7ce3dfb86d98442804159cae",
+     "fingerprint": "stride-70c8300dd726c6be",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 68,
+     "sha": "e15a7775caf1e38517c7c84d",
+     "fingerprint": "stride-119814251b4076ab",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 69,
+     "sha": "f8699ccf1e362a55ed9f968f",
+     "fingerprint": "stride-84fa40a179f81045",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 70,
+     "sha": "0b5ba3ac9eda80b7a2dc1378",
+     "fingerprint": "stride-519058604d63c4a1",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 71,
+     "sha": "72aa829ed734396539830190",
+     "fingerprint": "stride-de3a81f119d0bfc4",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 72,
+     "sha": "c5cadb61e1fdb7dd52d11c9b",
+     "fingerprint": "stride-32da358ebbefeffa",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 73,
+     "sha": "c9349692b4f4d5290c96e445",
+     "fingerprint": "stride-6f2a63e0f627ec5b",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 74,
+     "sha": "c36444f5c24b36ec539511ba",
+     "fingerprint": "stride-e29b6bb82d94ea75",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 75,
+     "sha": "f334ceb8fdf6d7e1881b163f",
+     "fingerprint": "stride-9d3c791c95c20c4e",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 76,
+     "sha": "df57887064f69aacde60b039",
+     "fingerprint": "stride-45545f2b1b4c0a59",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 77,
+     "sha": "a2bbee76c79f4208d59540c1",
+     "fingerprint": "stride-f4496f2b37235c97",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 78,
+     "sha": "fccdbe70b75e50d76387a644",
+     "fingerprint": "stride-4f953ea9fb90a4b5",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 79,
+     "sha": "d640c5920785d893e3f9ace1",
+     "fingerprint": "stride-8723de288c931338",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 80,
+     "sha": "43eb0e96780495b9fa19ad84",
+     "fingerprint": "stride-f08a01525f550148",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 81,
+     "sha": "4f6b65dc99f18a6a6df76422",
+     "fingerprint": "stride-aa39fd3e7a2da10e",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 82,
+     "sha": "02fe9d83b105648f1697a6ae",
+     "fingerprint": "stride-3ba6d48bfcd47194",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 83,
+     "sha": "0622fdfc5677e1514a8545ee",
+     "fingerprint": "stride-08471b3bf9ecffa3",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 84,
+     "sha": "9ec84f9308aa2ae97a816dc3",
+     "fingerprint": "stride-ae435b21c14b93c3",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 85,
+     "sha": "c5008fb4792cb8540ca4fce0",
+     "fingerprint": "stride-64945f13c0962723",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 86,
+     "sha": "5edc42d09d1a01f55aa896a0",
+     "fingerprint": "stride-6feef7d55cc9a0e2",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 87,
+     "sha": "020a469f7352de67e2d9caff",
+     "fingerprint": "stride-580e9d2c5cb46e99",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 88,
+     "sha": "cf3b4855fb6ca72a88ea7e3c",
+     "fingerprint": "stride-684b31c9bcd2c371",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 89,
+     "sha": "a8dc76a228b009db277b1a76",
+     "fingerprint": "stride-4c882f7a27b94eee",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 90,
+     "sha": "b337a6330492d868054f570e",
+     "fingerprint": "stride-753ee73f708fb9c8",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 91,
+     "sha": "99c1d728e5b81c007e314c7c",
+     "fingerprint": "stride-36492d32087de8fe",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 92,
+     "sha": "7d778b628f09ba08b46c812b",
+     "fingerprint": "stride-ce97b170352718fb",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 93,
+     "sha": "cab68a1a075eb016323e8851",
+     "fingerprint": "stride-cdfa018eb30f087d",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 94,
+     "sha": "028f45b4147fa3c481c41ed4",
+     "fingerprint": "stride-d81942842ff7ac5d",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 95,
+     "sha": "8efae735e3a7c68022d17119",
+     "fingerprint": "stride-69d3e6a2f972777f",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 96,
+     "sha": "ec213fbd747e917fb0589aca",
+     "fingerprint": "stride-f06b5bb11f82517f",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 97,
+     "sha": "f5063f9be4579b863018942f",
+     "fingerprint": "stride-b42578dcdc25e7c3",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 98,
+     "sha": "6274d52c6455ef845befccaa",
+     "fingerprint": "stride-5c5e7874f1300542",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 99,
+     "sha": "d7e64bc1920872b4a68b1e52",
+     "fingerprint": "stride-f1bcceb45f8a9090",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 0,
+     "sha": "ad56f50ae588a8129aa2af0e",
+     "fingerprint": "stride-b72701e71ddccbaf",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 1,
+     "sha": "c27fa25a4a5630849753897a",
+     "fingerprint": "stride-5737658689a1b700",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 2,
+     "sha": "eae335e297e5d01a0ed833a8",
+     "fingerprint": "stride-473cd5081bd62fe4",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 3,
+     "sha": "53d394edf5dcfa5e17d336d8",
+     "fingerprint": "stride-5662f5f3e4d4998f",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 4,
+     "sha": "1b73e08c4d1f7055eb3ae2e3",
+     "fingerprint": "stride-526f13e4e0df1f49",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 5,
+     "sha": "0503f9370a39de8582f5124b",
+     "fingerprint": "stride-61637d03dadfb69e",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 6,
+     "sha": "7f74c1702abf333c3fa7d9ee",
+     "fingerprint": "stride-5be85beb0666e34b",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 7,
+     "sha": "1cfdb89371060b50455847f9",
+     "fingerprint": "stride-da1641c54e10eb14",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 8,
+     "sha": "11cdf7288247d29aef229e33",
+     "fingerprint": "stride-d117b715cf2d8afa",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 9,
+     "sha": "5633831dad834f4952c776d9",
+     "fingerprint": "stride-09763d105f0abea9",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 10,
+     "sha": "764fb42ed51607c405390e0a",
+     "fingerprint": "stride-6d2e2b87542ba4a2",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 11,
+     "sha": "95a4a99df389b76b41f9267f",
+     "fingerprint": "stride-fbce91ebf5b06215",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 12,
+     "sha": "df56127a9bc236f8562385f3",
+     "fingerprint": "stride-1faf12abce833620",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 13,
+     "sha": "86970285119951f2b64a42fa",
+     "fingerprint": "stride-dbdb69c675312681",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 14,
+     "sha": "87855cd29774cf32fe093882",
+     "fingerprint": "stride-63140b5a84375759",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 15,
+     "sha": "04fdcd8b01aea7856fbc2e26",
+     "fingerprint": "stride-e4418aaafc494a33",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 16,
+     "sha": "10039b121457c2f653a76604",
+     "fingerprint": "stride-7625c84a0b15dbcc",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 17,
+     "sha": "8524d50e7c3eda05e5b81709",
+     "fingerprint": "stride-71a0761b2fa016ec",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 18,
+     "sha": "13e63ecb14bd32b7989d5eb6",
+     "fingerprint": "stride-0b20b801824312f0",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 19,
+     "sha": "2fb00a8711ba327fc84615fc",
+     "fingerprint": "stride-3cad0b0e5e3b5cbc",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 20,
+     "sha": "201b09de2b9bc39b8bfddc0a",
+     "fingerprint": "stride-9ff1c6796bc7f54e",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 21,
+     "sha": "79871435e1063f86bac1dc4e",
+     "fingerprint": "stride-9351cb83ce42c559",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 22,
+     "sha": "be4be4f4a2841ee24348ed11",
+     "fingerprint": "stride-236da6c28964027d",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 23,
+     "sha": "e7a07949d4fc891f57163669",
+     "fingerprint": "stride-124a8b00ed8a125a",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 24,
+     "sha": "7a6849d6d5b04bc00960b132",
+     "fingerprint": "stride-28dfa33fe58b77bb",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 25,
+     "sha": "b610405d43428adb575ed91a",
+     "fingerprint": "stride-b54cf9755181d0bb",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 26,
+     "sha": "25c84b31a5eb19a7712ed388",
+     "fingerprint": "stride-7dbe037bcd8eb97d",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 27,
+     "sha": "986592cb87afc1b7a04f3a02",
+     "fingerprint": "stride-4f8f136ba21cf876",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 28,
+     "sha": "7b334ab0c802c67b6c7be478",
+     "fingerprint": "stride-8bb9117ffc4f5d53",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 29,
+     "sha": "bcdc0cb8f8c0e278a5b02834",
+     "fingerprint": "stride-16cd873b18ca0a8c",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 30,
+     "sha": "a8dfd8407121834939ca73a7",
+     "fingerprint": "stride-3470b8b63845c9fe",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 31,
+     "sha": "276280e2fb16600c4687df63",
+     "fingerprint": "stride-c6472d51ba50b013",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 32,
+     "sha": "3d125d8118cf462dca9330a5",
+     "fingerprint": "stride-e2fd82f61dd40257",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 33,
+     "sha": "f014c0e2f30c39c181e1ef49",
+     "fingerprint": "stride-8c2507c673695cb1",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 34,
+     "sha": "f8c5a9cb5030f6e1160af740",
+     "fingerprint": "stride-8ec20e0173ad8768",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 35,
+     "sha": "31340dfcc7116b0f5f6cab5e",
+     "fingerprint": "stride-f13a9546d6e590ba",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 36,
+     "sha": "f74c3cb26ea73df1784c1f32",
+     "fingerprint": "stride-bacab6708780242b",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 37,
+     "sha": "87b171594a0805e920fcf94d",
+     "fingerprint": "stride-d8180645ad309fb9",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 38,
+     "sha": "27b5ea045502767315367a47",
+     "fingerprint": "stride-ffee0611b49f4914",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 39,
+     "sha": "44f25760bb52c84f71fcea50",
+     "fingerprint": "stride-7565e208449b39fa",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 40,
+     "sha": "6ca58c92f6cb08b9ce7a420c",
+     "fingerprint": "stride-f9a2b27c0c98fad3",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 41,
+     "sha": "52adca34cc01c30d0a03c976",
+     "fingerprint": "stride-d0c5ce205354059a",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 42,
+     "sha": "1aa2ec26f317e658ef4a9093",
+     "fingerprint": "stride-2b8399b614a2e06d",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 43,
+     "sha": "5f870c195e97b20f8dbbac90",
+     "fingerprint": "stride-97cd9985c3ec686a",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 44,
+     "sha": "45968e3db85b945661baf636",
+     "fingerprint": "stride-b77e3801d7697f43",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 45,
+     "sha": "556139f962c9278fc3c8f918",
+     "fingerprint": "stride-aa8e93f859b5aadf",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 46,
+     "sha": "a1d823f0eff97bfe1fe22092",
+     "fingerprint": "stride-c78220579a456f31",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 47,
+     "sha": "095266509e5177bd4b1b4b4c",
+     "fingerprint": "stride-88cec861c7ff071c",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 48,
+     "sha": "af155ae277c6e7f5d4f4e556",
+     "fingerprint": "stride-2323f411de8dcf4f",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 49,
+     "sha": "3f5d83ead17fb412c7c41ab8",
+     "fingerprint": "stride-89ea0083651eecb3",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 50,
+     "sha": "88573c99a7ff8985a8fe7453",
+     "fingerprint": "stride-a56068f1f0364573",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 51,
+     "sha": "28710a0a541f274cb4b08126",
+     "fingerprint": "stride-ebcccc583ddcfa45",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 52,
+     "sha": "03ec0c0e02e05bfedd002741",
+     "fingerprint": "stride-61fe08fd01245d62",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 53,
+     "sha": "b393169a3b1d82175c24527f",
+     "fingerprint": "stride-2bc46ab5088ff3d9",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 54,
+     "sha": "466dee66a132d488a8dab66b",
+     "fingerprint": "stride-46ac6056b43ad677",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 55,
+     "sha": "23713de20f54b6c231392616",
+     "fingerprint": "stride-22c6509160a9aaf7",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 56,
+     "sha": "7c9612a32f17b4d9f348543e",
+     "fingerprint": "stride-93b9b4da0ce6cc00",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 57,
+     "sha": "480bf091e3a974314bd2a930",
+     "fingerprint": "stride-844a826ac47998d1",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 58,
+     "sha": "6b248e65df02e631c9e62f17",
+     "fingerprint": "stride-f805843e3d1ef323",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 59,
+     "sha": "f9c53524822436f31b795153",
+     "fingerprint": "stride-2db238f952acba01",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 60,
+     "sha": "ca1c8e110b85128f1be71aa2",
+     "fingerprint": "stride-54b88075a2d78b5d",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 61,
+     "sha": "5af1a7205086a7187e753fe2",
+     "fingerprint": "stride-2fcb69f41609f9f6",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 62,
+     "sha": "ba4b1b69867542228b28b5a2",
+     "fingerprint": "stride-868652f450333355",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 63,
+     "sha": "6553a9386aa6d59587a9b191",
+     "fingerprint": "stride-ae50d3c829703d7b",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 64,
+     "sha": "045729cc158976644678fe5e",
+     "fingerprint": "stride-4bf8f7df2b419941",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 65,
+     "sha": "698e4178740b784798d1b5d5",
+     "fingerprint": "stride-ec07c4abecf79759",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 66,
+     "sha": "6c33524b96e2c175125940c2",
+     "fingerprint": "stride-b51c281368943de3",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 67,
+     "sha": "7ce3dfb86d98442804159cae",
+     "fingerprint": "stride-70c8300dd726c6be",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 68,
+     "sha": "e15a7775caf1e38517c7c84d",
+     "fingerprint": "stride-119814251b4076ab",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 69,
+     "sha": "f8699ccf1e362a55ed9f968f",
+     "fingerprint": "stride-84fa40a179f81045",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 70,
+     "sha": "0b5ba3ac9eda80b7a2dc1378",
+     "fingerprint": "stride-519058604d63c4a1",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 71,
+     "sha": "72aa829ed734396539830190",
+     "fingerprint": "stride-de3a81f119d0bfc4",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 72,
+     "sha": "c5cadb61e1fdb7dd52d11c9b",
+     "fingerprint": "stride-32da358ebbefeffa",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 73,
+     "sha": "c9349692b4f4d5290c96e445",
+     "fingerprint": "stride-6f2a63e0f627ec5b",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 74,
+     "sha": "c36444f5c24b36ec539511ba",
+     "fingerprint": "stride-e29b6bb82d94ea75",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 75,
+     "sha": "f334ceb8fdf6d7e1881b163f",
+     "fingerprint": "stride-9d3c791c95c20c4e",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 76,
+     "sha": "df57887064f69aacde60b039",
+     "fingerprint": "stride-45545f2b1b4c0a59",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 77,
+     "sha": "a2bbee76c79f4208d59540c1",
+     "fingerprint": "stride-f4496f2b37235c97",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 78,
+     "sha": "fccdbe70b75e50d76387a644",
+     "fingerprint": "stride-4f953ea9fb90a4b5",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 79,
+     "sha": "d640c5920785d893e3f9ace1",
+     "fingerprint": "stride-8723de288c931338",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 80,
+     "sha": "43eb0e96780495b9fa19ad84",
+     "fingerprint": "stride-f08a01525f550148",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 81,
+     "sha": "4f6b65dc99f18a6a6df76422",
+     "fingerprint": "stride-aa39fd3e7a2da10e",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 82,
+     "sha": "02fe9d83b105648f1697a6ae",
+     "fingerprint": "stride-3ba6d48bfcd47194",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 83,
+     "sha": "0622fdfc5677e1514a8545ee",
+     "fingerprint": "stride-08471b3bf9ecffa3",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 84,
+     "sha": "9ec84f9308aa2ae97a816dc3",
+     "fingerprint": "stride-ae435b21c14b93c3",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 85,
+     "sha": "c5008fb4792cb8540ca4fce0",
+     "fingerprint": "stride-64945f13c0962723",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 86,
+     "sha": "5edc42d09d1a01f55aa896a0",
+     "fingerprint": "stride-6feef7d55cc9a0e2",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 87,
+     "sha": "020a469f7352de67e2d9caff",
+     "fingerprint": "stride-580e9d2c5cb46e99",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 88,
+     "sha": "cf3b4855fb6ca72a88ea7e3c",
+     "fingerprint": "stride-684b31c9bcd2c371",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 89,
+     "sha": "a8dc76a228b009db277b1a76",
+     "fingerprint": "stride-4c882f7a27b94eee",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 90,
+     "sha": "b337a6330492d868054f570e",
+     "fingerprint": "stride-753ee73f708fb9c8",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 91,
+     "sha": "99c1d728e5b81c007e314c7c",
+     "fingerprint": "stride-36492d32087de8fe",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 92,
+     "sha": "7d778b628f09ba08b46c812b",
+     "fingerprint": "stride-ce97b170352718fb",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 93,
+     "sha": "cab68a1a075eb016323e8851",
+     "fingerprint": "stride-cdfa018eb30f087d",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 94,
+     "sha": "028f45b4147fa3c481c41ed4",
+     "fingerprint": "stride-d81942842ff7ac5d",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 95,
+     "sha": "8efae735e3a7c68022d17119",
+     "fingerprint": "stride-69d3e6a2f972777f",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 96,
+     "sha": "ec213fbd747e917fb0589aca",
+     "fingerprint": "stride-f06b5bb11f82517f",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 97,
+     "sha": "f5063f9be4579b863018942f",
+     "fingerprint": "stride-b42578dcdc25e7c3",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 98,
+     "sha": "6274d52c6455ef845befccaa",
+     "fingerprint": "stride-5c5e7874f1300542",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 99,
+     "sha": "d7e64bc1920872b4a68b1e52",
+     "fingerprint": "stride-f1bcceb45f8a9090",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 0,
+     "sha": "ad56f50ae588a8129aa2af0e",
+     "fingerprint": "stride-b72701e71ddccbaf",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 1,
+     "sha": "c27fa25a4a5630849753897a",
+     "fingerprint": "stride-5737658689a1b700",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 2,
+     "sha": "eae335e297e5d01a0ed833a8",
+     "fingerprint": "stride-473cd5081bd62fe4",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 3,
+     "sha": "53d394edf5dcfa5e17d336d8",
+     "fingerprint": "stride-5662f5f3e4d4998f",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 4,
+     "sha": "1b73e08c4d1f7055eb3ae2e3",
+     "fingerprint": "stride-526f13e4e0df1f49",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 5,
+     "sha": "0503f9370a39de8582f5124b",
+     "fingerprint": "stride-61637d03dadfb69e",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 6,
+     "sha": "7f74c1702abf333c3fa7d9ee",
+     "fingerprint": "stride-5be85beb0666e34b",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 7,
+     "sha": "1cfdb89371060b50455847f9",
+     "fingerprint": "stride-da1641c54e10eb14",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 8,
+     "sha": "11cdf7288247d29aef229e33",
+     "fingerprint": "stride-d117b715cf2d8afa",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 9,
+     "sha": "5633831dad834f4952c776d9",
+     "fingerprint": "stride-09763d105f0abea9",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 10,
+     "sha": "764fb42ed51607c405390e0a",
+     "fingerprint": "stride-6d2e2b87542ba4a2",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 11,
+     "sha": "95a4a99df389b76b41f9267f",
+     "fingerprint": "stride-fbce91ebf5b06215",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 12,
+     "sha": "df56127a9bc236f8562385f3",
+     "fingerprint": "stride-1faf12abce833620",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 13,
+     "sha": "86970285119951f2b64a42fa",
+     "fingerprint": "stride-dbdb69c675312681",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 14,
+     "sha": "87855cd29774cf32fe093882",
+     "fingerprint": "stride-63140b5a84375759",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 15,
+     "sha": "04fdcd8b01aea7856fbc2e26",
+     "fingerprint": "stride-e4418aaafc494a33",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 16,
+     "sha": "10039b121457c2f653a76604",
+     "fingerprint": "stride-7625c84a0b15dbcc",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 17,
+     "sha": "8524d50e7c3eda05e5b81709",
+     "fingerprint": "stride-71a0761b2fa016ec",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 18,
+     "sha": "13e63ecb14bd32b7989d5eb6",
+     "fingerprint": "stride-0b20b801824312f0",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 19,
+     "sha": "2fb00a8711ba327fc84615fc",
+     "fingerprint": "stride-3cad0b0e5e3b5cbc",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 20,
+     "sha": "201b09de2b9bc39b8bfddc0a",
+     "fingerprint": "stride-9ff1c6796bc7f54e",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 21,
+     "sha": "79871435e1063f86bac1dc4e",
+     "fingerprint": "stride-9351cb83ce42c559",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 22,
+     "sha": "be4be4f4a2841ee24348ed11",
+     "fingerprint": "stride-236da6c28964027d",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 23,
+     "sha": "e7a07949d4fc891f57163669",
+     "fingerprint": "stride-124a8b00ed8a125a",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 24,
+     "sha": "7a6849d6d5b04bc00960b132",
+     "fingerprint": "stride-28dfa33fe58b77bb",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 25,
+     "sha": "b610405d43428adb575ed91a",
+     "fingerprint": "stride-b54cf9755181d0bb",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 26,
+     "sha": "25c84b31a5eb19a7712ed388",
+     "fingerprint": "stride-7dbe037bcd8eb97d",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 27,
+     "sha": "986592cb87afc1b7a04f3a02",
+     "fingerprint": "stride-4f8f136ba21cf876",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 28,
+     "sha": "7b334ab0c802c67b6c7be478",
+     "fingerprint": "stride-8bb9117ffc4f5d53",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 29,
+     "sha": "bcdc0cb8f8c0e278a5b02834",
+     "fingerprint": "stride-16cd873b18ca0a8c",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 30,
+     "sha": "a8dfd8407121834939ca73a7",
+     "fingerprint": "stride-3470b8b63845c9fe",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 31,
+     "sha": "276280e2fb16600c4687df63",
+     "fingerprint": "stride-c6472d51ba50b013",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 32,
+     "sha": "3d125d8118cf462dca9330a5",
+     "fingerprint": "stride-e2fd82f61dd40257",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 33,
+     "sha": "f014c0e2f30c39c181e1ef49",
+     "fingerprint": "stride-8c2507c673695cb1",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 34,
+     "sha": "f8c5a9cb5030f6e1160af740",
+     "fingerprint": "stride-8ec20e0173ad8768",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 35,
+     "sha": "31340dfcc7116b0f5f6cab5e",
+     "fingerprint": "stride-f13a9546d6e590ba",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 36,
+     "sha": "f74c3cb26ea73df1784c1f32",
+     "fingerprint": "stride-bacab6708780242b",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 37,
+     "sha": "87b171594a0805e920fcf94d",
+     "fingerprint": "stride-d8180645ad309fb9",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 38,
+     "sha": "27b5ea045502767315367a47",
+     "fingerprint": "stride-ffee0611b49f4914",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 39,
+     "sha": "44f25760bb52c84f71fcea50",
+     "fingerprint": "stride-7565e208449b39fa",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 40,
+     "sha": "6ca58c92f6cb08b9ce7a420c",
+     "fingerprint": "stride-f9a2b27c0c98fad3",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 41,
+     "sha": "52adca34cc01c30d0a03c976",
+     "fingerprint": "stride-d0c5ce205354059a",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 42,
+     "sha": "1aa2ec26f317e658ef4a9093",
+     "fingerprint": "stride-2b8399b614a2e06d",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 43,
+     "sha": "5f870c195e97b20f8dbbac90",
+     "fingerprint": "stride-97cd9985c3ec686a",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 44,
+     "sha": "45968e3db85b945661baf636",
+     "fingerprint": "stride-b77e3801d7697f43",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 45,
+     "sha": "556139f962c9278fc3c8f918",
+     "fingerprint": "stride-aa8e93f859b5aadf",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 46,
+     "sha": "a1d823f0eff97bfe1fe22092",
+     "fingerprint": "stride-c78220579a456f31",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 47,
+     "sha": "095266509e5177bd4b1b4b4c",
+     "fingerprint": "stride-88cec861c7ff071c",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 48,
+     "sha": "af155ae277c6e7f5d4f4e556",
+     "fingerprint": "stride-2323f411de8dcf4f",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 49,
+     "sha": "3f5d83ead17fb412c7c41ab8",
+     "fingerprint": "stride-89ea0083651eecb3",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 50,
+     "sha": "88573c99a7ff8985a8fe7453",
+     "fingerprint": "stride-a56068f1f0364573",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 51,
+     "sha": "28710a0a541f274cb4b08126",
+     "fingerprint": "stride-ebcccc583ddcfa45",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 52,
+     "sha": "03ec0c0e02e05bfedd002741",
+     "fingerprint": "stride-61fe08fd01245d62",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 53,
+     "sha": "b393169a3b1d82175c24527f",
+     "fingerprint": "stride-2bc46ab5088ff3d9",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 54,
+     "sha": "466dee66a132d488a8dab66b",
+     "fingerprint": "stride-46ac6056b43ad677",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 55,
+     "sha": "23713de20f54b6c231392616",
+     "fingerprint": "stride-22c6509160a9aaf7",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 56,
+     "sha": "7c9612a32f17b4d9f348543e",
+     "fingerprint": "stride-93b9b4da0ce6cc00",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 57,
+     "sha": "480bf091e3a974314bd2a930",
+     "fingerprint": "stride-844a826ac47998d1",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 58,
+     "sha": "6b248e65df02e631c9e62f17",
+     "fingerprint": "stride-f805843e3d1ef323",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 59,
+     "sha": "f9c53524822436f31b795153",
+     "fingerprint": "stride-2db238f952acba01",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 60,
+     "sha": "ca1c8e110b85128f1be71aa2",
+     "fingerprint": "stride-54b88075a2d78b5d",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 61,
+     "sha": "5af1a7205086a7187e753fe2",
+     "fingerprint": "stride-2fcb69f41609f9f6",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 62,
+     "sha": "ba4b1b69867542228b28b5a2",
+     "fingerprint": "stride-868652f450333355",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 63,
+     "sha": "6553a9386aa6d59587a9b191",
+     "fingerprint": "stride-ae50d3c829703d7b",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 64,
+     "sha": "045729cc158976644678fe5e",
+     "fingerprint": "stride-4bf8f7df2b419941",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 65,
+     "sha": "698e4178740b784798d1b5d5",
+     "fingerprint": "stride-ec07c4abecf79759",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 66,
+     "sha": "6c33524b96e2c175125940c2",
+     "fingerprint": "stride-b51c281368943de3",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 67,
+     "sha": "7ce3dfb86d98442804159cae",
+     "fingerprint": "stride-70c8300dd726c6be",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 68,
+     "sha": "e15a7775caf1e38517c7c84d",
+     "fingerprint": "stride-119814251b4076ab",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 69,
+     "sha": "f8699ccf1e362a55ed9f968f",
+     "fingerprint": "stride-84fa40a179f81045",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 70,
+     "sha": "0b5ba3ac9eda80b7a2dc1378",
+     "fingerprint": "stride-519058604d63c4a1",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 71,
+     "sha": "72aa829ed734396539830190",
+     "fingerprint": "stride-de3a81f119d0bfc4",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 72,
+     "sha": "c5cadb61e1fdb7dd52d11c9b",
+     "fingerprint": "stride-32da358ebbefeffa",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 73,
+     "sha": "c9349692b4f4d5290c96e445",
+     "fingerprint": "stride-6f2a63e0f627ec5b",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 74,
+     "sha": "c36444f5c24b36ec539511ba",
+     "fingerprint": "stride-e29b6bb82d94ea75",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 75,
+     "sha": "f334ceb8fdf6d7e1881b163f",
+     "fingerprint": "stride-9d3c791c95c20c4e",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 76,
+     "sha": "df57887064f69aacde60b039",
+     "fingerprint": "stride-45545f2b1b4c0a59",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 77,
+     "sha": "a2bbee76c79f4208d59540c1",
+     "fingerprint": "stride-f4496f2b37235c97",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 78,
+     "sha": "fccdbe70b75e50d76387a644",
+     "fingerprint": "stride-4f953ea9fb90a4b5",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 79,
+     "sha": "d640c5920785d893e3f9ace1",
+     "fingerprint": "stride-8723de288c931338",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 80,
+     "sha": "43eb0e96780495b9fa19ad84",
+     "fingerprint": "stride-f08a01525f550148",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 81,
+     "sha": "4f6b65dc99f18a6a6df76422",
+     "fingerprint": "stride-aa39fd3e7a2da10e",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 82,
+     "sha": "02fe9d83b105648f1697a6ae",
+     "fingerprint": "stride-3ba6d48bfcd47194",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 83,
+     "sha": "0622fdfc5677e1514a8545ee",
+     "fingerprint": "stride-08471b3bf9ecffa3",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 84,
+     "sha": "9ec84f9308aa2ae97a816dc3",
+     "fingerprint": "stride-ae435b21c14b93c3",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 85,
+     "sha": "c5008fb4792cb8540ca4fce0",
+     "fingerprint": "stride-64945f13c0962723",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 86,
+     "sha": "5edc42d09d1a01f55aa896a0",
+     "fingerprint": "stride-6feef7d55cc9a0e2",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 87,
+     "sha": "020a469f7352de67e2d9caff",
+     "fingerprint": "stride-580e9d2c5cb46e99",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 88,
+     "sha": "cf3b4855fb6ca72a88ea7e3c",
+     "fingerprint": "stride-684b31c9bcd2c371",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 89,
+     "sha": "a8dc76a228b009db277b1a76",
+     "fingerprint": "stride-4c882f7a27b94eee",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 90,
+     "sha": "b337a6330492d868054f570e",
+     "fingerprint": "stride-753ee73f708fb9c8",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 91,
+     "sha": "99c1d728e5b81c007e314c7c",
+     "fingerprint": "stride-36492d32087de8fe",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 92,
+     "sha": "7d778b628f09ba08b46c812b",
+     "fingerprint": "stride-ce97b170352718fb",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 93,
+     "sha": "cab68a1a075eb016323e8851",
+     "fingerprint": "stride-cdfa018eb30f087d",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 94,
+     "sha": "028f45b4147fa3c481c41ed4",
+     "fingerprint": "stride-d81942842ff7ac5d",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 95,
+     "sha": "8efae735e3a7c68022d17119",
+     "fingerprint": "stride-69d3e6a2f972777f",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 96,
+     "sha": "ec213fbd747e917fb0589aca",
+     "fingerprint": "stride-f06b5bb11f82517f",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 97,
+     "sha": "f5063f9be4579b863018942f",
+     "fingerprint": "stride-b42578dcdc25e7c3",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 98,
+     "sha": "6274d52c6455ef845befccaa",
+     "fingerprint": "stride-5c5e7874f1300542",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 99,
+     "sha": "d7e64bc1920872b4a68b1e52",
+     "fingerprint": "stride-f1bcceb45f8a9090",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 0,
+     "sha": "ad56f50ae588a8129aa2af0e",
+     "fingerprint": "stride-b72701e71ddccbaf",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 1,
+     "sha": "c27fa25a4a5630849753897a",
+     "fingerprint": "stride-5737658689a1b700",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 2,
+     "sha": "eae335e297e5d01a0ed833a8",
+     "fingerprint": "stride-473cd5081bd62fe4",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 3,
+     "sha": "53d394edf5dcfa5e17d336d8",
+     "fingerprint": "stride-5662f5f3e4d4998f",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 4,
+     "sha": "1b73e08c4d1f7055eb3ae2e3",
+     "fingerprint": "stride-526f13e4e0df1f49",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 5,
+     "sha": "0503f9370a39de8582f5124b",
+     "fingerprint": "stride-61637d03dadfb69e",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 6,
+     "sha": "7f74c1702abf333c3fa7d9ee",
+     "fingerprint": "stride-5be85beb0666e34b",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 7,
+     "sha": "1cfdb89371060b50455847f9",
+     "fingerprint": "stride-da1641c54e10eb14",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 8,
+     "sha": "11cdf7288247d29aef229e33",
+     "fingerprint": "stride-d117b715cf2d8afa",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 9,
+     "sha": "5633831dad834f4952c776d9",
+     "fingerprint": "stride-09763d105f0abea9",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 10,
+     "sha": "764fb42ed51607c405390e0a",
+     "fingerprint": "stride-6d2e2b87542ba4a2",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 11,
+     "sha": "95a4a99df389b76b41f9267f",
+     "fingerprint": "stride-fbce91ebf5b06215",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 12,
+     "sha": "df56127a9bc236f8562385f3",
+     "fingerprint": "stride-1faf12abce833620",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 13,
+     "sha": "86970285119951f2b64a42fa",
+     "fingerprint": "stride-dbdb69c675312681",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 14,
+     "sha": "87855cd29774cf32fe093882",
+     "fingerprint": "stride-63140b5a84375759",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 15,
+     "sha": "04fdcd8b01aea7856fbc2e26",
+     "fingerprint": "stride-e4418aaafc494a33",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 16,
+     "sha": "10039b121457c2f653a76604",
+     "fingerprint": "stride-7625c84a0b15dbcc",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 17,
+     "sha": "8524d50e7c3eda05e5b81709",
+     "fingerprint": "stride-71a0761b2fa016ec",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 18,
+     "sha": "13e63ecb14bd32b7989d5eb6",
+     "fingerprint": "stride-0b20b801824312f0",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 19,
+     "sha": "2fb00a8711ba327fc84615fc",
+     "fingerprint": "stride-3cad0b0e5e3b5cbc",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 20,
+     "sha": "201b09de2b9bc39b8bfddc0a",
+     "fingerprint": "stride-9ff1c6796bc7f54e",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 21,
+     "sha": "79871435e1063f86bac1dc4e",
+     "fingerprint": "stride-9351cb83ce42c559",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 22,
+     "sha": "be4be4f4a2841ee24348ed11",
+     "fingerprint": "stride-236da6c28964027d",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 23,
+     "sha": "e7a07949d4fc891f57163669",
+     "fingerprint": "stride-124a8b00ed8a125a",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 24,
+     "sha": "7a6849d6d5b04bc00960b132",
+     "fingerprint": "stride-28dfa33fe58b77bb",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 25,
+     "sha": "b610405d43428adb575ed91a",
+     "fingerprint": "stride-b54cf9755181d0bb",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 26,
+     "sha": "25c84b31a5eb19a7712ed388",
+     "fingerprint": "stride-7dbe037bcd8eb97d",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 27,
+     "sha": "986592cb87afc1b7a04f3a02",
+     "fingerprint": "stride-4f8f136ba21cf876",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 28,
+     "sha": "7b334ab0c802c67b6c7be478",
+     "fingerprint": "stride-8bb9117ffc4f5d53",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 29,
+     "sha": "bcdc0cb8f8c0e278a5b02834",
+     "fingerprint": "stride-16cd873b18ca0a8c",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 30,
+     "sha": "a8dfd8407121834939ca73a7",
+     "fingerprint": "stride-3470b8b63845c9fe",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 31,
+     "sha": "276280e2fb16600c4687df63",
+     "fingerprint": "stride-c6472d51ba50b013",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 32,
+     "sha": "3d125d8118cf462dca9330a5",
+     "fingerprint": "stride-e2fd82f61dd40257",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 33,
+     "sha": "f014c0e2f30c39c181e1ef49",
+     "fingerprint": "stride-8c2507c673695cb1",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 34,
+     "sha": "f8c5a9cb5030f6e1160af740",
+     "fingerprint": "stride-8ec20e0173ad8768",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 35,
+     "sha": "31340dfcc7116b0f5f6cab5e",
+     "fingerprint": "stride-f13a9546d6e590ba",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 36,
+     "sha": "f74c3cb26ea73df1784c1f32",
+     "fingerprint": "stride-bacab6708780242b",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 37,
+     "sha": "87b171594a0805e920fcf94d",
+     "fingerprint": "stride-d8180645ad309fb9",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 38,
+     "sha": "27b5ea045502767315367a47",
+     "fingerprint": "stride-ffee0611b49f4914",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 39,
+     "sha": "44f25760bb52c84f71fcea50",
+     "fingerprint": "stride-7565e208449b39fa",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 40,
+     "sha": "6ca58c92f6cb08b9ce7a420c",
+     "fingerprint": "stride-f9a2b27c0c98fad3",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 41,
+     "sha": "52adca34cc01c30d0a03c976",
+     "fingerprint": "stride-d0c5ce205354059a",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 42,
+     "sha": "1aa2ec26f317e658ef4a9093",
+     "fingerprint": "stride-2b8399b614a2e06d",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 43,
+     "sha": "5f870c195e97b20f8dbbac90",
+     "fingerprint": "stride-97cd9985c3ec686a",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 44,
+     "sha": "45968e3db85b945661baf636",
+     "fingerprint": "stride-b77e3801d7697f43",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 45,
+     "sha": "556139f962c9278fc3c8f918",
+     "fingerprint": "stride-aa8e93f859b5aadf",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 46,
+     "sha": "a1d823f0eff97bfe1fe22092",
+     "fingerprint": "stride-c78220579a456f31",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 47,
+     "sha": "095266509e5177bd4b1b4b4c",
+     "fingerprint": "stride-88cec861c7ff071c",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 48,
+     "sha": "af155ae277c6e7f5d4f4e556",
+     "fingerprint": "stride-2323f411de8dcf4f",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 49,
+     "sha": "3f5d83ead17fb412c7c41ab8",
+     "fingerprint": "stride-89ea0083651eecb3",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 50,
+     "sha": "88573c99a7ff8985a8fe7453",
+     "fingerprint": "stride-a56068f1f0364573",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 51,
+     "sha": "28710a0a541f274cb4b08126",
+     "fingerprint": "stride-ebcccc583ddcfa45",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 52,
+     "sha": "03ec0c0e02e05bfedd002741",
+     "fingerprint": "stride-61fe08fd01245d62",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 53,
+     "sha": "b393169a3b1d82175c24527f",
+     "fingerprint": "stride-2bc46ab5088ff3d9",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 54,
+     "sha": "466dee66a132d488a8dab66b",
+     "fingerprint": "stride-46ac6056b43ad677",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 55,
+     "sha": "23713de20f54b6c231392616",
+     "fingerprint": "stride-22c6509160a9aaf7",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 56,
+     "sha": "7c9612a32f17b4d9f348543e",
+     "fingerprint": "stride-93b9b4da0ce6cc00",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 57,
+     "sha": "480bf091e3a974314bd2a930",
+     "fingerprint": "stride-844a826ac47998d1",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 58,
+     "sha": "6b248e65df02e631c9e62f17",
+     "fingerprint": "stride-f805843e3d1ef323",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 59,
+     "sha": "f9c53524822436f31b795153",
+     "fingerprint": "stride-2db238f952acba01",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 60,
+     "sha": "ca1c8e110b85128f1be71aa2",
+     "fingerprint": "stride-54b88075a2d78b5d",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 61,
+     "sha": "5af1a7205086a7187e753fe2",
+     "fingerprint": "stride-2fcb69f41609f9f6",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 62,
+     "sha": "ba4b1b69867542228b28b5a2",
+     "fingerprint": "stride-868652f450333355",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 63,
+     "sha": "6553a9386aa6d59587a9b191",
+     "fingerprint": "stride-ae50d3c829703d7b",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 64,
+     "sha": "045729cc158976644678fe5e",
+     "fingerprint": "stride-4bf8f7df2b419941",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 65,
+     "sha": "698e4178740b784798d1b5d5",
+     "fingerprint": "stride-ec07c4abecf79759",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 66,
+     "sha": "6c33524b96e2c175125940c2",
+     "fingerprint": "stride-b51c281368943de3",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 67,
+     "sha": "7ce3dfb86d98442804159cae",
+     "fingerprint": "stride-70c8300dd726c6be",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 68,
+     "sha": "e15a7775caf1e38517c7c84d",
+     "fingerprint": "stride-119814251b4076ab",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 69,
+     "sha": "f8699ccf1e362a55ed9f968f",
+     "fingerprint": "stride-84fa40a179f81045",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 70,
+     "sha": "0b5ba3ac9eda80b7a2dc1378",
+     "fingerprint": "stride-519058604d63c4a1",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 71,
+     "sha": "72aa829ed734396539830190",
+     "fingerprint": "stride-de3a81f119d0bfc4",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 72,
+     "sha": "c5cadb61e1fdb7dd52d11c9b",
+     "fingerprint": "stride-32da358ebbefeffa",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 73,
+     "sha": "c9349692b4f4d5290c96e445",
+     "fingerprint": "stride-6f2a63e0f627ec5b",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 74,
+     "sha": "c36444f5c24b36ec539511ba",
+     "fingerprint": "stride-e29b6bb82d94ea75",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 75,
+     "sha": "f334ceb8fdf6d7e1881b163f",
+     "fingerprint": "stride-9d3c791c95c20c4e",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 76,
+     "sha": "df57887064f69aacde60b039",
+     "fingerprint": "stride-45545f2b1b4c0a59",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 77,
+     "sha": "a2bbee76c79f4208d59540c1",
+     "fingerprint": "stride-f4496f2b37235c97",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 78,
+     "sha": "fccdbe70b75e50d76387a644",
+     "fingerprint": "stride-4f953ea9fb90a4b5",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 79,
+     "sha": "d640c5920785d893e3f9ace1",
+     "fingerprint": "stride-8723de288c931338",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 80,
+     "sha": "43eb0e96780495b9fa19ad84",
+     "fingerprint": "stride-f08a01525f550148",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 81,
+     "sha": "4f6b65dc99f18a6a6df76422",
+     "fingerprint": "stride-aa39fd3e7a2da10e",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 82,
+     "sha": "02fe9d83b105648f1697a6ae",
+     "fingerprint": "stride-3ba6d48bfcd47194",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 83,
+     "sha": "0622fdfc5677e1514a8545ee",
+     "fingerprint": "stride-08471b3bf9ecffa3",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 84,
+     "sha": "9ec84f9308aa2ae97a816dc3",
+     "fingerprint": "stride-ae435b21c14b93c3",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 85,
+     "sha": "c5008fb4792cb8540ca4fce0",
+     "fingerprint": "stride-64945f13c0962723",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 86,
+     "sha": "5edc42d09d1a01f55aa896a0",
+     "fingerprint": "stride-6feef7d55cc9a0e2",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 87,
+     "sha": "020a469f7352de67e2d9caff",
+     "fingerprint": "stride-580e9d2c5cb46e99",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 88,
+     "sha": "cf3b4855fb6ca72a88ea7e3c",
+     "fingerprint": "stride-684b31c9bcd2c371",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 89,
+     "sha": "a8dc76a228b009db277b1a76",
+     "fingerprint": "stride-4c882f7a27b94eee",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 90,
+     "sha": "b337a6330492d868054f570e",
+     "fingerprint": "stride-753ee73f708fb9c8",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 91,
+     "sha": "99c1d728e5b81c007e314c7c",
+     "fingerprint": "stride-36492d32087de8fe",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 92,
+     "sha": "7d778b628f09ba08b46c812b",
+     "fingerprint": "stride-ce97b170352718fb",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 93,
+     "sha": "cab68a1a075eb016323e8851",
+     "fingerprint": "stride-cdfa018eb30f087d",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 94,
+     "sha": "028f45b4147fa3c481c41ed4",
+     "fingerprint": "stride-d81942842ff7ac5d",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 95,
+     "sha": "8efae735e3a7c68022d17119",
+     "fingerprint": "stride-69d3e6a2f972777f",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 96,
+     "sha": "ec213fbd747e917fb0589aca",
+     "fingerprint": "stride-f06b5bb11f82517f",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 97,
+     "sha": "f5063f9be4579b863018942f",
+     "fingerprint": "stride-b42578dcdc25e7c3",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 98,
+     "sha": "6274d52c6455ef845befccaa",
+     "fingerprint": "stride-5c5e7874f1300542",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 99,
+     "sha": "d7e64bc1920872b4a68b1e52",
+     "fingerprint": "stride-f1bcceb45f8a9090",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 0,
+     "sha": "ad56f50ae588a8129aa2af0e",
+     "fingerprint": "stride-b72701e71ddccbaf",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 1,
+     "sha": "c27fa25a4a5630849753897a",
+     "fingerprint": "stride-5737658689a1b700",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 2,
+     "sha": "eae335e297e5d01a0ed833a8",
+     "fingerprint": "stride-473cd5081bd62fe4",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 3,
+     "sha": "53d394edf5dcfa5e17d336d8",
+     "fingerprint": "stride-5662f5f3e4d4998f",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 4,
+     "sha": "1b73e08c4d1f7055eb3ae2e3",
+     "fingerprint": "stride-526f13e4e0df1f49",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 5,
+     "sha": "0503f9370a39de8582f5124b",
+     "fingerprint": "stride-61637d03dadfb69e",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 6,
+     "sha": "7f74c1702abf333c3fa7d9ee",
+     "fingerprint": "stride-5be85beb0666e34b",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 7,
+     "sha": "1cfdb89371060b50455847f9",
+     "fingerprint": "stride-da1641c54e10eb14",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 8,
+     "sha": "11cdf7288247d29aef229e33",
+     "fingerprint": "stride-d117b715cf2d8afa",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 9,
+     "sha": "5633831dad834f4952c776d9",
+     "fingerprint": "stride-09763d105f0abea9",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 10,
+     "sha": "764fb42ed51607c405390e0a",
+     "fingerprint": "stride-6d2e2b87542ba4a2",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 11,
+     "sha": "95a4a99df389b76b41f9267f",
+     "fingerprint": "stride-fbce91ebf5b06215",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 12,
+     "sha": "df56127a9bc236f8562385f3",
+     "fingerprint": "stride-1faf12abce833620",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 13,
+     "sha": "86970285119951f2b64a42fa",
+     "fingerprint": "stride-dbdb69c675312681",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 14,
+     "sha": "87855cd29774cf32fe093882",
+     "fingerprint": "stride-63140b5a84375759",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 15,
+     "sha": "04fdcd8b01aea7856fbc2e26",
+     "fingerprint": "stride-e4418aaafc494a33",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 16,
+     "sha": "10039b121457c2f653a76604",
+     "fingerprint": "stride-7625c84a0b15dbcc",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 17,
+     "sha": "8524d50e7c3eda05e5b81709",
+     "fingerprint": "stride-71a0761b2fa016ec",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 18,
+     "sha": "13e63ecb14bd32b7989d5eb6",
+     "fingerprint": "stride-0b20b801824312f0",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 19,
+     "sha": "2fb00a8711ba327fc84615fc",
+     "fingerprint": "stride-3cad0b0e5e3b5cbc",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 20,
+     "sha": "201b09de2b9bc39b8bfddc0a",
+     "fingerprint": "stride-9ff1c6796bc7f54e",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 21,
+     "sha": "79871435e1063f86bac1dc4e",
+     "fingerprint": "stride-9351cb83ce42c559",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 22,
+     "sha": "be4be4f4a2841ee24348ed11",
+     "fingerprint": "stride-236da6c28964027d",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 23,
+     "sha": "e7a07949d4fc891f57163669",
+     "fingerprint": "stride-124a8b00ed8a125a",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 24,
+     "sha": "7a6849d6d5b04bc00960b132",
+     "fingerprint": "stride-28dfa33fe58b77bb",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 25,
+     "sha": "b610405d43428adb575ed91a",
+     "fingerprint": "stride-b54cf9755181d0bb",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 26,
+     "sha": "25c84b31a5eb19a7712ed388",
+     "fingerprint": "stride-7dbe037bcd8eb97d",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 27,
+     "sha": "986592cb87afc1b7a04f3a02",
+     "fingerprint": "stride-4f8f136ba21cf876",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 28,
+     "sha": "7b334ab0c802c67b6c7be478",
+     "fingerprint": "stride-8bb9117ffc4f5d53",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 29,
+     "sha": "bcdc0cb8f8c0e278a5b02834",
+     "fingerprint": "stride-16cd873b18ca0a8c",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 30,
+     "sha": "a8dfd8407121834939ca73a7",
+     "fingerprint": "stride-3470b8b63845c9fe",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 31,
+     "sha": "276280e2fb16600c4687df63",
+     "fingerprint": "stride-c6472d51ba50b013",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 32,
+     "sha": "3d125d8118cf462dca9330a5",
+     "fingerprint": "stride-e2fd82f61dd40257",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 33,
+     "sha": "f014c0e2f30c39c181e1ef49",
+     "fingerprint": "stride-8c2507c673695cb1",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 34,
+     "sha": "f8c5a9cb5030f6e1160af740",
+     "fingerprint": "stride-8ec20e0173ad8768",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 35,
+     "sha": "31340dfcc7116b0f5f6cab5e",
+     "fingerprint": "stride-f13a9546d6e590ba",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 36,
+     "sha": "f74c3cb26ea73df1784c1f32",
+     "fingerprint": "stride-bacab6708780242b",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 37,
+     "sha": "87b171594a0805e920fcf94d",
+     "fingerprint": "stride-d8180645ad309fb9",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 38,
+     "sha": "27b5ea045502767315367a47",
+     "fingerprint": "stride-ffee0611b49f4914",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 39,
+     "sha": "44f25760bb52c84f71fcea50",
+     "fingerprint": "stride-7565e208449b39fa",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 40,
+     "sha": "6ca58c92f6cb08b9ce7a420c",
+     "fingerprint": "stride-f9a2b27c0c98fad3",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 41,
+     "sha": "52adca34cc01c30d0a03c976",
+     "fingerprint": "stride-d0c5ce205354059a",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 42,
+     "sha": "1aa2ec26f317e658ef4a9093",
+     "fingerprint": "stride-2b8399b614a2e06d",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 43,
+     "sha": "5f870c195e97b20f8dbbac90",
+     "fingerprint": "stride-97cd9985c3ec686a",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 44,
+     "sha": "45968e3db85b945661baf636",
+     "fingerprint": "stride-b77e3801d7697f43",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 45,
+     "sha": "556139f962c9278fc3c8f918",
+     "fingerprint": "stride-aa8e93f859b5aadf",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 46,
+     "sha": "a1d823f0eff97bfe1fe22092",
+     "fingerprint": "stride-c78220579a456f31",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 47,
+     "sha": "095266509e5177bd4b1b4b4c",
+     "fingerprint": "stride-88cec861c7ff071c",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 48,
+     "sha": "af155ae277c6e7f5d4f4e556",
+     "fingerprint": "stride-2323f411de8dcf4f",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 49,
+     "sha": "3f5d83ead17fb412c7c41ab8",
+     "fingerprint": "stride-89ea0083651eecb3",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 50,
+     "sha": "88573c99a7ff8985a8fe7453",
+     "fingerprint": "stride-a56068f1f0364573",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 51,
+     "sha": "28710a0a541f274cb4b08126",
+     "fingerprint": "stride-ebcccc583ddcfa45",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 52,
+     "sha": "03ec0c0e02e05bfedd002741",
+     "fingerprint": "stride-61fe08fd01245d62",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 53,
+     "sha": "b393169a3b1d82175c24527f",
+     "fingerprint": "stride-2bc46ab5088ff3d9",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 54,
+     "sha": "466dee66a132d488a8dab66b",
+     "fingerprint": "stride-46ac6056b43ad677",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 55,
+     "sha": "23713de20f54b6c231392616",
+     "fingerprint": "stride-22c6509160a9aaf7",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 56,
+     "sha": "7c9612a32f17b4d9f348543e",
+     "fingerprint": "stride-93b9b4da0ce6cc00",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 57,
+     "sha": "480bf091e3a974314bd2a930",
+     "fingerprint": "stride-844a826ac47998d1",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 58,
+     "sha": "6b248e65df02e631c9e62f17",
+     "fingerprint": "stride-f805843e3d1ef323",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 59,
+     "sha": "f9c53524822436f31b795153",
+     "fingerprint": "stride-2db238f952acba01",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 60,
+     "sha": "ca1c8e110b85128f1be71aa2",
+     "fingerprint": "stride-54b88075a2d78b5d",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 61,
+     "sha": "5af1a7205086a7187e753fe2",
+     "fingerprint": "stride-2fcb69f41609f9f6",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 62,
+     "sha": "ba4b1b69867542228b28b5a2",
+     "fingerprint": "stride-868652f450333355",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 63,
+     "sha": "6553a9386aa6d59587a9b191",
+     "fingerprint": "stride-ae50d3c829703d7b",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 64,
+     "sha": "045729cc158976644678fe5e",
+     "fingerprint": "stride-4bf8f7df2b419941",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 65,
+     "sha": "698e4178740b784798d1b5d5",
+     "fingerprint": "stride-ec07c4abecf79759",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 66,
+     "sha": "6c33524b96e2c175125940c2",
+     "fingerprint": "stride-b51c281368943de3",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 67,
+     "sha": "7ce3dfb86d98442804159cae",
+     "fingerprint": "stride-70c8300dd726c6be",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 68,
+     "sha": "e15a7775caf1e38517c7c84d",
+     "fingerprint": "stride-119814251b4076ab",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 69,
+     "sha": "f8699ccf1e362a55ed9f968f",
+     "fingerprint": "stride-84fa40a179f81045",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 70,
+     "sha": "0b5ba3ac9eda80b7a2dc1378",
+     "fingerprint": "stride-519058604d63c4a1",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 71,
+     "sha": "72aa829ed734396539830190",
+     "fingerprint": "stride-de3a81f119d0bfc4",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 72,
+     "sha": "c5cadb61e1fdb7dd52d11c9b",
+     "fingerprint": "stride-32da358ebbefeffa",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 73,
+     "sha": "c9349692b4f4d5290c96e445",
+     "fingerprint": "stride-6f2a63e0f627ec5b",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 74,
+     "sha": "c36444f5c24b36ec539511ba",
+     "fingerprint": "stride-e29b6bb82d94ea75",
+     "completion_tokens": 256,
+     "prompt_tokens": 50
+    },
+    {
+     "prompt": 75,
+     "sha": "f334ceb8fdf6d7e1881b163f",
+     "fingerprint": "stride-9d3c791c95c20c4e",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 76,
+     "sha": "df57887064f69aacde60b039",
+     "fingerprint": "stride-45545f2b1b4c0a59",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 77,
+     "sha": "a2bbee76c79f4208d59540c1",
+     "fingerprint": "stride-f4496f2b37235c97",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 78,
+     "sha": "fccdbe70b75e50d76387a644",
+     "fingerprint": "stride-4f953ea9fb90a4b5",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 79,
+     "sha": "d640c5920785d893e3f9ace1",
+     "fingerprint": "stride-8723de288c931338",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 80,
+     "sha": "43eb0e96780495b9fa19ad84",
+     "fingerprint": "stride-f08a01525f550148",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 81,
+     "sha": "4f6b65dc99f18a6a6df76422",
+     "fingerprint": "stride-aa39fd3e7a2da10e",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 82,
+     "sha": "02fe9d83b105648f1697a6ae",
+     "fingerprint": "stride-3ba6d48bfcd47194",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 83,
+     "sha": "0622fdfc5677e1514a8545ee",
+     "fingerprint": "stride-08471b3bf9ecffa3",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 84,
+     "sha": "9ec84f9308aa2ae97a816dc3",
+     "fingerprint": "stride-ae435b21c14b93c3",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 85,
+     "sha": "c5008fb4792cb8540ca4fce0",
+     "fingerprint": "stride-64945f13c0962723",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 86,
+     "sha": "5edc42d09d1a01f55aa896a0",
+     "fingerprint": "stride-6feef7d55cc9a0e2",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 87,
+     "sha": "020a469f7352de67e2d9caff",
+     "fingerprint": "stride-580e9d2c5cb46e99",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 88,
+     "sha": "cf3b4855fb6ca72a88ea7e3c",
+     "fingerprint": "stride-684b31c9bcd2c371",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 89,
+     "sha": "a8dc76a228b009db277b1a76",
+     "fingerprint": "stride-4c882f7a27b94eee",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 90,
+     "sha": "b337a6330492d868054f570e",
+     "fingerprint": "stride-753ee73f708fb9c8",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 91,
+     "sha": "99c1d728e5b81c007e314c7c",
+     "fingerprint": "stride-36492d32087de8fe",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 92,
+     "sha": "7d778b628f09ba08b46c812b",
+     "fingerprint": "stride-ce97b170352718fb",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 93,
+     "sha": "cab68a1a075eb016323e8851",
+     "fingerprint": "stride-cdfa018eb30f087d",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 94,
+     "sha": "028f45b4147fa3c481c41ed4",
+     "fingerprint": "stride-d81942842ff7ac5d",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 95,
+     "sha": "8efae735e3a7c68022d17119",
+     "fingerprint": "stride-69d3e6a2f972777f",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 96,
+     "sha": "ec213fbd747e917fb0589aca",
+     "fingerprint": "stride-f06b5bb11f82517f",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 97,
+     "sha": "f5063f9be4579b863018942f",
+     "fingerprint": "stride-b42578dcdc25e7c3",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 98,
+     "sha": "6274d52c6455ef845befccaa",
+     "fingerprint": "stride-5c5e7874f1300542",
+     "completion_tokens": 256,
+     "prompt_tokens": 49
+    },
+    {
+     "prompt": 99,
+     "sha": "d7e64bc1920872b4a68b1e52",
+     "fingerprint": "stride-f1bcceb45f8a9090",
+     "completion_tokens": 256,
+     "prompt_tokens": 46
+    },
+    {
+     "prompt": 0,
+     "sha": "ad56f50ae588a8129aa2af0e",
+     "fingerprint": "stride-b72701e71ddccbaf",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 1,
+     "sha": "c27fa25a4a5630849753897a",
+     "fingerprint": "stride-5737658689a1b700",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 2,
+     "sha": "eae335e297e5d01a0ed833a8",
+     "fingerprint": "stride-473cd5081bd62fe4",
+     "completion_tokens": 256,
+     "prompt_tokens": 51
+    },
+    {
+     "prompt": 3,
+     "sha": "53d394edf5dcfa5e17d336d8",
+     "fingerprint": "stride-5662f5f3e4d4998f",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 4,
+     "sha": "1b73e08c4d1f7055eb3ae2e3",
+     "fingerprint": "stride-526f13e4e0df1f49",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 5,
+     "sha": "0503f9370a39de8582f5124b",
+     "fingerprint": "stride-61637d03dadfb69e",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 6,
+     "sha": "7f74c1702abf333c3fa7d9ee",
+     "fingerprint": "stride-5be85beb0666e34b",
+     "completion_tokens": 256,
+     "prompt_tokens": 48
+    },
+    {
+     "prompt": 7,
+     "sha": "1cfdb89371060b50455847f9",
+     "fingerprint": "stride-da1641c54e10eb14",
+     "completion_tokens": 256,
+     "prompt_tokens": 45
+    },
+    {
+     "prompt": 8,
+     "sha": "11cdf7288247d29aef229e33",
+     "fingerprint": "stride-d117b715cf2d8afa",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    },
+    {
+     "prompt": 9,
+     "sha": "5633831dad834f4952c776d9",
+     "fingerprint": "stride-09763d105f0abea9",
+     "completion_tokens": 256,
+     "prompt_tokens": 43
+    },
+    {
+     "prompt": 10,
+     "sha": "764fb42ed51607c405390e0a",
+     "fingerprint": "stride-6d2e2b87542ba4a2",
+     "completion_tokens": 256,
+     "prompt_tokens": 47
+    },
+    {
+     "prompt": 11,
+     "sha": "95a4a99df389b76b41f9267f",
+     "fingerprint": "stride-fbce91ebf5b06215",
+     "completion_tokens": 256,
+     "prompt_tokens": 44
+    }
+   ],
+   "fingerprints_differing": 0,
+   "stats_after": {
+    "active": 0,
+    "cancelled": 0,
+    "completion_tokens": 299008,
+    "generated": 299008,
+    "kv_free_blocks": 8192,
+    "kv_total_blocks": 8192,
+    "max_context": 2048,
+    "peak_blocks": 605,
+    "peak_seqs": 128,
+    "preemptions": 0,
+    "prompt_tokens": 54088,
+    "replayed_rows": 0,
+    "requests": 1168,
+    "rows": 351928,
+    "steps": 61566
+   }
+  }
+ ]
+}

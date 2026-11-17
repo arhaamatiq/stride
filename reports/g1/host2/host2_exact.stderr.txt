@@ -1,0 +1,1 @@
+{"block_bytes":4194304,"device":"NVIDIA GeForce RTX 4090","generated":25600,"load_seconds":1.886493741,"peak_blocks":5,"peak_seqs":1,"preemptions":0,"rows":30130,"run_seconds":88.119507095,"steps":25600,"total_blocks":1536,"weight_bytes_on_device":2472288512,"weight_bytes_per_pass":2471493632}

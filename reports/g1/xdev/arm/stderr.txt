@@ -1,0 +1,1 @@
+{"block_bytes":4194304,"device":"cpu","generated":256,"load_seconds":6.81656175,"peak_blocks":2,"peak_seqs":1,"preemptions":0,"rows":624,"run_seconds":23.821642916,"steps":256,"total_blocks":256,"weight_bytes_on_device":2472288512,"weight_bytes_per_pass":2471493632}

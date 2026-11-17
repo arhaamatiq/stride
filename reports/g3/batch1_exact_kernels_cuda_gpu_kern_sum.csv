@@ -1,0 +1,14 @@
+Time (%),Total Time (ns),Instances,Avg (ns),Med (ns),Min (ns),Max (ns),StdDev (ns),Name
+34.7,300005603,4080,73530.8,73536.0,72576,74784,313.1,void stride::kimpl::kernel_entry<stride::kimpl::Mlp13<(int)1>>(T1::Params)
+22.4,194024290,8160,23777.5,23856.0,10176,38048,13353.0,void stride::kimpl::kernel_entry<stride::kimpl::GemmResidual<(int)1>>(T1::Params)
+16.5,142793125,256,557785.6,557796.5,555140,562404,940.5,void stride::kimpl::kernel_entry<stride::kimpl::LmGreedy<(int)1>>(T1::Params)
+7.2,61857517,4080,15161.2,15168.0,14784,16000,115.6,void stride::kimpl::kernel_entry<stride::kimpl::Qkv<(int)1>>(T1::Params)
+6.0,52285101,4096,12764.9,12768.0,7552,13729,403.6,"void stride::kimpl::kernel_entry<stride::kimpl::AttentionPage<float, (int)2>>(T1::Params)"
+5.7,48918438,8415,5813.2,5792.0,5632,6464,104.8,void stride::kimpl::kernel_entry<stride::kimpl::RmsNorm<(int)1>>(T1::Params)
+3.0,26337455,16,1646090.9,1645741.0,1641837,1649613,2201.5,void stride::kimpl::kernel_entry<stride::kimpl::Mlp13<(int)4>>(T1::Params)
+1.8,15916670,32,497395.9,495139.5,193217,804135,304431.8,void stride::kimpl::kernel_entry<stride::kimpl::GemmResidual<(int)4>>(T1::Params)
+1.4,12522153,4096,3057.2,3136.0,2144,5440,389.5,"void stride::kimpl::kernel_entry<stride::kimpl::AttentionCombine<stride::kimpl::LaneWriter, (int)2>>(T1::Params)"
+0.6,4795301,16,299706.3,300034.5,296515,301410,1305.3,void stride::kimpl::kernel_entry<stride::kimpl::Qkv<(int)4>>(T1::Params)
+0.5,4398850,256,17183.0,17121.0,16800,20608,300.6,void stride::kimpl::kernel_entry<stride::kimpl::Embed>(T1::Params)
+0.1,567813,33,17206.5,17248.0,16385,17536,200.6,void stride::kimpl::kernel_entry<stride::kimpl::RmsNorm<(int)4>>(T1::Params)
+0.0,1312,1,1312.0,1312.0,1312,1312,0.0,void stride::kimpl::kernel_entry<stride::kimpl::Compact>(T1::Params)

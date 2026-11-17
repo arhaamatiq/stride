@@ -1,0 +1,17 @@
+commit 268d3ced7526def19faa5faceeaff606bdd7c97b
+Fri Nov  6 15:23:44 UTC 2026
+provider RunPod Secure Cloud, data center EUR-IS-1
+name, driver_version, memory.total [MiB], clocks.max.memory [MHz], clocks.max.graphics [MHz], pstate
+NVIDIA GeForce RTX 4090, 595.91.07, 24564 MiB, 10501 MHz, 3105 MHz, P8
+GPU 0: NVIDIA GeForce RTX 4090 (UUID: GPU-9073d15d-4e35-299e-1825-fabf2dc82b0d)
+| NVIDIA-SMI 595.91.07              Driver Version: 595.91.07      CUDA Version: 13.2     |
+Cuda compilation tools, release 12.8, V12.8.93
+NVIDIA (R) Nsight Compute Command Line Profiler
+NVIDIA Nsight Systems version 2024.6.2.225-246235244400v0
+model name	: AMD EPYC 7702 64-Core Processor
+256
+5440000 100000
+RmProfilingAdminOnly: 1
+vllm 0.32.0 torch 2.13.0+cu130 transformers 5.19.0
+reference torch 2.8.0+cu128 transformers 4.56.2
+6.8.0-147-generic

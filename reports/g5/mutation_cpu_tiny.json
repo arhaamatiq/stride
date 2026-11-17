@@ -1,0 +1,419 @@
+{
+  "path": "exact",
+  "tolerance": 0.0002,
+  "token_oracle": true,
+  "rounding_only_mutants": [
+    102,
+    111,
+    123,
+    131
+  ],
+  "functional_mutants": 25,
+  "functional_caught": 25,
+  "functional_caught_by_tolerance": 19,
+  "caught_only_by_crash_or_hang": [],
+  "clean": {
+    "max_logit_diff": 4.482269287109375e-05,
+    "tokens_match_reference": true,
+    "invariant_mixed": true,
+    "invariant_tight": true,
+    "preemptions": 22
+  },
+  "clean_within_tolerance": true,
+  "mutants": 29,
+  "caught": 29,
+  "catch_rate_pct": 100.0,
+  "caught_by_oracle": {
+    "tolerance": 19,
+    "golden": 25,
+    "invariance": 10
+  },
+  "caught_only_by_bit_exact_oracles": [
+    102,
+    111,
+    123,
+    131,
+    151,
+    202,
+    204,
+    205,
+    206,
+    303
+  ],
+  "missed": [],
+  "results": {
+    "101": {
+      "where": "embed",
+      "what": "sign flip on one embedding element",
+      "rounding_only": false,
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 13.873101234436035,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": false
+    },
+    "102": {
+      "where": "norm",
+      "what": "RMSNorm partial sums combined in reverse order",
+      "rounding_only": true,
+      "caught": true,
+      "caught_by": [
+        "golden"
+      ],
+      "max_logit_diff": 3.8623809814453125e-05,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": true
+    },
+    "103": {
+      "where": "norm",
+      "what": "mean divides by dim - 1",
+      "rounding_only": false,
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 0.12499344348907471,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": false
+    },
+    "104": {
+      "where": "norm",
+      "what": "epsilon dropped from RMSNorm",
+      "rounding_only": false,
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 0.007428884506225586,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": true
+    },
+    "105": {
+      "where": "norm",
+      "what": "learned norm gain ignored for some dims",
+      "rounding_only": false,
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 13.564476013183594,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": false
+    },
+    "111": {
+      "where": "rope",
+      "what": "RoPE uses position + 1",
+      "rounding_only": true,
+      "caught": true,
+      "caught_by": [
+        "golden"
+      ],
+      "max_logit_diff": 4.106760025024414e-05,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": true
+    },
+    "112": {
+      "where": "rope",
+      "what": "sign error in one RoPE rotation term",
+      "rounding_only": false,
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 14.959755897521973,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": false
+    },
+    "113": {
+      "where": "kv",
+      "what": "K and V swapped on append",
+      "rounding_only": false,
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 14.982599258422852,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": false
+    },
+    "121": {
+      "where": "attention",
+      "what": "query cannot see its own position",
+      "rounding_only": false,
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "invariance",
+        "golden"
+      ],
+      "max_logit_diff": null,
+      "logits_non_finite_or_missing": true,
+      "tokens_match_reference": false
+    },
+    "122": {
+      "where": "attention",
+      "what": "score scale dropped",
+      "rounding_only": false,
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 14.242425918579102,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": false
+    },
+    "123": {
+      "where": "attention",
+      "what": "softmax denominator summed in reverse order",
+      "rounding_only": true,
+      "caught": true,
+      "caught_by": [
+        "golden"
+      ],
+      "max_logit_diff": 4.267692565917969e-05,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": true
+    },
+    "124": {
+      "where": "attention",
+      "what": "value mix reads K instead of V",
+      "rounding_only": false,
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 16.560157775878906,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": false
+    },
+    "125": {
+      "where": "kv",
+      "what": "value mix reads the previous KV page",
+      "rounding_only": false,
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 4.482269287109375e-05,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": false
+    },
+    "126": {
+      "where": "attention",
+      "what": "query heads swapped inside a KV group",
+      "rounding_only": false,
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 15.142929077148438,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": false
+    },
+    "131": {
+      "where": "gemm",
+      "what": "partial sums combined in reverse order",
+      "rounding_only": true,
+      "caught": true,
+      "caught_by": [
+        "golden"
+      ],
+      "max_logit_diff": 4.32431697845459e-05,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": true
+    },
+    "132": {
+      "where": "gemm",
+      "what": "residual connection dropped",
+      "rounding_only": false,
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 14.670135498046875,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": false
+    },
+    "141": {
+      "where": "mlp",
+      "what": "SiLU skipped",
+      "rounding_only": false,
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 14.025041580200195,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": false
+    },
+    "142": {
+      "where": "mlp",
+      "what": "SiLU applied to the wrong projection",
+      "rounding_only": false,
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 14.754137992858887,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": false
+    },
+    "151": {
+      "where": "sampling",
+      "what": "argmax picks the minimum",
+      "rounding_only": false,
+      "caught": true,
+      "caught_by": [
+        "invariance"
+      ],
+      "max_logit_diff": 4.482269287109375e-05,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": true
+    },
+    "201": {
+      "where": "scheduler",
+      "what": "last row of a prefill chunk gets the wrong position",
+      "rounding_only": false,
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "invariance",
+        "golden"
+      ],
+      "max_logit_diff": 14.422111511230469,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": false
+    },
+    "202": {
+      "where": "scheduler",
+      "what": "preempted sequence resumes without replaying its KV",
+      "rounding_only": false,
+      "caught": true,
+      "caught_by": [
+        "invariance"
+      ],
+      "max_logit_diff": 4.482269287109375e-05,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": true
+    },
+    "203": {
+      "where": "scheduler",
+      "what": "decode row feeds the previous token",
+      "rounding_only": false,
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "invariance",
+        "golden"
+      ],
+      "max_logit_diff": 13.428194046020508,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": false
+    },
+    "204": {
+      "where": "scheduler",
+      "what": "logits routed to the wrong sequence after a lane shuffle",
+      "rounding_only": false,
+      "caught": true,
+      "caught_by": [
+        "invariance"
+      ],
+      "max_logit_diff": 4.482269287109375e-05,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": true
+    },
+    "205": {
+      "where": "kv",
+      "what": "freed block returned to the pool twice",
+      "rounding_only": false,
+      "caught": true,
+      "caught_by": [
+        "invariance",
+        "golden"
+      ],
+      "max_logit_diff": 4.482269287109375e-05,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": true
+    },
+    "206": {
+      "where": "kv",
+      "what": "new block not synced to the device table",
+      "rounding_only": false,
+      "caught": true,
+      "caught_by": [
+        "invariance",
+        "golden"
+      ],
+      "max_logit_diff": 4.482269287109375e-05,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": true
+    },
+    "207": {
+      "where": "scheduler",
+      "what": "generated-token count off by one",
+      "rounding_only": false,
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 4.482269287109375e-05,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": false
+    },
+    "301": {
+      "where": "engine",
+      "what": "all layers read KV from layer zero",
+      "rounding_only": false,
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "invariance",
+        "golden"
+      ],
+      "max_logit_diff": 16.40006446838379,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": false
+    },
+    "302": {
+      "where": "engine",
+      "what": "final norm uses a layer norm's weights",
+      "rounding_only": false,
+      "caught": true,
+      "caught_by": [
+        "tolerance",
+        "golden"
+      ],
+      "max_logit_diff": 12.856449127197266,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": false
+    },
+    "303": {
+      "where": "engine",
+      "what": "logit lanes compacted from the wrong row",
+      "rounding_only": false,
+      "caught": true,
+      "caught_by": [
+        "invariance"
+      ],
+      "max_logit_diff": 4.482269287109375e-05,
+      "logits_non_finite_or_missing": false,
+      "tokens_match_reference": true
+    }
+  }
+}

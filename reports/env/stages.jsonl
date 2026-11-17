@@ -1,0 +1,30 @@
+{"stage": "build", "commit": "06c4d26db824fbf317c77b48356d493c5c711d01", "device": "RTX 4090", "finished_utc": "2026-11-06T13:24:32Z"}
+{"stage": "g1", "commit": "06c4d26db824fbf317c77b48356d493c5c711d01", "device": "RTX 4090", "finished_utc": "2026-11-06T13:29:30Z"}
+{"stage": "nsys_b1", "commit": "06c4d26db824fbf317c77b48356d493c5c711d01", "device": "RTX 4090", "finished_utc": "2026-11-06T13:30:36Z"}
+{"stage": "nsys_server", "commit": "06c4d26db824fbf317c77b48356d493c5c711d01", "device": "RTX 4090", "finished_utc": "2026-11-06T13:31:12Z"}
+{"stage": "sweep_stride", "commit": "06c4d26db824fbf317c77b48356d493c5c711d01", "device": "RTX 4090", "finished_utc": "2026-11-06T13:51:05Z"}
+{"stage": "sweep_vllm", "commit": "06c4d26db824fbf317c77b48356d493c5c711d01", "device": "RTX 4090", "finished_utc": "2026-11-06T14:03:16Z"}
+{"stage": "ab_micro_off", "commit": "06c4d26db824fbf317c77b48356d493c5c711d01", "device": "RTX 4090", "finished_utc": "2026-11-06T14:08:18Z"}
+{"stage": "ab_micro_on", "commit": "06c4d26db824fbf317c77b48356d493c5c711d01", "device": "RTX 4090", "finished_utc": "2026-11-06T14:12:46Z"}
+{"stage": "ab_norm_tile", "commit": "06c4d26db824fbf317c77b48356d493c5c711d01", "device": "RTX 4090", "finished_utc": "2026-11-06T14:17:30Z"}
+{"stage": "ab_bits", "commit": "06c4d26db824fbf317c77b48356d493c5c711d01", "device": "RTX 4090", "finished_utc": "2026-11-06T14:17:40Z"}
+{"stage": "mut_ref", "commit": "06c4d26db824fbf317c77b48356d493c5c711d01", "device": "RTX 4090", "finished_utc": "2026-11-06T14:18:01Z"}
+{"stage": "build", "commit": "268d3ced7526def19faa5faceeaff606bdd7c97b", "device": "RTX 4090", "finished_utc": "2026-11-06T15:24:11Z"}
+{"stage": "ncu_probe", "commit": "268d3ced7526def19faa5faceeaff606bdd7c97b", "device": "RTX 4090", "finished_utc": "2026-11-06T15:24:14Z"}
+{"stage": "memread", "commit": "268d3ced7526def19faa5faceeaff606bdd7c97b", "device": "RTX 4090", "finished_utc": "2026-11-06T15:24:15Z"}
+{"stage": "tc_probe", "commit": "268d3ced7526def19faa5faceeaff606bdd7c97b", "device": "RTX 4090", "finished_utc": "2026-11-06T15:24:18Z"}
+{"stage": "cublas_probe", "commit": "268d3ced7526def19faa5faceeaff606bdd7c97b", "device": "RTX 4090", "finished_utc": "2026-11-06T15:24:22Z"}
+{"stage": "cross_device", "commit": "268d3ced7526def19faa5faceeaff606bdd7c97b", "device": "RTX 4090 and CPU", "finished_utc": "2026-11-06T15:24:56Z"}
+{"stage": "roofline", "commit": "268d3ced7526def19faa5faceeaff606bdd7c97b", "device": "RTX 4090", "finished_utc": "2026-11-06T15:25:44Z"}
+{"stage": "det_stride", "commit": "268d3ced7526def19faa5faceeaff606bdd7c97b", "device": "RTX 4090", "finished_utc": "2026-11-06T15:29:17Z"}
+{"stage": "det_vllm", "commit": "268d3ced7526def19faa5faceeaff606bdd7c97b", "device": "RTX 4090", "finished_utc": "2026-11-06T15:33:34Z"}
+{"stage": "det_preempt", "commit": "268d3ced7526def19faa5faceeaff606bdd7c97b", "device": "RTX 4090", "finished_utc": "2026-11-06T15:36:56Z"}
+{"stage": "offline", "commit": "268d3ced7526def19faa5faceeaff606bdd7c97b", "device": "RTX 4090", "finished_utc": "2026-11-06T15:39:07Z"}
+{"stage": "mut_exact", "commit": "268d3ced7526def19faa5faceeaff606bdd7c97b", "device": "RTX 4090", "finished_utc": "2026-11-06T15:50:35Z"}
+{"stage": "mut_tc", "commit": "268d3ced7526def19faa5faceeaff606bdd7c97b", "device": "RTX 4090", "finished_utc": "2026-11-06T16:00:02Z"}
+{"stage": "mut_cpu", "commit": "268d3ced7526def19faa5faceeaff606bdd7c97b", "device": "CPU", "finished_utc": "2026-11-06T16:10:37Z"}
+{"stage": "cross_device_arm", "commit": "268d3ced7526def19faa5faceeaff606bdd7c97b", "device": "RTX 4090; AMD EPYC 7702; Apple M1 Pro", "finished_utc": "2026-11-06T15:41:42Z"}
+{"stage": "cross_host", "commit": "268d3ced7526def19faa5faceeaff606bdd7c97b", "device": "two RTX 4090 hosts; see reports/g1/host2/host2_env.txt", "finished_utc": "2026-11-06T15:30:12Z", "note": "host2_env.txt start time plus load and run seconds from the stderr summaries"}
+{"stage": "pin", "commit": "71b0906", "device": "RTX 4090 host", "finished_utc": "2026-11-06T11:56:36Z", "note": "retrieved just before the commit that first records the lock"}
+{"stage": "exact_scaling", "commit": "c3eda3a32776de62bc58c646a168a2fedac2b334", "device": "RTX 4090, third host", "finished_utc": "2026-11-06T16:56:00Z", "note": "time to the minute, from the run's console clock"}
+{"stage": "ci", "commit": "fcab2300d5ae446051fbd34c118f8d167f3a5681", "device": "GitHub Actions, ubuntu-24.04 CPU", "finished_utc": "2026-11-06T17:01:14Z"}
